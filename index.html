@@ -1285,6 +1285,672 @@
             align-items: center;
             margin-bottom: 15px;
         }
+
+        /* Enhanced Excel Preview */
+        .full-data-preview {
+            max-height: 600px;
+            overflow: auto;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            background: white;
+            margin-top: 20px;
+        }
+
+        .full-data-preview table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .full-data-preview th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            border-right: 1px solid white;
+        }
+
+        .full-data-preview td {
+            padding: 6px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .full-data-preview tr:hover td {
+            background-color: #f0f9ff;
+        }
+
+        .attendance-present {
+            background-color: #d1fae5;
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .attendance-absent {
+            background-color: #fee2e2;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .student-result-info {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        /* Excel Management Enhanced Features */
+        .excel-enhanced-features {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #f59e0b;
+        }
+
+        .excel-enhanced-features h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .enhanced-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.2);
+        }
+
+        .feature-card h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-summary-card {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .data-summary-card h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #93c5fd;
+        }
+
+        .summary-label {
+            color: #1e40af;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        
+        /* Enhanced Mobile Responsive Design */
+        @media (max-width: 768px) {
+            /* Excel Management Container */
+            .excel-management-container {
+                grid-template-columns: 1fr !important;
+                gap: 15px;
+            }
+            
+            .excel-file-info {
+                position: static !important;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .excel-operations {
+                padding: 15px;
+            }
+            
+            /* Enhanced Excel Features */
+            .excel-enhanced-features {
+                padding: 15px;
+            }
+            
+            .enhanced-features-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px;
+            }
+            
+            .feature-card {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            
+            /* Excel File Info Panel - Mobile Optimized */
+            .file-info-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px;
+            }
+            
+            .stat-card {
+                padding: 12px;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            /* Operation Sections */
+            .operation-section {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .operation-buttons {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Preview Header */
+            .preview-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .preview-header h4 {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            
+            /* Data Preview Table */
+            .data-preview {
+                max-height: 300px;
+                font-size: 0.8rem;
+            }
+            
+            .data-preview th,
+            .data-preview td {
+                padding: 8px 6px;
+                font-size: 0.75rem;
+            }
+            
+            /* Full Data Preview Modal */
+            #enhancedPreviewModal > div {
+                width: 95% !important;
+                padding: 15px !important;
+                max-height: 85vh !important;
+            }
+            
+            .full-data-preview {
+                font-size: 0.7rem;
+            }
+            
+            .full-data-preview th,
+            .full-data-preview td {
+                padding: 4px !important;
+                font-size: 0.7rem;
+            }
+            
+            /* Enhanced Preview Title */
+            #previewTitle {
+                font-size: 1.2rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 5px;
+            }
+            
+            /* Data Summary Card */
+            .data-summary-card {
+                padding: 12px;
+            }
+            
+            .summary-row {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+            
+            /* Excel Upload Section */
+            .excel-upload-section {
+                padding: 15px;
+            }
+            
+            .file-input-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            /* Quick Actions */
+            .excel-file-info .btn {
+                margin-bottom: 8px;
+                width: 100%;
+            }
+            
+            /* Fine Management */
+            .form-group input[type="number"] {
+                font-size: 16px;
+            }
+            
+            /* Backup & Restore */
+            .operation-buttons {
+                gap: 8px;
+            }
+            
+            .operation-buttons .btn {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+        }
+        
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            /* Excel File Status */
+            .excel-file-info h3 {
+                font-size: 1.2rem;
+            }
+            
+            .file-info-card h4 {
+                font-size: 1rem;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            /* Statistics */
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .stat-card {
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 1.3rem;
+            }
+            
+            /* Enhanced Features Cards */
+            .feature-card h4 {
+                font-size: 0.95rem;
+            }
+            
+            .feature-card .btn {
+                font-size: 0.85rem;
+                padding: 8px;
+            }
+            
+            /* Excel Operations */
+            .excel-operations h3 {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+            
+            /* Preview Tables */
+            .data-preview {
+                font-size: 0.7rem;
+            }
+            
+            .data-preview table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .full-data-preview table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            /* Enhanced Preview Modal */
+            #enhancedPreviewModal > div {
+                padding: 12px !important;
+            }
+            
+            .enhanced-preview-content {
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Tablet Devices */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .excel-management-container {
+                grid-template-columns: 350px 1fr;
+                gap: 20px;
+            }
+            
+            .excel-file-info {
+                position: sticky;
+                top: 10px;
+                height: fit-content;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .enhanced-features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .operation-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            /* Make buttons easier to tap */
+            .btn, .tab, .student-item, .status-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Increase touch target size */
+            input[type="file"] {
+                min-height: 44px;
+            }
+            
+            /* Improve dropdown usability */
+            select {
+                font-size: 16px;
+                padding: 12px;
+            }
+            
+            /* Scrollable tables with better touch */
+            .data-preview, .full-data-preview {
+                -webkit-overflow-scrolling: touch;
+                overflow-scrolling: touch;
+            }
+            
+            /* Better touch feedback */
+            .btn:active, .tab:active, .student-item:active {
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
+        }
+        
+        /* Landscape Mode Optimizations */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .excel-file-info {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .excel-operations {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .data-preview {
+                max-height: 200px;
+            }
+        }
+        
+        /* High DPI Screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .btn, .tab, .student-item {
+                border-width: 1px;
+            }
+            
+            .excel-file-info, .excel-operations {
+                border-width: 2px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .excel-management, .excel-file-info, .excel-operations {
+                background: white !important;
+                border: 1px solid #000 !important;
+            }
+            
+            .btn, .menu-toggle, .admin-panel {
+                display: none !important;
+            }
+        }
+        
+        /* Loading States for Mobile */
+        .mobile-loading {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-loading {
+                display: block;
+                text-align: center;
+                padding: 20px;
+                color: #666;
+            }
+            
+            /* Excel Loading States */
+            .excel-file-info.loading {
+                opacity: 0.7;
+                pointer-events: none;
+            }
+            
+            .excel-operations.loading {
+                opacity: 0.7;
+                pointer-events: none;
+            }
+        }
+        
+        /* Mobile-optimized modal for Excel preview */
+        @media (max-width: 768px) {
+            #enhancedPreviewModal {
+                padding: 10px;
+            }
+            
+            #enhancedPreviewModal > div {
+                width: 100% !important;
+                max-height: 90vh !important;
+                border-radius: 15px;
+            }
+            
+            #enhancedPreviewContent {
+                max-height: 60vh;
+                overflow: auto;
+            }
+            
+            /* Close button positioning */
+            #enhancedPreviewModal > div > div:first-child {
+                position: sticky;
+                top: 0;
+                background: white;
+                padding: 10px 0;
+                z-index: 10;
+            }
+            
+            #enhancedPreviewModal button[onclick="closeEnhancedPreview()"] {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 11;
+            }
+        }
+        
+        /* Better scrollbars for mobile */
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 6px;
+                height: 6px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: rgba(102, 126, 234, 0.7);
+            }
+            
+            .excel-file-info::-webkit-scrollbar,
+            .excel-operations::-webkit-scrollbar {
+                width: 4px;
+            }
+        }
+        
+        /* Excel File Info Mobile Layout */
+        @media (max-width: 480px) {
+            .excel-file-info h3 {
+                text-align: center;
+            }
+            
+            .file-info-card {
+                text-align: center;
+            }
+            
+            .info-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .stats-grid {
+                text-align: center;
+            }
+            
+            .excel-operations h3 {
+                text-align: center;
+            }
+            
+            .operation-section h4 {
+                text-align: center;
+            }
+        }
+        
+        /* Enhanced Data Tables for Mobile */
+        @media (max-width: 768px) {
+            .full-data-preview {
+                font-size: 0.6rem;
+            }
+            
+            .full-data-preview th {
+                padding: 6px 3px;
+                font-size: 0.65rem;
+            }
+            
+            .full-data-preview td {
+                padding: 4px 2px;
+                font-size: 0.65rem;
+            }
+            
+            .attendance-present,
+            .attendance-absent {
+                font-size: 0.6rem;
+                padding: 2px 4px;
+            }
+        }
+        
+        /* Excel Management Specific Improvements */
+        @media (max-width: 768px) {
+            /* Better button spacing */
+            .excel-file-info .btn {
+                margin-bottom: 10px;
+            }
+            
+            /* Operation sections spacing */
+            .operation-section:not(:last-child) {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #e2e8f0;
+            }
+            
+            /* File input improvements */
+            input[type="file"] {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            /* Better form controls */
+            .form-group input,
+            .form-group select {
+                font-size: 16px;
+                padding: 12px;
+            }
+            
+            /* Improved data preview */
+            .data-preview {
+                border-radius: 8px;
+                border-width: 1px;
+            }
+        }
+        
+        /* Excel Quick Actions Mobile Layout */
+        @media (max-width: 480px) {
+            .excel-file-info > div:last-child {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .excel-file-info .btn {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+        }
+        
+        /* Add smooth transitions for mobile */
+        @media (max-width: 768px) {
+            .excel-management-container,
+            .excel-file-info,
+            .excel-operations,
+            .operation-section,
+            .feature-card,
+            .file-info-card {
+                transition: all 0.3s ease;
+            }
+        }
+        
+        /* Mobile-first adjustments for very small screens */
+        @media (max-width: 360px) {
+            .excel-management-container {
+                gap: 10px;
+            }
+            
+            .excel-file-info,
+            .excel-operations {
+                padding: 12px;
+            }
+            
+            .feature-card {
+                padding: 10px;
+            }
+            
+            .feature-card .btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1620,8 +2286,44 @@
 
                 <!-- Excel Operations Panel -->
                 <div class="excel-operations">
-                    <h3>📁 Excel File Management</h3>
-                    
+                    <!-- Enhanced Excel Features Section -->
+                    <div class="excel-enhanced-features">
+                        <h3>👀 ENHANCED EXCEL MANAGEMENT</h3>
+                        <p style="color: #92400e; margin-bottom: 15px;">
+                            View all student data with attendance, fines, and results in one place.
+                        </p>
+                        <div class="enhanced-features-grid">
+                            <div class="feature-card">
+                                <h4>📊 ALL STUDENT DATA</h4>
+                                <p>View complete data of all students with every date's attendance</p>
+                                <button class="btn btn-purple" onclick="showAllStudentDataMobile()" style="width: 100%; margin-top: 10px;">
+                                    👁️ Show All Data
+                                </button>
+                            </div>
+                            <div class="feature-card">
+                                <h4>💰 FINE CALCULATIONS</h4>
+                                <p>Automatic fine calculation for each student (₹10 per absent day)</p>
+                                <button class="btn btn-warning" onclick="showFineCalculations()" style="width: 100%; margin-top: 10px;">
+                                    💰 Show Fines
+                                </button>
+                            </div>
+                            <div class="feature-card">
+                                <h4>📋 DELETE ALL ATTENDANCE</h4>
+                                <p>Reset all attendance to present and fines to ₹0</p>
+                                <button class="btn btn-danger" onclick="deleteAllAttendanceData()" style="width: 100%; margin-top: 10px;">
+                                    🗑️ Reset Attendance
+                                </button>
+                            </div>
+                            <div class="feature-card">
+                                <h4>📝 STUDENT RESULTS</h4>
+                                <p>View student exam results integrated with attendance</p>
+                                <button class="btn btn-success" onclick="showStudentResults()" style="width: 100%; margin-top: 10px;">
+                                    📚 Show Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Upload Section -->
                     <div class="operation-section">
                         <h4>📤 Upload Excel File</h4>
@@ -1631,7 +2333,7 @@
                         
                         <div class="file-input-container">
                             <input type="file" id="excelFile" accept=".xlsx, .xls" style="flex: 1;">
-                            <button class="btn btn-success" onclick="uploadExcelFile()">📤 Upload Excel</button>
+                            <button class="btn btn-success" onclick="uploadExcelFileMobile()">📤 Upload Excel</button>
                         </div>
                         
                         <div style="margin-top: 15px;">
@@ -1827,6 +2529,23 @@
         </div>
     </div>
 
+    <!-- Enhanced Data Preview Modal -->
+    <div id="enhancedPreviewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; padding: 20px; overflow: auto;">
+        <div style="background: white; padding: 25px; border-radius: 20px; width: 95%; max-width: 1800px; max-height: 90vh; overflow: auto; border: 3px solid #667eea; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="color: #4b0082; font-size: 1.5rem; display: flex; align-items: center; gap: 10px;" id="previewTitle">
+                    📊 Complete Data Preview
+                </h3>
+                <button onclick="closeEnhancedPreview()" style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                    ✕ Close
+                </button>
+            </div>
+            <div id="enhancedPreviewContent" style="max-height: 70vh; overflow: auto;">
+                <!-- Enhanced preview content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
     <script>
         // Firebase Configuration
         const firebaseConfig = {
@@ -1874,27 +2593,28 @@
             updateSubjectTotal('kalma');
             updateSubjectTotal('namaz');
             setupEventListeners();
-            loadClassPositions(); // Load saved positions for classes
-            loadExcelFileFromStorage(); // Load saved Excel file info
+            loadClassPositions();
+            loadExcelFileFromStorage();
+            
+            // Initialize mobile features
+            if (window.innerWidth <= 768) {
+                initMobileExcelManagement();
+            }
         };
 
         // Setup event listeners
         function setupEventListeners() {
-            // Auto-calculate totals when marks change
             document.getElementById('nazraMarks').addEventListener('input', calculateTotal);
             document.getElementById('kalmaMarks').addEventListener('input', calculateTotal);
             document.getElementById('namazMarks').addEventListener('input', calculateTotal);
             document.getElementById('nazraTotal').addEventListener('input', calculateTotal);
             document.getElementById('kalmaTotal').addEventListener('input', calculateTotal);
             document.getElementById('namazTotal').addEventListener('input', calculateTotal);
-            
-            // Keyboard shortcuts
             document.addEventListener('keydown', handleKeyboardShortcuts);
         }
 
         // Handle keyboard shortcuts
         function handleKeyboardShortcuts(event) {
-            // Ctrl + S to save
             if (event.ctrlKey && event.key === 's') {
                 event.preventDefault();
                 const activeTab = document.querySelector('.content.active').id;
@@ -1908,11 +2628,186 @@
                     saveClassPositions();
                 }
             }
-            
-            // Escape to close modal
             if (event.key === 'Escape') {
                 hideAdminLogin();
+                closeEnhancedPreview();
             }
+        }
+
+        // Mobile-specific Excel management functions
+        function initMobileExcelManagement() {
+            // Add touch events for better mobile experience
+            const excelSections = document.querySelectorAll('.excel-file-info, .excel-operations');
+            
+            excelSections.forEach(section => {
+                section.addEventListener('touchstart', function(e) {
+                    this.style.transform = 'scale(0.99)';
+                });
+                
+                section.addEventListener('touchend', function(e) {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Handle file input on mobile
+            const excelFileInput = document.getElementById('excelFile');
+            if (excelFileInput) {
+                excelFileInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const fileName = this.files[0].name;
+                        showToast(`Selected file: ${fileName}`, 'info');
+                    }
+                });
+            }
+            
+            // Load Excel data on mobile with better feedback
+            document.querySelectorAll('[onclick="loadExcelData()"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        showMessage('Loading Excel data...', 'info');
+                        setTimeout(() => {
+                            loadExcelData();
+                        }, 100);
+                    }
+                });
+            });
+            
+            // Enhanced mobile preview
+            document.querySelectorAll('[onclick="showAllStudentDataMobile()"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        showMessage('Loading all student data...', 'info');
+                    }
+                });
+            });
+            
+            // Mobile-optimized excel operations
+            setupMobileExcelOperations();
+        }
+
+        function setupMobileExcelOperations() {
+            // Add swipe functionality for preview sections
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            const previewDiv = document.getElementById('dataPreview');
+            if (previewDiv) {
+                previewDiv.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+                
+                previewDiv.addEventListener('touchend', function(e) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+            }
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const swipeDistance = touchEndX - touchStartX;
+                
+                if (Math.abs(swipeDistance) > swipeThreshold) {
+                    if (swipeDistance > 0) {
+                        // Swipe right - show previous operation
+                        navigateExcelOperations('prev');
+                    } else {
+                        // Swipe left - show next operation
+                        navigateExcelOperations('next');
+                    }
+                }
+            }
+        }
+
+        function navigateExcelOperations(direction) {
+            const sections = document.querySelectorAll('.operation-section');
+            const currentSection = document.querySelector('.operation-section.active');
+            let currentIndex = 0;
+            
+            sections.forEach((section, index) => {
+                if (section === currentSection) {
+                    currentIndex = index;
+                }
+            });
+            
+            if (direction === 'next') {
+                const nextIndex = (currentIndex + 1) % sections.length;
+                sections[currentIndex].classList.remove('active');
+                sections[nextIndex].classList.add('active');
+                sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+            } else {
+                const prevIndex = (currentIndex - 1 + sections.length) % sections.length;
+                sections[currentIndex].classList.remove('active');
+                sections[prevIndex].classList.add('active');
+                sections[prevIndex].scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Enhanced mobile data preview
+        function showMobileExcelPreview() {
+            if (!currentExcelData) {
+                showToast('No Excel file loaded!', 'warning');
+                return;
+            }
+            
+            const previewDiv = document.getElementById('dataPreview');
+            if (window.innerWidth <= 768) {
+                previewDiv.style.maxHeight = '300px';
+                previewDiv.style.fontSize = '0.8rem';
+                previewDiv.style.overflow = 'auto';
+                previewDiv.style.webkitOverflowScrolling = 'touch';
+            }
+            
+            showDataPreview();
+        }
+
+        // Mobile-optimized file upload
+        function uploadExcelFileMobile() {
+            const fileInput = document.getElementById('excelFile');
+            
+            if (window.innerWidth <= 768) {
+                // Create a mobile-friendly file picker
+                fileInput.click();
+                
+                fileInput.onchange = function() {
+                    if (this.files && this.files[0]) {
+                        const file = this.files[0];
+                        const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                        
+                        if (fileSize > 5) {
+                            showToast('File is too large! Max 5MB on mobile.', 'error');
+                            return;
+                        }
+                        
+                        showMessage('Uploading Excel file...', 'info');
+                        uploadExcelFile();
+                    }
+                };
+            } else {
+                uploadExcelFile();
+            }
+        }
+
+        function setupMobileTouchEvents() {
+            // Add long press for excel operations
+            const excelBtns = document.querySelectorAll('.excel-operations .btn');
+            
+            excelBtns.forEach(btn => {
+                let pressTimer;
+                
+                btn.addEventListener('touchstart', function(e) {
+                    pressTimer = setTimeout(() => {
+                        showToast(this.textContent.trim(), 'info');
+                    }, 1000);
+                });
+                
+                btn.addEventListener('touchend', function(e) {
+                    clearTimeout(pressTimer);
+                });
+                
+                btn.addEventListener('touchmove', function(e) {
+                    clearTimeout(pressTimer);
+                });
+            });
         }
 
         // Toggle mobile menu
@@ -1926,7 +2821,6 @@
             const savedCode = localStorage.getItem('mudrasaAdminCode');
             const isLoggedIn = localStorage.getItem('mudrasaAdminLoggedIn');
             
-            // Load saved admin code if exists
             if (savedCode) {
                 ADMIN_CODE = savedCode;
             }
@@ -1975,7 +2869,7 @@
             document.getElementById('adminTab2').style.display = 'flex';
             document.getElementById('adminTab3').style.display = 'flex';
             document.getElementById('adminTab4').style.display = 'flex';
-            document.getElementById('adminTab5').style.display = 'flex'; // Excel Management tab
+            document.getElementById('adminTab5').style.display = 'flex';
             document.getElementById('logoutBtn').style.display = 'inline-flex';
             document.querySelector('.admin-panel .admin-btn').style.display = 'none';
         }
@@ -1987,7 +2881,7 @@
             document.getElementById('adminTab2').style.display = 'none';
             document.getElementById('adminTab3').style.display = 'none';
             document.getElementById('adminTab4').style.display = 'none';
-            document.getElementById('adminTab5').style.display = 'none'; // Excel Management tab
+            document.getElementById('adminTab5').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'none';
             document.querySelector('.admin-panel .admin-btn').style.display = 'inline-flex';
             showTab('publicResults');
@@ -2014,19 +2908,16 @@
                 return;
             }
             
-            // Ask for current admin code for security
             const currentCode = prompt('Please enter current admin code to confirm change:');
             if (currentCode !== ADMIN_CODE) {
                 showToast('Current admin code is incorrect!', 'error');
                 return;
             }
             
-            // Update admin code
             ADMIN_CODE = newCode;
             localStorage.setItem('mudrasaAdminCode', newCode);
             document.getElementById('currentAdminCodeDisplay').textContent = newCode;
             
-            // Clear fields
             document.getElementById('newAdminCode').value = '';
             document.getElementById('confirmAdminCode').value = '';
             
@@ -2035,33 +2926,27 @@
 
         // Show tab content
         function showTab(tabName) {
-            // Close mobile menu if open
             const tabs = document.getElementById('mobileTabs');
             tabs.classList.remove('mobile-open');
             
-            // Hide all tabs
             const contentTabs = document.querySelectorAll('.content');
             contentTabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected tab
             document.getElementById(tabName).classList.add('active');
             
-            // Update tab headers
             const tabHeaders = document.querySelectorAll('.tab');
             tabHeaders.forEach(header => header.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Load data for specific tabs
             if (tabName === 'addResult') {
                 loadStudentList();
             } else if (tabName === 'addStudent') {
                 loadAllStudentsTable();
             } else if (tabName === 'attendance') {
-                // Clear attendance list when tab is opened
                 document.getElementById('attendanceList').innerHTML = '<div class="message info">Click "Load Students" button to load students for attendance.</div>';
                 updateFineSummary();
             } else if (tabName === 'excelManagement') {
-                loadExcelData(); // Load Excel data when tab is opened
+                loadExcelData();
             } else if (tabName === 'adminManagement') {
                 loadClassPositionCandidates();
             }
@@ -2069,13 +2954,11 @@
 
         // Show toast notification
         function showToast(message, type = 'info') {
-            // Remove existing toast
             const existingToast = document.querySelector('.toast');
             if (existingToast) {
                 existingToast.remove();
             }
             
-            // Create new toast
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.innerHTML = `
@@ -2085,7 +2968,6 @@
             
             document.body.appendChild(toast);
             
-            // Auto remove after 3 seconds
             setTimeout(() => {
                 toast.style.animation = 'slideUp 0.3s ease reverse';
                 setTimeout(() => toast.remove(), 300);
@@ -2106,6 +2988,535 @@
             }, 4000);
         }
 
+        // ==================== ENHANCED EXCEL FEATURES ====================
+
+        // Show ALL student data with every date's attendance
+        function showAllStudentData() {
+            if (!currentExcelData) {
+                showToast('No Excel file loaded!', 'warning');
+                return;
+            }
+
+            showMessage('Loading complete student data...', 'info');
+            
+            try {
+                const sheet = currentExcelData.Sheets[currentExcelData.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                
+                if (jsonData.length === 0) {
+                    showToast('No data in Excel file!', 'warning');
+                    showMessage('', '');
+                    return;
+                }
+
+                const headers = jsonData[0];
+                const previewContent = document.getElementById('enhancedPreviewContent');
+                previewContent.innerHTML = '';
+                
+                // Set title
+                document.getElementById('previewTitle').textContent = '📊 ALL STUDENT DATA - EVERY DATE ATTENDANCE';
+                
+                // Create summary card
+                const summaryCard = document.createElement('div');
+                summaryCard.className = 'data-summary-card';
+                summaryCard.innerHTML = `
+                    <h4>📈 Data Summary</h4>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Students:</span>
+                        <span class="summary-value">${jsonData.length - 1}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Dates:</span>
+                        <span class="summary-value">${headers.filter(h => h && typeof h === 'string' && h.match(/\d{4}-\d{2}-\d{2}/)).length}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">File Name:</span>
+                        <span class="summary-value">${document.getElementById('currentExcelFileNameInfo').textContent}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Last Updated:</span>
+                        <span class="summary-value">${document.getElementById('excelLastUpdatedInfo').textContent}</span>
+                    </div>
+                `;
+                previewContent.appendChild(summaryCard);
+
+                // Create table
+                const table = document.createElement('table');
+                table.className = 'full-data-preview';
+                
+                // Create header
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                
+                // Add all headers
+                headers.forEach((header, index) => {
+                    const th = document.createElement('th');
+                    th.textContent = header || `Column ${index + 1}`;
+                    if (header && typeof header === 'string' && header.match(/\d{4}-\d{2}-\d{2}/)) {
+                        th.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+                    } else if (header === 'Total Absent Days' || header === 'Total Fine') {
+                        th.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                    }
+                    headerRow.appendChild(th);
+                });
+                
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // Create body
+                const tbody = document.createElement('tbody');
+                
+                // Add all rows
+                for (let i = 1; i < jsonData.length; i++) {
+                    const row = document.createElement('tr');
+                    const rowData = jsonData[i];
+                    
+                    for (let j = 0; j < headers.length; j++) {
+                        const td = document.createElement('td');
+                        let cellValue = rowData[j] || '';
+                        
+                        // Format attendance cells
+                        if (headers[j] && typeof headers[j] === 'string' && headers[j].match(/\d{4}-\d{2}-\d{2}/)) {
+                            if (cellValue === 'P' || cellValue === 'Present' || cellValue === 'present') {
+                                td.className = 'attendance-present';
+                                td.textContent = 'P';
+                            } else if (cellValue === 'A' || cellValue === 'Absent' || cellValue === 'absent') {
+                                td.className = 'attendance-absent';
+                                td.textContent = 'A';
+                            } else {
+                                td.textContent = '';
+                            }
+                        } else if (headers[j] === 'Total Fine') {
+                            td.style.color = '#ef4444';
+                            td.style.fontWeight = 'bold';
+                            td.textContent = cellValue ? '₹' + cellValue : '₹0';
+                        } else if (headers[j] === 'Total Absent Days') {
+                            td.style.color = cellValue > 0 ? '#ef4444' : '#10b981';
+                            td.style.fontWeight = 'bold';
+                            td.textContent = cellValue || '0';
+                        } else {
+                            td.textContent = cellValue;
+                        }
+                        
+                        row.appendChild(td);
+                    }
+                    
+                    tbody.appendChild(row);
+                }
+                
+                table.appendChild(tbody);
+                previewContent.appendChild(table);
+                
+                // Show modal
+                document.getElementById('enhancedPreviewModal').style.display = 'flex';
+                showMessage('', '');
+                showToast('Complete student data loaded successfully!', 'success');
+                
+            } catch (error) {
+                showToast('Error loading student data: ' + error.message, 'error');
+                showMessage('', '');
+            }
+        }
+
+        // Mobile-optimized enhanced preview
+        function showAllStudentDataMobile() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('enhancedPreviewModal').style.display = 'flex';
+                document.getElementById('enhancedPreviewContent').innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 20px; color: #666;">Loading student data...</p>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    showAllStudentData();
+                }, 100);
+            } else {
+                showAllStudentData();
+            }
+        }
+
+        // Show fine calculations for each student
+        function showFineCalculations() {
+            if (!currentExcelData) {
+                showToast('No Excel file loaded!', 'warning');
+                return;
+            }
+
+            showMessage('Loading fine calculations...', 'info');
+            
+            try {
+                const sheet = currentExcelData.Sheets[currentExcelData.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                
+                if (jsonData.length === 0) {
+                    showToast('No data in Excel file!', 'warning');
+                    showMessage('', '');
+                    return;
+                }
+
+                const headers = jsonData[0];
+                const previewContent = document.getElementById('enhancedPreviewContent');
+                previewContent.innerHTML = '';
+                
+                // Set title
+                document.getElementById('previewTitle').textContent = '💰 FINE CALCULATIONS - ALL STUDENTS';
+                
+                // Calculate total fine
+                let totalFine = 0;
+                let totalAbsentDays = 0;
+                const fineRate = parseInt(document.getElementById('fineRate').value) || 10;
+                
+                // Create table
+                const table = document.createElement('table');
+                table.className = 'full-data-preview';
+                
+                // Create header
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                ['Roll No', 'Name', 'Class', 'Total Absent Days', 'Fine Rate', 'Total Fine'].forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    if (header.includes('Fine')) {
+                        th.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+                    }
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // Create body
+                const tbody = document.createElement('tbody');
+                
+                // Calculate for each student
+                for (let i = 1; i < jsonData.length; i++) {
+                    const rowData = jsonData[i];
+                    if (!rowData[0]) continue;
+                    
+                    // Calculate absent days
+                    let absentDays = 0;
+                    for (let j = 0; j < headers.length; j++) {
+                        if (headers[j] && typeof headers[j] === 'string' && headers[j].match(/\d{4}-\d{2}-\d{2}/)) {
+                            const cellValue = rowData[j];
+                            if (cellValue === 'A' || cellValue === 'Absent' || cellValue === 'absent') {
+                                absentDays++;
+                            }
+                        }
+                    }
+                    
+                    // Check if fine is already calculated
+                    const totalAbsentIndex = headers.indexOf('Total Absent Days');
+                    const totalFineIndex = headers.indexOf('Total Fine');
+                    
+                    let calculatedFine = absentDays * fineRate;
+                    totalAbsentDays += absentDays;
+                    totalFine += calculatedFine;
+                    
+                    const row = document.createElement('tr');
+                    
+                    // Roll No
+                    const tdRoll = document.createElement('td');
+                    tdRoll.textContent = rowData[0] || '';
+                    row.appendChild(tdRoll);
+                    
+                    // Name
+                    const tdName = document.createElement('td');
+                    tdName.textContent = rowData[1] || '';
+                    row.appendChild(tdName);
+                    
+                    // Class
+                    const tdClass = document.createElement('td');
+                    tdClass.textContent = rowData[2] || '';
+                    row.appendChild(tdClass);
+                    
+                    // Total Absent Days
+                    const tdAbsent = document.createElement('td');
+                    tdAbsent.textContent = absentDays;
+                    tdAbsent.style.color = absentDays > 0 ? '#ef4444' : '#10b981';
+                    tdAbsent.style.fontWeight = 'bold';
+                    row.appendChild(tdAbsent);
+                    
+                    // Fine Rate
+                    const tdRate = document.createElement('td');
+                    tdRate.textContent = '₹' + fineRate + ' per day';
+                    row.appendChild(tdRate);
+                    
+                    // Total Fine
+                    const tdFine = document.createElement('td');
+                    tdFine.textContent = '₹' + calculatedFine;
+                    tdFine.style.color = calculatedFine > 0 ? '#ef4444' : '#10b981';
+                    tdFine.style.fontWeight = 'bold';
+                    row.appendChild(tdFine);
+                    
+                    tbody.appendChild(row);
+                }
+                
+                table.appendChild(tbody);
+                previewContent.appendChild(table);
+                
+                // Add summary
+                const summaryCard = document.createElement('div');
+                summaryCard.className = 'data-summary-card';
+                summaryCard.innerHTML = `
+                    <h4>💰 Fine Summary</h4>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Students:</span>
+                        <span class="summary-value">${jsonData.length - 1}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Absent Days:</span>
+                        <span class="summary-value" style="color: #ef4444;">${totalAbsentDays}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Fine Rate:</span>
+                        <span class="summary-value">₹${fineRate} per day</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Fine Amount:</span>
+                        <span class="summary-value" style="color: #ef4444; font-size: 1.2rem;">₹${totalFine}</span>
+                    </div>
+                `;
+                previewContent.insertBefore(summaryCard, table);
+                
+                // Show modal
+                document.getElementById('enhancedPreviewModal').style.display = 'flex';
+                showMessage('', '');
+                showToast('Fine calculations loaded successfully!', 'success');
+                
+            } catch (error) {
+                showToast('Error loading fine calculations: ' + error.message, 'error');
+                showMessage('', '');
+            }
+        }
+
+        // Delete all attendance data (Reset to Present and ₹0 Fine)
+        function deleteAllAttendanceData() {
+            if (!currentExcelData) {
+                showToast('No Excel file loaded!', 'warning');
+                return;
+            }
+
+            if (!confirm('⚠️ WARNING: This will reset ALL attendance data!\n\nAll students will be marked as PRESENT for all dates.\nAll fines will be set to ₹0.\n\nThis action cannot be undone.\n\nEnter admin code to confirm:')) {
+                return;
+            }
+
+            const adminCode = prompt('Enter admin code to confirm:');
+            if (adminCode !== ADMIN_CODE) {
+                showToast('Invalid admin code! Operation cancelled.', 'error');
+                return;
+            }
+
+            showMessage('Resetting all attendance data...', 'warning');
+            
+            try {
+                const sheet = currentExcelData.Sheets[currentExcelData.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                
+                if (jsonData.length === 0) {
+                    showToast('No data to reset!', 'warning');
+                    showMessage('', '');
+                    return;
+                }
+
+                const headers = jsonData[0];
+                
+                // Reset all attendance and fines
+                for (let i = 1; i < jsonData.length; i++) {
+                    const row = jsonData[i];
+                    
+                    // Reset attendance for all dates
+                    for (let j = 0; j < headers.length; j++) {
+                        if (headers[j] && typeof headers[j] === 'string' && headers[j].match(/\d{4}-\d{2}-\d{2}/)) {
+                            row[j] = 'P'; // Mark as Present
+                        }
+                    }
+                    
+                    // Reset fine calculations
+                    const totalAbsentIndex = headers.indexOf('Total Absent Days');
+                    const totalFineIndex = headers.indexOf('Total Fine');
+                    
+                    if (totalAbsentIndex !== -1) {
+                        row[totalAbsentIndex] = 0;
+                    }
+                    if (totalFineIndex !== -1) {
+                        row[totalFineIndex] = 0;
+                    }
+                }
+                
+                // Save updated data
+                const updatedWorksheet = XLSX.utils.aoa_to_sheet(jsonData);
+                currentExcelData.Sheets[currentExcelData.SheetNames[0]] = updatedWorksheet;
+                
+                const fileName = document.getElementById('currentExcelFileNameInfo').textContent;
+                saveExcelFileToStorage(fileName, currentExcelData);
+                
+                // Download updated file
+                XLSX.writeFile(currentExcelData, fileName);
+                
+                showToast('✅ ALL attendance data reset successfully! All students marked as PRESENT, all fines set to ₹0.', 'success');
+                showMessage('', '');
+                
+                // Update statistics
+                updateExcelStats();
+                
+            } catch (error) {
+                showToast('Error resetting attendance data: ' + error.message, 'error');
+                showMessage('', '');
+            }
+        }
+
+        // Show student results integrated with attendance
+        function showStudentResults() {
+            showMessage('Loading student results with attendance...', 'info');
+            
+            Promise.all([
+                database.ref('students').once('value'),
+                database.ref('results').once('value'),
+                currentExcelData ? Promise.resolve(currentExcelData) : Promise.resolve(null)
+            ]).then(([studentsSnap, resultsSnap, excelData]) => {
+                const students = studentsSnap.val();
+                const results = resultsSnap.val();
+                
+                if (!students && !results) {
+                    showToast('No student or result data found!', 'warning');
+                    showMessage('', '');
+                    return;
+                }
+
+                const previewContent = document.getElementById('enhancedPreviewContent');
+                previewContent.innerHTML = '';
+                
+                // Set title
+                document.getElementById('previewTitle').textContent = '📝 STUDENT RESULTS WITH ATTENDANCE';
+                
+                // Get attendance data from Excel if available
+                let attendanceData = {};
+                if (excelData) {
+                    try {
+                        const sheet = excelData.Sheets[excelData.SheetNames[0]];
+                        const jsonData = XLSX.utils.sheet_to_json(sheet);
+                        
+                        jsonData.forEach(row => {
+                            if (row['Roll No']) {
+                                attendanceData[row['Roll No']] = {
+                                    totalAbsentDays: row['Total Absent Days'] || 0,
+                                    totalFine: row['Total Fine'] || 0
+                                };
+                            }
+                        });
+                    } catch (e) {
+                        console.error('Error reading attendance data:', e);
+                    }
+                }
+                
+                // Group results by student
+                const studentResults = {};
+                if (results) {
+                    Object.values(results).forEach(result => {
+                        if (!studentResults[result.studentRoll]) {
+                            studentResults[result.studentRoll] = [];
+                        }
+                        studentResults[result.studentRoll].push(result);
+                    });
+                }
+                
+                // Create summary card
+                const summaryCard = document.createElement('div');
+                summaryCard.className = 'data-summary-card';
+                summaryCard.innerHTML = `
+                    <h4>📊 Results Summary</h4>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Students:</span>
+                        <span class="summary-value">${students ? Object.keys(students).length : 0}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Students with Results:</span>
+                        <span class="summary-value">${Object.keys(studentResults).length}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Results:</span>
+                        <span class="summary-value">${results ? Object.keys(results).length : 0}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Attendance Data:</span>
+                        <span class="summary-value">${excelData ? 'Available' : 'Not Available'}</span>
+                    </div>
+                `;
+                previewContent.appendChild(summaryCard);
+                
+                // Create container for student cards
+                const studentsGrid = document.createElement('div');
+                studentsGrid.className = 'results-grid';
+                studentsGrid.style.marginTop = '20px';
+                
+                // Create cards for each student
+                Object.values(students || {}).forEach(student => {
+                    const studentCard = document.createElement('div');
+                    studentCard.className = 'result-card';
+                    
+                    const studentResultsList = studentResults[student.rollNumber] || [];
+                    const attendanceInfo = attendanceData[student.rollNumber] || { totalAbsentDays: 0, totalFine: 0 };
+                    
+                    let resultsHTML = '';
+                    if (studentResultsList.length > 0) {
+                        studentResultsList.forEach(result => {
+                            resultsHTML += `
+                                <div class="student-result-info">
+                                    <p><strong>${result.examMonth}</strong></p>
+                                    <p>Nazra: ${result.subjects.nazra.obtained}/${result.subjects.nazra.total}</p>
+                                    <p>Kalma: ${result.subjects.kalma.obtained}/${result.subjects.kalma.total}</p>
+                                    <p>Namaz: ${result.subjects.namaz.obtained}/${result.subjects.namaz.total}</p>
+                                    <p>Total: ${result.totalObtained}/${result.overallTotal}</p>
+                                    <p>Percentage: ${result.percentage}%</p>
+                                    <p>Grade: <span class="grade-badge grade-${result.grade.charAt(0).toLowerCase()}">${result.grade}</span></p>
+                                    <p>Fine: ₹${result.fine || 0}</p>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        resultsHTML = '<div class="student-result-info"><p>No results yet</p></div>';
+                    }
+                    
+                    studentCard.innerHTML = `
+                        <h3>${student.name}</h3>
+                        <p><strong>Roll No:</strong> ${student.rollNumber}</p>
+                        <p><strong>Class:</strong> ${student.class}</p>
+                        
+                        <div style="margin: 15px 0; padding: 12px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px; border: 1px solid #f59e0b;">
+                            <h4 style="color: #92400e; margin-bottom: 8px;">💰 Attendance & Fine</h4>
+                            <p><strong>Absent Days:</strong> ${attendanceInfo.totalAbsentDays}</p>
+                            <p><strong>Total Fine:</strong> ₹${attendanceInfo.totalFine}</p>
+                        </div>
+                        
+                        <div style="margin: 15px 0; padding: 12px; background: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%); border-radius: 8px; border: 1px solid #c4b5fd;">
+                            <h4 style="color: #4b0082; margin-bottom: 8px;">📚 Exam Results (${studentResultsList.length})</h4>
+                            ${resultsHTML}
+                        </div>
+                    `;
+                    
+                    studentsGrid.appendChild(studentCard);
+                });
+                
+                previewContent.appendChild(studentsGrid);
+                
+                // Show modal
+                document.getElementById('enhancedPreviewModal').style.display = 'flex';
+                showMessage('', '');
+                showToast('Student results with attendance loaded successfully!', 'success');
+                
+            }).catch(error => {
+                showToast('Error loading student results: ' + error.message, 'error');
+                showMessage('', '');
+            });
+        }
+
+        // Close enhanced preview modal
+        function closeEnhancedPreview() {
+            document.getElementById('enhancedPreviewModal').style.display = 'none';
+            document.getElementById('enhancedPreviewContent').innerHTML = '';
+        }
+
         // Update subject total display
         function updateSubjectTotal(subject) {
             const totalInput = document.getElementById(subject + 'Total');
@@ -2114,11 +3525,7 @@
             
             const total = parseInt(totalInput.value) || 100;
             totalDisplay.textContent = total;
-            
-            // Update marks input max value
             marksInput.max = total;
-            
-            // Calculate total
             calculateTotal();
         }
 
@@ -2141,7 +3548,6 @@
                 const percentage = ((totalObtained / overallTotal) * 100).toFixed(2);
                 document.getElementById('percentage').value = percentage + '%';
                 
-                // Auto assign grade based on percentage
                 if (percentage >= 90) document.getElementById('grade').value = 'A+';
                 else if (percentage >= 80) document.getElementById('grade').value = 'A';
                 else if (percentage >= 70) document.getElementById('grade').value = 'B';
@@ -2190,7 +3596,7 @@
 
         // Delete individual student
         function deleteStudent(rollNumber, event) {
-            event.stopPropagation(); // Prevent selecting the student
+            event.stopPropagation();
             
             if (!confirm(`Are you sure you want to delete student with Roll Number: ${rollNumber}? This will also delete all their results!`)) {
                 return;
@@ -2202,10 +3608,8 @@
                 return;
             }
             
-            // Delete student
             database.ref('students/' + rollNumber).remove()
                 .then(() => {
-                    // Delete all results for this student
                     return database.ref('results').once('value')
                         .then(snapshot => {
                             const updates = {};
@@ -2247,25 +3651,20 @@
         async function selectStudent(student) {
             selectedStudentId = student.rollNumber;
             
-            // Update selected student UI
             document.querySelectorAll('.student-item').forEach(item => {
                 item.classList.remove('selected');
             });
             event.target.closest('.student-item').classList.add('selected');
             
-            // Fill form fields
             document.getElementById('resultStudentRoll').value = student.rollNumber;
             document.getElementById('resultStudentName').value = student.name;
             document.getElementById('selectedStudentName').textContent = student.name;
             
-            // Reset marks
             document.getElementById('nazraMarks').value = '';
             document.getElementById('kalmaMarks').value = '';
             document.getElementById('namazMarks').value = '';
             
             calculateTotal();
-            
-            // Calculate and show fine information
             await calculateAndShowFine(student.rollNumber);
             
             showToast(`Selected student: ${student.name}`, 'success');
@@ -2278,7 +3677,6 @@
             const examDate = new Date(`${examMonth} 1, ${currentYear}`);
             const examMonthNum = examDate.getMonth() + 1;
             
-            // Get attendance for this month from Excel file
             let absentDays = 0;
             
             if (currentExcelData) {
@@ -2289,7 +3687,6 @@
                 
                 jsonData.forEach(row => {
                     if (row['Roll No'] && row['Roll No'].toString() === studentRoll.toString()) {
-                        // Check each day of the month
                         for (let day = 1; day <= 31; day++) {
                             const dateStr = `${currentYear}-${currentMonth}-${day.toString().padStart(2, '0')}`;
                             if (row[dateStr] && (row[dateStr] === 'A' || row[dateStr] === 'Absent' || row[dateStr] === 'absent')) {
@@ -2300,10 +3697,7 @@
                 });
             }
             
-            // Calculate fine: ₹10 per absent day
             const totalFine = absentDays * 10;
-            
-            // Show fine information
             const fineInfoDiv = document.getElementById('fineInfoInAdd');
             if (absentDays > 0) {
                 document.getElementById('absentDaysCount').textContent = absentDays;
@@ -2314,7 +3708,7 @@
             }
         }
 
-        // Add result with fine calculation for absent students
+        // Add result with fine calculation
         async function addResult() {
             if (!selectedStudentId) {
                 showToast('Please select a student first!', 'error');
@@ -2335,19 +3729,16 @@
             const grade = document.getElementById('grade').value;
             const percentage = document.getElementById('percentage').value.replace('%', '');
             
-            // Validate marks
             if (nazraMarks > nazraTotal || kalmaMarks > kalmaTotal || namazMarks > namazTotal) {
                 showToast('Obtained marks cannot exceed total marks!', 'error');
                 return;
             }
             
-            // Check if marks are entered
             if (!nazraMarks && !kalmaMarks && !namazMarks) {
                 showToast('Please enter marks for at least one subject!', 'error');
                 return;
             }
             
-            // Calculate fine based on attendance from Excel file
             let totalFine = 0;
             let absentDays = 0;
             const currentYear = new Date().getFullYear();
@@ -2362,7 +3753,6 @@
                 
                 jsonData.forEach(row => {
                     if (row['Roll No'] && row['Roll No'].toString() === studentRoll.toString()) {
-                        // Check each day of the month
                         for (let day = 1; day <= 31; day++) {
                             const dateStr = `${currentYear}-${currentMonth}-${day.toString().padStart(2, '0')}`;
                             if (row[dateStr] && (row[dateStr] === 'A' || row[dateStr] === 'Absent' || row[dateStr] === 'absent')) {
@@ -2372,7 +3762,6 @@
                     }
                 });
                 
-                // Calculate fine: ₹10 per absent day
                 totalFine = absentDays * 10;
             }
             
@@ -2401,13 +3790,11 @@
                 .then(() => {
                     showToast('Result saved successfully!', 'success');
                     
-                    // Reset form
                     document.getElementById('nazraMarks').value = '';
                     document.getElementById('kalmaMarks').value = '';
                     document.getElementById('namazMarks').value = '';
                     document.getElementById('fineInfoInAdd').style.display = 'none';
                     
-                    // Clear selected student
                     selectedStudentId = null;
                     document.querySelectorAll('.student-item').forEach(item => {
                         item.classList.remove('selected');
@@ -2416,8 +3803,6 @@
                     document.getElementById('resultStudentName').value = '';
                     document.getElementById('selectedStudentName').textContent = '[Select Student]';
                     
-                    // Do NOT move to check results page - stay on same page
-                    // Just reload the student list
                     loadStudentList();
                     
                 })
@@ -2437,7 +3822,6 @@
                 return;
             }
             
-            // Check if roll number already exists
             database.ref('students').once('value', snapshot => {
                 const students = snapshot.val();
                 let rollExists = false;
@@ -2467,11 +3851,9 @@
                     .then(() => {
                         showToast(`Student ${name} registered successfully with Roll Number: ${rollNumber}`, 'success');
                         
-                        // Clear form
                         document.getElementById('studentRoll').value = '';
                         document.getElementById('studentName').value = '';
                         
-                        // Refresh student lists
                         loadAllStudents();
                         loadStudentList();
                         loadAllStudentsTable();
@@ -2535,10 +3917,8 @@
                 return;
             }
             
-            // Delete student
             database.ref('students/' + rollNumber).remove()
                 .then(() => {
-                    // Delete all results for this student
                     return database.ref('results').once('value')
                         .then(snapshot => {
                             const updates = {};
@@ -2569,12 +3949,9 @@
             if (savedFileInfo) {
                 try {
                     const fileInfo = JSON.parse(savedFileInfo);
-                    
-                    // Update file info on Excel Management page
                     document.getElementById('currentExcelFileNameInfo').textContent = fileInfo.name || 'No file uploaded';
                     document.getElementById('excelLastUpdatedInfo').textContent = fileInfo.lastUpdated || 'Never';
                     
-                    // Try to load the file data if available
                     const fileData = localStorage.getItem('mudrasaExcelFileData');
                     if (fileData) {
                         currentExcelData = JSON.parse(fileData);
@@ -2596,27 +3973,20 @@
             
             localStorage.setItem('mudrasaExcelFileInfo', JSON.stringify(fileInfo));
             localStorage.setItem('mudrasaExcelFileData', JSON.stringify(fileData));
-            
-            // Update UI
             updateExcelFileInfo(fileInfo, fileData);
         }
 
         // Update Excel file information in UI
         function updateExcelFileInfo(fileInfo, fileData) {
-            // Update Excel Management page
             document.getElementById('currentExcelFileNameInfo').textContent = fileInfo.name || 'No file uploaded';
             document.getElementById('excelLastUpdatedInfo').textContent = fileInfo.lastUpdated || 'Never';
             
-            // Calculate file size
             const fileSize = JSON.stringify(fileData).length;
             const sizeInKB = (fileSize / 1024).toFixed(2);
             document.getElementById('excelFileSize').textContent = sizeInKB + ' KB';
             
-            // Update status
             document.getElementById('excelFileStatus').textContent = 'Loaded';
             document.getElementById('excelFileStatus').style.color = '#10b981';
-            
-            // Update statistics
             updateExcelStats();
         }
 
@@ -2636,17 +4006,15 @@
                     return;
                 }
                 
-                // Calculate statistics
                 const headers = jsonData[0];
                 const dateColumns = headers.filter(h => h && typeof h === 'string' && h.match(/\d{4}-\d{2}-\d{2}/));
                 
                 let totalAbsent = 0;
                 let totalFine = 0;
                 
-                // Count absent days and calculate fines
                 for (let i = 1; i < jsonData.length; i++) {
                     const row = jsonData[i];
-                    if (row && row[0]) { // If row has roll number
+                    if (row && row[0]) {
                         for (let j = 0; j < dateColumns.length; j++) {
                             const cellValue = row[headers.indexOf(dateColumns[j])];
                             if (cellValue === 'A' || cellValue === 'Absent' || cellValue === 'absent') {
@@ -2656,17 +4024,14 @@
                     }
                 }
                 
-                // Calculate fine based on current fine rate
                 const fineRate = parseInt(document.getElementById('fineRate').value) || 10;
                 totalFine = totalAbsent * fineRate;
                 
-                // Update stats
                 excelStats.totalStudents = Math.max(0, jsonData.length - 1);
                 excelStats.totalDays = dateColumns.length;
                 excelStats.totalAbsent = totalAbsent;
                 excelStats.totalFine = totalFine;
                 
-                // Update UI
                 document.getElementById('totalStudentsStat').textContent = excelStats.totalStudents;
                 document.getElementById('totalDaysStat').textContent = excelStats.totalDays;
                 document.getElementById('totalAbsentStat').textContent = excelStats.totalAbsent;
@@ -2704,7 +4069,7 @@
             }
             
             updateExcelStats();
-            showDataPreview();
+            showMobileExcelPreview();
             showToast('Excel data refreshed successfully!', 'success');
         }
 
@@ -2725,22 +4090,13 @@
                     const data = new Uint8Array(e.target.result);
                     const workbook = XLSX.read(data, { type: 'array' });
                     
-                    // Store the workbook data
                     currentExcelFile = file;
                     currentExcelData = workbook;
-                    
-                    // Save to local storage
                     saveExcelFileToStorage(file.name, workbook);
                     
                     showToast(`Excel file "${file.name}" uploaded successfully!`, 'success');
-                    
-                    // Update fine summary
                     updateFineSummary();
-                    
-                    // Show data preview
-                    showDataPreview();
-                    
-                    // Clear file input
+                    showMobileExcelPreview();
                     fileInput.value = '';
                     
                 } catch (error) {
@@ -2766,28 +4122,20 @@
                 return;
             }
             
-            // Ask for admin code for security
             const adminCode = prompt('Enter admin code to confirm deletion:');
             if (adminCode !== ADMIN_CODE) {
                 showToast('Invalid admin code! Deletion cancelled.', 'error');
                 return;
             }
             
-            // Clear file input
             document.getElementById('excelFile').value = '';
-            
-            // Clear stored data
             localStorage.removeItem('mudrasaExcelFileInfo');
             localStorage.removeItem('mudrasaExcelFileData');
             
-            // Reset variables
             currentExcelFile = null;
             currentExcelData = null;
-            
-            // Reset UI
             resetExcelStats();
             
-            // Clear data preview
             document.getElementById('dataPreview').innerHTML = '';
             document.getElementById('dataPreview').style.display = 'none';
             
@@ -2796,13 +4144,9 @@
 
         // Download Excel template
         function downloadTemplate() {
-            // Create a new workbook
             const workbook = XLSX.utils.book_new();
-            
-            // Create header row
             const headers = ['Roll No', 'Name', 'Class'];
             
-            // Add dates for current month
             const today = new Date();
             const currentYear = today.getFullYear();
             const currentMonth = today.getMonth() + 1;
@@ -2813,13 +4157,10 @@
                 headers.push(dateStr);
             }
             
-            // Add fine columns
             headers.push('Total Absent Days', 'Fine Amount (₹10 per day)', 'Total Fine');
             
-            // Create sample data
             const data = [headers];
             
-            // Add sample students
             const sampleStudents = [
                 { rollNo: '101', name: 'Student 1', class: 'Noorani Qayda' },
                 { rollNo: '102', name: 'Student 2', class: 'Separa' },
@@ -2829,24 +4170,17 @@
             sampleStudents.forEach(student => {
                 const row = [student.rollNo, student.name, student.class];
                 
-                // Add empty cells for each day
                 for (let day = 1; day <= daysInMonth; day++) {
-                    row.push(''); // Empty for attendance
+                    row.push('');
                 }
                 
-                // Add empty cells for fine calculations
                 row.push('', '', '');
-                
                 data.push(row);
             });
             
-            // Create worksheet
             const worksheet = XLSX.utils.aoa_to_sheet(data);
-            
-            // Add to workbook
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
             
-            // Generate and download file
             const fileName = `attendance_template_${currentYear}_${currentMonth.toString().padStart(2, '0')}.xlsx`;
             XLSX.writeFile(workbook, fileName);
             
@@ -2885,12 +4219,9 @@
                 }
                 
                 const table = document.createElement('table');
-                
-                // Create header
                 const thead = document.createElement('thead');
                 const headerRow = document.createElement('tr');
                 
-                // Show only first 10 columns for preview
                 const maxColumns = Math.min(10, jsonData[0].length);
                 
                 for (let i = 0; i < maxColumns; i++) {
@@ -2902,10 +4233,7 @@
                 thead.appendChild(headerRow);
                 table.appendChild(thead);
                 
-                // Create body
                 const tbody = document.createElement('tbody');
-                
-                // Show only first 10 rows for preview
                 const maxRows = Math.min(10, jsonData.length - 1);
                 
                 for (let i = 1; i <= maxRows; i++) {
@@ -2923,7 +4251,6 @@
                 table.appendChild(tbody);
                 previewDiv.appendChild(table);
                 
-                // Add info about total rows
                 const totalRows = jsonData.length - 1;
                 const totalColumns = jsonData[0].length;
                 const infoDiv = document.createElement('div');
@@ -2950,7 +4277,7 @@
         function toggleDataPreview() {
             const previewDiv = document.getElementById('dataPreview');
             if (previewDiv.style.display === 'none' || previewDiv.style.display === '') {
-                showDataPreview();
+                showMobileExcelPreview();
             } else {
                 previewDiv.style.display = 'none';
             }
@@ -2979,13 +4306,11 @@
                 const totalAbsentIndex = headers.indexOf('Total Absent Days');
                 const totalFineIndex = headers.indexOf('Total Fine');
                 
-                // Update each row
                 for (let i = 1; i < jsonData.length; i++) {
                     const row = jsonData[i];
                     if (row && row[0]) {
                         let absentDays = 0;
                         
-                        // Count absent days
                         for (let j = 0; j < dateColumns.length; j++) {
                             const cellValue = row[headers.indexOf(dateColumns[j])];
                             if (cellValue === 'A' || cellValue === 'Absent' || cellValue === 'absent') {
@@ -2993,7 +4318,6 @@
                             }
                         }
                         
-                        // Update absent days and fine
                         if (totalAbsentIndex !== -1) {
                             row[totalAbsentIndex] = absentDays;
                         }
@@ -3003,15 +4327,11 @@
                     }
                 }
                 
-                // Convert back to worksheet
                 const updatedWorksheet = XLSX.utils.aoa_to_sheet(jsonData);
                 currentExcelData.Sheets[currentExcelData.SheetNames[0]] = updatedWorksheet;
                 
-                // Save updated file
                 const fileName = document.getElementById('currentExcelFileNameInfo').textContent;
                 saveExcelFileToStorage(fileName, currentExcelData);
-                
-                // Update statistics
                 updateExcelStats();
                 
                 showToast(`Fines calculated successfully! Fine rate: ₹${fineRate} per absent day`, 'success');
@@ -3032,7 +4352,6 @@
             const today = new Date();
             const fileName = `Excel_Summary_${today.toISOString().split('T')[0]}.xlsx`;
             
-            // Create summary sheet
             const summaryData = [
                 ['Excel File Summary Report'],
                 ['Generated on:', today.toLocaleDateString(), today.toLocaleTimeString()],
@@ -3054,18 +4373,15 @@
                 ['Data Preview', 'Showing first 10 rows']
             ];
             
-            // Add sample data
             try {
                 const sheet = currentExcelData.Sheets[currentExcelData.SheetNames[0]];
                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
                 
-                // Add headers
                 const maxColumns = Math.min(10, jsonData[0].length);
                 const headers = jsonData[0].slice(0, maxColumns);
                 summaryData.push([], ['Headers:']);
                 summaryData.push(headers);
                 
-                // Add sample rows
                 const maxRows = Math.min(10, jsonData.length - 1);
                 summaryData.push([], [`First ${maxRows} rows:`]);
                 
@@ -3099,16 +4415,13 @@
                 const sheet = currentExcelData.Sheets[currentExcelData.SheetNames[0]];
                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
                 
-                // Remove empty rows
                 const cleanedData = jsonData.filter(row => {
                     return row && row.some(cell => cell !== null && cell !== '' && cell !== undefined);
                 });
                 
-                // Convert back to worksheet
                 const cleanedWorksheet = XLSX.utils.aoa_to_sheet(cleanedData);
                 currentExcelData.Sheets[currentExcelData.SheetNames[0]] = cleanedWorksheet;
                 
-                // Save cleaned file
                 const fileName = document.getElementById('currentExcelFileNameInfo').textContent;
                 saveExcelFileToStorage(fileName, currentExcelData);
                 
@@ -3148,7 +4461,6 @@
                 
                 const headers = jsonData[0];
                 
-                // Clear attendance columns (date columns)
                 for (let i = 1; i < jsonData.length; i++) {
                     const row = jsonData[i];
                     for (let j = 0; j < headers.length; j++) {
@@ -3158,11 +4470,9 @@
                     }
                 }
                 
-                // Convert back to worksheet
                 const clearedWorksheet = XLSX.utils.aoa_to_sheet(jsonData);
                 currentExcelData.Sheets[currentExcelData.SheetNames[0]] = clearedWorksheet;
                 
-                // Save cleared file
                 const fileName = document.getElementById('currentExcelFileNameInfo').textContent;
                 saveExcelFileToStorage(fileName, currentExcelData);
                 
@@ -3200,7 +4510,6 @@
                 const monthStr = month.toString().padStart(2, '0');
                 const currentYear = new Date().getFullYear();
                 
-                // Filter date columns for the selected month
                 const monthDates = headers.filter(h => 
                     h && typeof h === 'string' && h.startsWith(`${currentYear}-${monthStr}-`)
                 );
@@ -3210,7 +4519,6 @@
                     return;
                 }
                 
-                // Create monthly report
                 const reportData = [
                     [`Monthly Attendance Report - ${new Date(currentYear, month - 1, 1).toLocaleString('default', { month: 'long' })} ${currentYear}`],
                     ['Generated on:', new Date().toLocaleDateString()],
@@ -3218,7 +4526,6 @@
                     ['Roll No', 'Name', 'Class', 'Present Days', 'Absent Days', 'Total Days', 'Attendance %', 'Fine Amount']
                 ];
                 
-                // Calculate for each student
                 for (let i = 1; i < jsonData.length; i++) {
                     const row = jsonData[i];
                     if (row && row[0]) {
@@ -3241,9 +4548,9 @@
                         const fineAmount = absentDays * fineRate;
                         
                         reportData.push([
-                            row[0], // Roll No
-                            row[1] || '', // Name
-                            row[2] || '', // Class
+                            row[0],
+                            row[1] || '',
+                            row[2] || '',
                             presentDays,
                             absentDays,
                             totalDays,
@@ -3253,7 +4560,6 @@
                     }
                 }
                 
-                // Create and download report
                 const workbook = XLSX.utils.book_new();
                 const worksheet = XLSX.utils.aoa_to_sheet(reportData);
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Monthly Report");
@@ -3293,7 +4599,6 @@
                     return;
                 }
                 
-                // Create fine report
                 const reportData = [
                     ['Fine Report - All Students'],
                     ['Generated on:', new Date().toLocaleDateString()],
@@ -3302,7 +4607,6 @@
                     ['Roll No', 'Name', 'Class', 'Total Absent Days', 'Total Fine Amount']
                 ];
                 
-                // Add student data
                 for (let i = 1; i < jsonData.length; i++) {
                     const row = jsonData[i];
                     if (row && row[0]) {
@@ -3311,9 +4615,9 @@
                         
                         if (absentDays > 0) {
                             reportData.push([
-                                row[0], // Roll No
-                                row[1] || '', // Name
-                                row[2] || '', // Class
+                                row[0],
+                                row[1] || '',
+                                row[2] || '',
                                 absentDays,
                                 '₹' + fineAmount
                             ]);
@@ -3321,7 +4625,6 @@
                     }
                 }
                 
-                // Create and download report
                 const workbook = XLSX.utils.book_new();
                 const worksheet = XLSX.utils.aoa_to_sheet(reportData);
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Fine Report");
@@ -3394,7 +4697,6 @@
                         return;
                     }
                     
-                    // Show backup selection
                     let backupList = 'Select backup to restore:\n\n';
                     const backupIds = [];
                     
@@ -3416,12 +4718,10 @@
                     
                     const selectedBackup = backups[backupIds[index]];
                     
-                    // Restore data
                     currentExcelData = JSON.parse(selectedBackup.excelData);
                     localStorage.setItem('mudrasaExcelFileInfo', selectedBackup.fileInfo);
                     localStorage.setItem('mudrasaExcelFileData', selectedBackup.excelData);
                     
-                    // Update UI
                     loadExcelFileFromStorage();
                     showDataPreview();
                     
@@ -3492,7 +4792,6 @@
                     return;
                 }
                 
-                // Get attendance from Excel file for this date
                 const sheet = currentExcelData.Sheets[currentExcelData.SheetNames[0]];
                 const jsonData = XLSX.utils.sheet_to_json(sheet);
                 
@@ -3506,17 +4805,13 @@
                 Object.keys(students).forEach(rollNumber => {
                     const student = students[rollNumber];
                     
-                    // Filter by class if not "all"
                     if (selectedClass !== 'all' && student.class !== selectedClass) {
                         return;
                     }
                     
                     totalCount++;
                     
-                    // Check attendance from Excel file
-                    let isPresent = true; // Default to present
-                    
-                    // Find student in Excel data
+                    let isPresent = true;
                     const excelRecord = jsonData.find(row => row['Roll No'] && row['Roll No'].toString() === rollNumber.toString());
                     if (excelRecord && excelRecord[date]) {
                         const status = excelRecord[date];
@@ -3549,15 +4844,12 @@
                     attendanceList.appendChild(attendanceCard);
                 });
                 
-                // Update counters
                 document.getElementById('presentCount').textContent = presentCount;
                 document.getElementById('absentCount').textContent = absentCount;
                 document.getElementById('totalCount').textContent = totalCount;
                 
                 showMessage('', '');
                 showToast(`Loaded ${totalCount} students for attendance`, 'success');
-                
-                // Update fine summary
                 updateFineSummary();
             });
         }
@@ -3570,7 +4862,6 @@
             if (card) {
                 card.className = `attendance-card ${status}`;
                 
-                // Update button states
                 const presentBtn = card.querySelector('.present-btn');
                 const absentBtn = card.querySelector('.absent-btn');
                 
@@ -3642,7 +4933,6 @@
             
             const monthlyData = {};
             
-            // Initialize monthly data
             for (let m = 1; m <= 12; m++) {
                 monthlyData[m] = {
                     month: new Date(currentYear, m - 1, 1).toLocaleString('default', { month: 'long' }),
@@ -3653,12 +4943,10 @@
             
             jsonData.forEach(row => {
                 if (row['Roll No']) {
-                    // Check each month
                     for (let month = 1; month <= 12; month++) {
                         let monthAbsentDays = 0;
                         const monthStr = month.toString().padStart(2, '0');
                         
-                        // Check each day of the month
                         for (let day = 1; day <= 31; day++) {
                             const dateStr = `${currentYear}-${monthStr}-${day.toString().padStart(2, '0')}`;
                             if (row[dateStr] && (row[dateStr] === 'A' || row[dateStr] === 'Absent' || row[dateStr] === 'absent')) {
@@ -3673,14 +4961,11 @@
                 }
             });
             
-            // Calculate total fine amount
             totalFineAmount = totalAbsentDays * 10;
             
-            // Update display
             document.getElementById('totalAbsentDays').textContent = totalAbsentDays;
             document.getElementById('totalFineAmount').textContent = totalFineAmount;
             
-            // Update monthly details
             const monthlyContainer = document.getElementById('monthlyFineDetails');
             monthlyContainer.innerHTML = '';
             
@@ -3719,23 +5004,17 @@
                 return;
             }
             
-            // Get the first sheet
             const sheetName = currentExcelData.SheetNames[0];
             const sheet = currentExcelData.Sheets[sheetName];
-            
-            // Convert to JSON
             const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
             
-            // Find header row
             const headerRow = jsonData[0];
             const dateColumnIndex = headerRow.indexOf(date);
             
             if (dateColumnIndex === -1) {
-                // Date column doesn't exist, add it
                 headerRow.push(date);
             }
             
-            // Update attendance for each student
             for (let i = 1; i < jsonData.length; i++) {
                 const row = jsonData[i];
                 const rollNumber = row[0] ? row[0].toString() : '';
@@ -3744,35 +5023,25 @@
                     const status = attendanceStatus[rollNumber] === 'present' ? 'P' : 'A';
                     
                     if (dateColumnIndex === -1) {
-                        // New date column
                         row.push(status);
                     } else {
-                        // Existing date column
                         row[dateColumnIndex] = status;
                     }
                     
-                    // Update absent days and fine calculations
                     updateFineCalculations(row, headerRow);
                 }
             }
             
-            // Convert back to worksheet
             const updatedWorksheet = XLSX.utils.aoa_to_sheet(jsonData);
             currentExcelData.Sheets[sheetName] = updatedWorksheet;
             
-            // Save updated file
             const fileName = document.getElementById('currentExcelFileNameInfo').textContent;
             saveExcelFileToStorage(fileName, currentExcelData);
             
-            // Download updated file
             XLSX.writeFile(currentExcelData, fileName);
             
             showToast(`Attendance saved to ${fileName}`, 'success');
-            
-            // Update fine summary
             updateFineSummary();
-            
-            // Update Excel management stats
             updateExcelStats();
         }
 
@@ -3783,7 +5052,6 @@
             const totalFineIndex = headerRow.indexOf('Total Fine');
             
             if (totalAbsentIndex === -1 || finePerDayIndex === -1 || totalFineIndex === -1) {
-                // Fine columns don't exist, add them
                 if (totalAbsentIndex === -1) {
                     headerRow.push('Total Absent Days');
                     row.push(0);
@@ -3797,12 +5065,10 @@
                     row.push(0);
                 }
                 
-                // Re-find indices
                 const newTotalAbsentIndex = headerRow.indexOf('Total Absent Days');
                 const newFinePerDayIndex = headerRow.indexOf('Fine Amount (₹10 per day)');
                 const newTotalFineIndex = headerRow.indexOf('Total Fine');
                 
-                // Calculate absent days
                 let absentDays = 0;
                 for (let i = 3; i < newTotalAbsentIndex; i++) {
                     if (headerRow[i] && row[i] && (row[i] === 'A' || row[i] === 'Absent' || row[i] === 'absent')) {
@@ -3813,7 +5079,6 @@
                 row[newTotalAbsentIndex] = absentDays;
                 row[newTotalFineIndex] = absentDays * 10;
             } else {
-                // Calculate absent days
                 let absentDays = 0;
                 for (let i = 3; i < totalAbsentIndex; i++) {
                     if (headerRow[i] && row[i] && (row[i] === 'A' || row[i] === 'Absent' || row[i] === 'absent')) {
@@ -3826,7 +5091,7 @@
             }
         }
 
-        // ==================== REST OF THE FUNCTIONS (Results, Positions, etc.) ====================
+        // ==================== REST OF THE FUNCTIONS ====================
 
         // Load class positions from database
         function loadClassPositions() {
@@ -3869,7 +5134,6 @@
                     return;
                 }
                 
-                // Filter results by month
                 const monthlyResults = [];
                 Object.values(results).forEach(result => {
                     if (result.examMonth === examMonth) {
@@ -3882,7 +5146,6 @@
                     return;
                 }
                 
-                // Load saved positions for this month
                 database.ref('classPositions/' + examMonth).once('value', posSnapshot => {
                     const savedPositions = posSnapshot.val();
                     let savedClassPositions = {
@@ -3897,7 +5160,6 @@
                     
                     positionDiv.innerHTML = '';
                     
-                    // Create position selection for Separa class
                     const separaResults = monthlyResults.filter(result => {
                         const studentClass = getStudentClass(result.studentRoll);
                         return studentClass === 'Separa';
@@ -3930,7 +5192,6 @@
                     `;
                     positionDiv.appendChild(separaCard);
                     
-                    // Create position selection for Noorani Qayda class
                     const nooraniResults = monthlyResults.filter(result => {
                         const studentClass = getStudentClass(result.studentRoll);
                         return studentClass === 'Noorani Qayda';
@@ -4009,21 +5270,14 @@
                     return;
                 }
                 
-                // Sort by date (newest first)
                 foundResults.sort((a, b) => b.timestamp - a.timestamp);
-                
-                // Show only latest result to public
                 const latestResult = foundResults[0];
-                
-                // Get student class
                 const studentClass = getStudentClass(latestResult.studentRoll);
                 
-                // Load positions for display
                 database.ref('classPositions').once('value', posSnapshot => {
                     const positions = posSnapshot.val();
                     let position = null;
                     
-                    // Check if student has position in their class
                     if (positions && positions[latestResult.examMonth] && positions[latestResult.examMonth].positions) {
                         const classPos = positions[latestResult.examMonth].positions[studentClass];
                         if (classPos) {
@@ -4035,7 +5289,6 @@
                     
                     displayResultCard(latestResult, position, studentClass);
                     
-                    // Show message that only latest result is shown
                     if (foundResults.length > 1) {
                         const infoCard = document.createElement('div');
                         infoCard.className = 'result-card';
@@ -4057,7 +5310,6 @@
             const resultsDiv = document.getElementById('searchResults');
             const gradeClass = `grade-${result.grade.charAt(0).toLowerCase()}`;
             
-            // Create position badge if student has position (on RIGHT side)
             let positionBadge = '';
             if (position) {
                 let positionText = '';
@@ -4077,7 +5329,6 @@
                 `;
             }
             
-            // Create fine information if any
             let fineInfo = '';
             if (result.fine && result.fine > 0) {
                 fineInfo = `
@@ -4151,7 +5402,6 @@
                 const workbook = XLSX.utils.book_new();
                 const fileName = `Mudrasa_Students_${new Date().toISOString().split('T')[0]}.xlsx`;
                 
-                // Export Students sheet
                 const studentsData = [];
                 studentsData.push(['Roll Number', 'Name', 'Class', 'Status', 'Date Added']);
                 
@@ -4194,7 +5444,6 @@
                 const workbook = XLSX.utils.book_new();
                 const fileName = `Mudrasa_Results_${new Date().toISOString().split('T')[0]}.xlsx`;
                 
-                // Export Results sheet
                 const resultsData = [];
                 resultsData.push(['Roll No', 'Name', 'Month', 'Nazra', 'Kalma', 'Namaz', 'Total', 'Percentage', 'Grade', 'Fine', 'Absent Days', 'Date']);
                 
@@ -4248,14 +5497,12 @@
                 const workbook = XLSX.utils.book_new();
                 const fileName = `Mudrasa_Attendance_${new Date().toISOString().split('T')[0]}.xlsx`;
                 
-                // Export Attendance sheet
                 const attendanceData = [];
                 attendanceData.push(['Date', 'Class', 'Roll No', 'Name', 'Status']);
                 
                 Object.keys(attendance).forEach(attendanceId => {
                     const record = attendance[attendanceId];
                     Object.keys(record.students || {}).forEach(rollNumber => {
-                        // Find student name
                         let studentName = '';
                         if (students && students[rollNumber]) {
                             studentName = students[rollNumber].name;
@@ -4305,7 +5552,6 @@
                 const workbook = XLSX.utils.book_new();
                 const fileName = `Mudrasa_Positions_${new Date().toISOString().split('T')[0]}.xlsx`;
                 
-                // Export Positions sheet
                 const positionsData = [];
                 positionsData.push(['Month', 'Class', 'Position', 'Roll No', 'Name', 'Percentage']);
                 
@@ -4315,13 +5561,11 @@
                         const pos = classPos[className];
                         for (let i = 1; i <= 3; i++) {
                             if (pos[i]) {
-                                // Find student name
                                 let studentName = '';
                                 if (students && students[pos[i]]) {
                                     studentName = students[pos[i]].name;
                                 }
                                 
-                                // Find percentage
                                 let percentage = '';
                                 if (results) {
                                     Object.values(results).forEach(result => {
@@ -4361,7 +5605,7 @@
             });
         }
 
-        // Export All Data to Excel (Single File with Multiple Sheets)
+        // Export All Data to Excel
         function exportAllToExcel() {
             showMessage('Preparing all data for export...', 'info');
             
@@ -4385,7 +5629,6 @@
                 const workbook = XLSX.utils.book_new();
                 const fileName = `Mudrasa_All_Data_${new Date().toISOString().split('T')[0]}.xlsx`;
                 
-                // Export Students sheet
                 if (students) {
                     const studentsData = [];
                     studentsData.push(['Roll Number', 'Name', 'Class', 'Status', 'Date Added']);
@@ -4405,7 +5648,6 @@
                     XLSX.utils.book_append_sheet(workbook, studentsSheet, "Students");
                 }
                 
-                // Export Results sheet
                 if (results) {
                     const resultsData = [];
                     resultsData.push(['Roll No', 'Name', 'Month', 'Nazra', 'Kalma', 'Namaz', 'Total', 'Percentage', 'Grade', 'Fine', 'Absent Days', 'Date']);
@@ -4432,7 +5674,6 @@
                     XLSX.utils.book_append_sheet(workbook, resultsSheet, "Results");
                 }
                 
-                // Export Attendance sheet
                 if (attendance) {
                     const attendanceData = [];
                     attendanceData.push(['Date', 'Class', 'Roll No', 'Name', 'Status']);
@@ -4440,7 +5681,6 @@
                     Object.keys(attendance).forEach(attendanceId => {
                         const record = attendance[attendanceId];
                         Object.keys(record.students || {}).forEach(rollNumber => {
-                            // Find student name
                             let studentName = '';
                             if (students && students[rollNumber]) {
                                 studentName = students[rollNumber].name;
@@ -4460,7 +5700,6 @@
                     XLSX.utils.book_append_sheet(workbook, attendanceSheet, "Attendance");
                 }
                 
-                // Export Positions sheet
                 if (positions) {
                     const positionsData = [];
                     positionsData.push(['Month', 'Class', 'Position', 'Roll No', 'Name', 'Percentage']);
@@ -4471,13 +5710,11 @@
                             const pos = classPos[className];
                             for (let i = 1; i <= 3; i++) {
                                 if (pos[i]) {
-                                    // Find student name
                                     let studentName = '';
                                     if (students && students[pos[i]]) {
                                         studentName = students[pos[i]].name;
                                     }
                                     
-                                    // Find percentage
                                     let percentage = '';
                                     if (results) {
                                         Object.values(results).forEach(result => {
@@ -4638,13 +5875,11 @@
                 database.ref('classPositions').remove(),
                 database.ref('excelBackups').remove()
             ]).then(() => {
-                // Also clear localStorage
                 localStorage.removeItem('mudrasaExcelFileInfo');
                 localStorage.removeItem('mudrasaExcelFileData');
                 localStorage.removeItem('mudrasaAdminCode');
                 localStorage.removeItem('mudrasaAdminLoggedIn');
                 
-                // Reset variables
                 currentExcelFile = null;
                 currentExcelData = null;
                 
