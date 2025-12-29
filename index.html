@@ -87,6 +87,7 @@
         .position-1 { background: var(--gold); color: #856404; }
         .position-2 { background: var(--silver); color: #495057; }
         .position-3 { background: var(--bronze); color: white; }
+        .position-pass { background: #d4edda; color: #155724; }
         .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
         .marks-table th { background: #f8f9fa; padding: 10px; text-align: left; color: var(--primary); font-weight: 600; }
         .marks-table td { padding: 10px; border-bottom: 1px solid #eee; }
@@ -230,6 +231,17 @@
                 </div>
                 
                 <div class="prayer-message urdu">نماز کی پابندی رکھیں۔</div>
+                
+                <!-- DELETE THIS RESULT BUTTON (ADMIN ONLY) -->
+                <div id="deleteResultSection" class="hidden mt-3">
+                    <div class="alert alert-danger">
+                        <i class="fas fa-trash"></i>
+                        <strong>Admin Action:</strong> Delete this result
+                    </div>
+                    <button id="deleteThisResultBtn" class="btn btn-danger btn-block">
+                        <i class="fas fa-trash-alt"></i> Delete This Result from Firebase
+                    </button>
+                </div>
             </div>
             
             <!-- Loading & Error -->
@@ -317,6 +329,10 @@
             <!-- Enter Marks -->
             <div id="enterMarks" class="tab-content">
                 <h3 class="card-title">Enter Marks & Positions</h3>
+                <div class="alert alert-info mb-3">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Note:</strong> Leave positions as "Auto" for automatic calculation based on total marks
+                </div>
                 <select id="marksClass" class="form-control mb-3">
                     <option value="all">All Classes</option>
                     <option value="Separa">Separa</option>
@@ -324,6 +340,9 @@
                 </select>
                 <div id="marksEntryContainer" class="student-list-container"></div>
                 <button id="saveAllMarksBtn" class="btn btn-success mt-3">Save All Marks & Positions</button>
+                <button id="autoCalculatePositionsBtn" class="btn btn-primary mt-2">
+                    <i class="fas fa-calculator"></i> Auto-Calculate Positions
+                </button>
             </div>
             
             <!-- Manage Fines -->
@@ -370,6 +389,17 @@
                             <button id="deleteStudentBtn" class="btn btn-danger btn-block">Delete Student</button>
                         </div>
                     </div>
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label class="form-label">Delete All Results Only</label>
+                    <div class="alert alert-danger">
+                        <i class="fas fa-file-alt"></i>
+                        <strong>DANGER:</strong> This will delete ALL RESULTS (marks, positions, fines) but keep student info!
+                    </div>
+                    <button id="deleteAllResultsBtn" class="btn btn-danger btn-block">
+                        <i class="fas fa-trash"></i> Delete ALL Results Only
+                    </button>
                 </div>
                 
                 <div class="form-group mt-3">
@@ -434,6 +464,16 @@
                     <option value="Separa">Separa</option>
                     <option value="Noorani Qayda">Noorani Qayda</option>
                 </select>
+                
+                <!-- DELETE ALL RESULTS BUTTON -->
+                <div class="alert alert-danger mb-3">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Delete All Results:</strong> This will clear marks, positions, and fines for ALL students
+                    <button id="deleteAllResultsFromViewBtn" class="btn btn-danger btn-block mt-2">
+                        <i class="fas fa-trash"></i> Delete ALL Results
+                    </button>
+                </div>
+                
                 <table class="data-table">
                     <thead><tr><th>Pos</th><th>Roll</th><th>Name</th><th>Class</th><th>Marks</th><th>Status</th><th>Fine</th><th>View</th><th>Delete</th></tr></thead>
                     <tbody id="allResultsTable"></tbody>
@@ -500,6 +540,16 @@
             loginBtn.addEventListener('click', handleAdminLogin);
             cancelLoginBtn.addEventListener('click', hideAdminLogin);
             logoutBtn.addEventListener('click', handleLogout);
+            
+            // Delete This Result Button
+            document.getElementById('deleteThisResultBtn').addEventListener('click', deleteThisResult);
+            
+            // Delete All Results Buttons
+            document.getElementById('deleteAllResultsBtn').addEventListener('click', confirmDeleteAllResults);
+            document.getElementById('deleteAllResultsFromViewBtn').addEventListener('click', confirmDeleteAllResults);
+            
+            // Auto Calculate Positions Button
+            document.getElementById('autoCalculatePositionsBtn').addEventListener('click', autoCalculatePositions);
             
             // Admin Tabs
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -626,7 +676,7 @@
             });
         }
         
-        // Display Result - MODIFIED: No pay button in result view
+        // Display Result - MODIFIED: Flowers only for position holders
         function displayResult(student, rollNo) {
             resultSection.classList.remove('hidden');
             
@@ -642,7 +692,17 @@
                 }
             });
             
-            // Status & Position
+            // Calculate total marks
+            let totalObtained = 0, totalMaximum = 0;
+            if(student.marks && subjects.length > 0) {
+                subjects.forEach((subject, index) => {
+                    const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                    totalObtained += parseInt(mark) || 0;
+                    totalMaximum += subject.total;
+                });
+            }
+            
+            // Status & Position - MODIFIED: Auto set position if not set by admin
             const hasMarks = student.marks && student.marks.some(m => m > 0);
             const isAbsent = student.status === 'absent' || !hasMarks;
             
@@ -655,20 +715,43 @@
                 statusEl.className = 'status-badge status-present';
             }
             
-            const position = student.position || 0;
+            // Get position (if manually set by admin) or calculate auto position
+            let position = student.position || 0;
             const positionBadge = document.getElementById('positionBadge');
-            if(position === 1) {
+            
+            // Check if position is "Auto" (position = -1 means auto-calculated as "Pass")
+            if(position === -1) {
+                // Auto position: Check if passed
+                const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
+                if(percentage >= 33) {
+                    positionBadge.textContent = 'Position: Pass 🎉';
+                    positionBadge.className = 'position-badge position-pass';
+                } else {
+                    positionBadge.textContent = 'Position: Fail';
+                    positionBadge.className = 'position-badge';
+                }
+            } else if(position === 1) {
                 positionBadge.textContent = '🥇 1st Position';
                 positionBadge.className = 'position-badge position-1';
-                startFlowerAnimation();
+                startFlowerAnimation(); // Flowers ONLY for position holders
             } else if(position === 2) {
                 positionBadge.textContent = '🥈 2nd Position';
                 positionBadge.className = 'position-badge position-2';
-                startFlowerAnimation();
+                startFlowerAnimation(); // Flowers ONLY for position holders
             } else if(position === 3) {
                 positionBadge.textContent = '🥉 3rd Position';
                 positionBadge.className = 'position-badge position-3';
-                startFlowerAnimation();
+                startFlowerAnimation(); // Flowers ONLY for position holders
+            } else if(position === 0 && !isAbsent) {
+                // No position set, but student has marks - show "Pass" if passed
+                const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
+                if(percentage >= 33) {
+                    positionBadge.textContent = 'Position: Pass 🎉';
+                    positionBadge.className = 'position-badge position-pass';
+                } else {
+                    positionBadge.textContent = 'Position: Fail';
+                    positionBadge.className = 'position-badge';
+                }
             } else {
                 positionBadge.textContent = 'Position: -';
                 positionBadge.className = 'position-badge';
@@ -677,7 +760,6 @@
             // Marks Table
             const marksBody = document.getElementById('marksTableBody');
             marksBody.innerHTML = '';
-            let totalObtained = 0, totalMaximum = 0;
             
             if(isAbsent) {
                 marksBody.innerHTML = '<tr><td colspan="3" class="text-center">Student was absent</td></tr>';
@@ -686,17 +768,28 @@
                     const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
                     const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
                     marksBody.innerHTML += row;
-                    totalObtained += parseInt(mark) || 0;
-                    totalMaximum += subject.total;
                 });
             }
             
             // Totals
             document.getElementById('obtainedMarks').textContent = totalObtained;
             document.getElementById('totalMarks').textContent = totalMaximum;
-            document.getElementById('percentage').textContent = totalMaximum > 0 ? `${((totalObtained/totalMaximum)*100).toFixed(2)}%` : '0%';
+            const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
+            document.getElementById('percentage').textContent = `${percentage}%`;
             
-            // Fine Section - MODIFIED: Read-only, no pay button
+            // Color code percentage
+            const percentageEl = document.getElementById('percentage');
+            if(percentage >= 80) {
+                percentageEl.style.color = '#38b000'; // Green for excellent
+            } else if(percentage >= 60) {
+                percentageEl.style.color = '#ffaa00'; // Orange for good
+            } else if(percentage >= 33) {
+                percentageEl.style.color = '#0077b6'; // Blue for pass
+            } else {
+                percentageEl.style.color = '#e63946'; // Red for fail
+            }
+            
+            // Fine Section - Read-only
             const fineSection = document.getElementById('fineSection');
             if(student.fine && student.fine.amount > 0) {
                 const paid = student.fine.paid || false;
@@ -706,9 +799,17 @@
             } else {
                 fineSection.classList.add('hidden');
             }
+            
+            // Show delete button for admin
+            const deleteResultSection = document.getElementById('deleteResultSection');
+            if(isAdminLoggedIn) {
+                deleteResultSection.classList.remove('hidden');
+            } else {
+                deleteResultSection.classList.add('hidden');
+            }
         }
         
-        // Flower Animation
+        // Flower Animation - ONLY for position holders
         function startFlowerAnimation() {
             const container = document.getElementById('flowerFall');
             container.innerHTML = '';
@@ -722,6 +823,142 @@
                 flower.style.animationDelay = `${Math.random()*2}s`;
                 container.appendChild(flower);
             }
+        }
+        
+        // Auto Calculate Positions based on marks
+        function autoCalculatePositions() {
+            const selectedClass = document.getElementById('marksClass').value;
+            
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                let studentsWithMarks = [];
+                
+                // Collect all students with their total marks
+                Object.keys(students).forEach(rollNo => {
+                    const student = students[rollNo];
+                    if(selectedClass !== 'all' && student.class !== selectedClass) return;
+                    
+                    // Calculate total marks
+                    let totalMarks = 0;
+                    if(student.marks && subjects.length > 0) {
+                        subjects.forEach((subject, index) => {
+                            const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                            totalMarks += parseInt(mark) || 0;
+                        });
+                    }
+                    
+                    // Only include students who have marks
+                    if(totalMarks > 0) {
+                        studentsWithMarks.push({
+                            rollNo,
+                            name: student.name,
+                            class: student.class,
+                            totalMarks,
+                            currentPosition: student.position || 0
+                        });
+                    }
+                });
+                
+                // Sort by total marks (descending)
+                studentsWithMarks.sort((a, b) => b.totalMarks - a.totalMarks);
+                
+                // Assign positions: 1st, 2nd, 3rd, and "Auto" for others
+                let updates = {};
+                studentsWithMarks.forEach((student, index) => {
+                    let position;
+                    if(index === 0) {
+                        position = 1; // 1st position
+                    } else if(index === 1) {
+                        position = 2; // 2nd position
+                    } else if(index === 2) {
+                        position = 3; // 3rd position
+                    } else {
+                        position = -1; // Auto (will show as Pass/Fail)
+                    }
+                    
+                    updates[`students/${student.rollNo}/position`] = position;
+                });
+                
+                // Apply updates
+                database.ref().update(updates).then(() => {
+                    showSuccess("Positions auto-calculated successfully!");
+                    // Refresh the marks entry view
+                    loadStudentsForMarks();
+                });
+            });
+        }
+        
+        // Delete This Result
+        function deleteThisResult() {
+            if(!currentStudentRollNo) return;
+            
+            if(confirm(`Are you sure you want to delete result for student ${currentStudentRollNo}?`)) {
+                // Clear marks, position, status, and fine
+                const updates = {
+                    marks: [],
+                    position: 0,
+                    status: 'absent',
+                    fine: {amount: 0, reason: "", paid: false}
+                };
+                
+                database.ref(`students/${currentStudentRollNo}`).update(updates).then(() => {
+                    showSuccess(`Result for ${currentStudentRollNo} deleted`);
+                    // Refresh display
+                    database.ref(`students/${currentStudentRollNo}`).once('value').then(snapshot => {
+                        displayResult(snapshot.val(), currentStudentRollNo);
+                    });
+                    // Refresh admin tables
+                    loadAllResults();
+                    loadStudentsForMarks();
+                });
+            }
+        }
+        
+        // Delete All Results
+        function confirmDeleteAllResults() {
+            if(confirm("⚠️ WARNING! This will delete ALL results (marks, positions, fines) for ALL students!\n\nStudent information will remain, but all marks will be cleared.\n\nAre you sure?")) {
+                if(prompt("Type 'DELETE ALL RESULTS' to confirm:") === "DELETE ALL RESULTS") {
+                    deleteAllResults();
+                }
+            }
+        }
+        
+        function deleteAllResults() {
+            showLoading(true);
+            
+            // Get all students
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                let updates = {};
+                
+                // Clear results for each student
+                Object.keys(students).forEach(rollNo => {
+                    updates[`students/${rollNo}/marks`] = [];
+                    updates[`students/${rollNo}/position`] = 0;
+                    updates[`students/${rollNo}/status`] = 'absent';
+                    updates[`students/${rollNo}/fine`] = {amount: 0, reason: "", paid: false};
+                });
+                
+                // Apply updates
+                database.ref().update(updates).then(() => {
+                    showLoading(false);
+                    showSuccess("All results deleted successfully!");
+                    // Refresh displays
+                    if(currentStudentRollNo) {
+                        database.ref(`students/${currentStudentRollNo}`).once('value').then(snap => {
+                            displayResult(snap.val(), currentStudentRollNo);
+                        });
+                    }
+                    loadAllResults();
+                    loadStudentsForMarks();
+                }).catch(error => {
+                    showLoading(false);
+                    showError("Error: " + error.message);
+                });
+            }).catch(error => {
+                showLoading(false);
+                showError("Error: " + error.message);
+            });
         }
         
         // Admin Functions
@@ -886,7 +1123,7 @@
             });
         }
         
-        // Load Students for Marks Entry
+        // Load Students for Marks Entry - MODIFIED: Added Auto option
         function loadStudentsForMarks() {
             const selectedClass = document.getElementById('marksClass').value;
             const container = document.getElementById('marksEntryContainer');
@@ -914,6 +1151,14 @@
                         `;
                     });
                     
+                    // Determine current position display
+                    let positionDisplay = "Auto";
+                    if(student.position === 1) positionDisplay = "1st";
+                    else if(student.position === 2) positionDisplay = "2nd";
+                    else if(student.position === 3) positionDisplay = "3rd";
+                    else if(student.position === -1) positionDisplay = "Auto";
+                    else positionDisplay = "Auto";
+                    
                     row.innerHTML = `
                         <div style="flex:1; min-width:150px;">
                             <strong>${rollNo} - ${student.name}</strong><br>
@@ -922,7 +1167,8 @@
                         <div class="form-row" style="flex:2;">${marksHTML}</div>
                         <div class="form-col">
                             <select class="position-select" data-roll="${rollNo}">
-                                <option value="0">No Position</option>
+                                <option value="-1" ${student.position==-1?'selected':''}>Auto</option>
+                                <option value="0" ${student.position==0?'selected':''}>No Position</option>
                                 <option value="1" ${student.position==1?'selected':''}>1st</option>
                                 <option value="2" ${student.position==2?'selected':''}>2nd</option>
                                 <option value="3" ${student.position==3?'selected':''}>3rd</option>
@@ -934,7 +1180,7 @@
             });
         }
         
-        // Save All Marks
+        // Save All Marks - MODIFIED: Include Auto position option
         function saveAllMarks() {
             const marksInputs = document.querySelectorAll('.marks-input');
             const positionSelects = document.querySelectorAll('.position-select');
@@ -942,13 +1188,13 @@
             let updates = {};
             let positionCount = {1:0,2:0,3:0};
             
-            // Count positions
+            // Count manual positions (excluding Auto)
             positionSelects.forEach(select => {
                 const pos = parseInt(select.value);
                 if(pos > 0) positionCount[pos]++;
             });
             
-            // Validate only 3 positions
+            // Validate only 3 positions (excluding Auto)
             if(positionCount[1] > 1 || positionCount[2] > 1 || positionCount[3] > 1) {
                 return showError("Only one student per position (1st, 2nd, 3rd) allowed");
             }
@@ -1166,7 +1412,18 @@
                     }
                     
                     const isAbsent = student.status === 'absent' || !student.marks || student.marks.every(m => m === 0);
-                    const positionText = student.position === 1 ? '🥇' : student.position === 2 ? '🥈' : student.position === 3 ? '🥉' : '-';
+                    
+                    // Determine position text
+                    let positionText = '-';
+                    if(student.position === 1) positionText = '🥇';
+                    else if(student.position === 2) positionText = '🥈';
+                    else if(student.position === 3) positionText = '🥉';
+                    else if(student.position === -1) {
+                        // Auto position: Check if passed
+                        const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
+                        positionText = percentage >= 33 ? 'Pass' : 'Fail';
+                    }
+                    
                     const fineText = student.fine?.amount > 0 ? 
                         (student.fine.paid ? `Rs.${student.fine.amount} (Paid)` : `Rs.${student.fine.amount}`) : 'None';
                     
