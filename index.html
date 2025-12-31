@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faizana Raza Madrassa - Result System</title>
+    <title>Faizana Raza Madrassa - Complete Result System</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
@@ -30,133 +30,199 @@
         body { font-family: 'Poppins', sans-serif; background: #f5f7fa; color: var(--dark); line-height: 1.6; }
         .arabic { font-family: 'Amiri', serif; direction: rtl; }
         .urdu { font-family: 'Lateef', serif; direction: rtl; font-size: 1.2rem; }
-        .container { width: 95%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        .container { width: 95%; max-width: 1400px; margin: 0 auto; padding: 0 15px; }
         
         /* Header */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white; padding: 1rem 0; box-shadow: var(--shadow); position: relative; overflow: hidden;
+            color: white; padding: 1.5rem 0; box-shadow: var(--shadow); position: relative; overflow: hidden;
         }
         .header::before, .header::after {
             content: "﷽"; font-family: 'Amiri', serif; position: absolute; top: 50%; transform: translateY(-50%);
-            font-size: 2.5rem; opacity: 0.15;
+            font-size: 3rem; opacity: 0.1;
         }
-        .header::before { right: 20px; }
-        .header::after { left: 20px; }
-        .logo-area { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 5px; flex-wrap: wrap; }
-        .logo-icon { font-size: 2rem; color: var(--accent); }
-        .madrassa-name { font-size: 1.5rem; font-weight: 700; text-align: center; }
-        .madrassa-subtitle { font-size: 1rem; opacity: 0.9; text-align: center; font-weight: 300; }
-        .sub-header { text-align: center; margin-top: 5px; font-size: 1rem; color: rgba(255,255,255,0.9); }
+        .header::before { right: 30px; }
+        .header::after { left: 30px; }
+        .logo-area { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap; }
+        .logo-icon { font-size: 2.5rem; color: var(--accent); }
+        .madrassa-name { font-size: 1.8rem; font-weight: 800; text-align: center; }
+        .madrassa-subtitle { font-size: 1.1rem; opacity: 0.9; text-align: center; font-weight: 300; }
+        .sub-header { text-align: center; margin-top: 10px; font-size: 1.1rem; color: rgba(255,255,255,0.9); }
         
-        /* Fixed Search Panel */
-        .search-panel {
-            background: white; padding: 1rem; border-radius: var(--border-radius); box-shadow: var(--shadow);
-            margin: 1rem auto; max-width: 600px; position: sticky; top: 10px; z-index: 100;
-        }
-        .search-title { color: var(--primary); font-size: 1.3rem; margin-bottom: 1rem; text-align: center; }
+        /* Navigation */
+        .nav-bar { background: white; padding: 1rem 0; box-shadow: var(--shadow); margin-bottom: 2rem; }
+        .nav-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .nav-link { color: var(--primary); text-decoration: none; font-weight: 600; padding: 10px 20px; border-radius: 50px; transition: all 0.3s; cursor: pointer; }
+        .nav-link:hover { background: var(--primary); color: white; }
+        .nav-link.active { background: var(--primary); color: white; }
         
         /* Main Content */
         .main-content { min-height: 70vh; padding: 1rem 0; }
         
         /* Cards */
-        .card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1rem; }
-        .card-title { color: var(--primary); font-size: 1.4rem; margin-bottom: 1rem; text-align: center; }
+        .card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 2rem; margin-bottom: 2rem; }
+        .card-title { color: var(--primary); font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
         
-        /* Forms */
-        .form-group { margin-bottom: 1rem; }
-        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--dark); }
-        .form-control { width: 100%; padding: 10px 12px; border: 2px solid #e1e5eb; border-radius: 8px; font-size: 1rem; }
-        .form-control:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(26,95,122,0.2); }
-        
-        /* Buttons */
-        .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-block { width: 100%; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #144c63; }
-        .btn-secondary { background: var(--secondary); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-success { background: var(--success); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
+        /* Search Panel (Public Result) */
+        .search-panel {
+            background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow);
+            margin: 2rem auto; max-width: 800px;
+        }
+        .search-title { color: var(--primary); font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center; }
         
         /* Result Display */
-        .result-card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 1.5rem; margin-top: 1rem; }
-        .student-header { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary); }
-        .student-info h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 0.3rem; }
-        .position-badge { padding: 6px 15px; border-radius: 50px; font-weight: 700; }
-        .position-1 { background: var(--gold); color: #856404; }
-        .position-2 { background: var(--silver); color: #495057; }
-        .position-3 { background: var(--bronze); color: white; }
-        .position-pass { background: #d4edda; color: #155724; }
-        .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-        .marks-table th { background: #f8f9fa; padding: 10px; text-align: left; color: var(--primary); font-weight: 600; }
-        .marks-table td { padding: 10px; border-bottom: 1px solid #eee; }
-        .total-section { background: #e7f5ff; padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .percentage { font-size: 1.5rem; font-weight: 700; color: var(--success); }
-        .fine-notice { background: #fff3cd; border-left: 4px solid #ffc107; padding: 0.8rem; margin: 1rem 0; }
-        .prayer-message { background: linear-gradient(to right, #2a9d8f, #1a5f7a); color: white; padding: 1rem; border-radius: 8px; text-align: center; margin-top: 1rem; font-weight: 600; }
+        .result-card { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 2rem; margin-top: 2rem; }
+        .student-header { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-left: 8px solid var(--primary); }
+        .student-info h3 { color: var(--primary); font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .position-badge { padding: 12px 25px; border-radius: 50px; font-weight: 800; font-size: 1.3rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .position-1 { background: linear-gradient(135deg, var(--gold) 0%, #ffec80 100%); color: #856404; }
+        .position-2 { background: linear-gradient(135deg, var(--silver) 0%, #e0e0e0 100%); color: #495057; }
+        .position-3 { background: linear-gradient(135deg, var(--bronze) 0%, #e6b17e 100%); color: white; }
+        .position-pass { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; }
         
-        /* Flowers Animation */
-        .flower-fall { position: relative; height: 100px; width: 100%; overflow: hidden; margin: 1rem 0; }
-        .falling-flower { position: absolute; top: -30px; font-size: 1.5rem; animation: fall linear infinite; }
+        /* Flowers Animation - ONLY FOR POSITION HOLDERS */
+        .flower-fall { 
+            position: relative; height: 200px; width: 100%; 
+            overflow: hidden; margin: 1rem 0; z-index: 1;
+        }
+        .falling-flower { 
+            position: absolute; top: -50px; font-size: 2.5rem; 
+            animation: fall linear infinite; z-index: 1;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
         @keyframes fall {
-            0% { transform: translateY(-30px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(130px) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(250px) rotate(360deg); opacity: 0; }
         }
         
+        /* Marks Table */
+        .marks-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .marks-table th { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 15px; text-align: left; font-weight: 600; }
+        .marks-table td { padding: 15px; border-bottom: 1px solid #eee; }
+        .total-section { background: linear-gradient(135deg, #e7f5ff 0%, #d0ebff 100%); padding: 1.5rem; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .percentage { font-size: 2.2rem; font-weight: 800; color: var(--success); }
+        
+        /* Fine Notice */
+        .fine-notice { 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); 
+            border-left: 6px solid var(--warning); padding: 1.2rem; 
+            margin: 1.5rem 0; border-radius: 8px;
+        }
+        
+        /* Forms */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.8rem; font-weight: 600; color: var(--dark); font-size: 1.1rem; }
+        .form-control { width: 100%; padding: 12px 15px; border: 2px solid #e1e5eb; border-radius: 10px; font-size: 1rem; }
+        .form-control:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(26,95,122,0.2); }
+        .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 1rem; }
+        .form-col { flex: 1; min-width: 200px; }
+        
+        /* Buttons */
+        .btn { padding: 12px 25px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+        .btn-block { width: 100%; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; }
+        .btn-secondary { background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; }
+        .btn-success { background: linear-gradient(135deg, var(--success) 0%, #2dc653 100%); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning) 0%, #ffc107 100%); color: white; }
+        .btn-danger { background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%); color: white; }
+        .btn-small { padding: 8px 15px; font-size: 0.9rem; }
+        
         /* Admin Panel */
-        .admin-panel { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 1.5rem; margin: 1rem auto; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 2px solid #e1e5eb; flex-wrap: wrap; }
-        .admin-title { color: var(--primary); font-size: 1.3rem; }
-        .admin-tabs { display: flex; gap: 5px; margin-bottom: 1rem; flex-wrap: wrap; }
-        .tab-btn { padding: 8px 12px; background: #f1f3f4; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; }
-        .tab-btn.active { background: var(--primary); color: white; }
+        .admin-panel { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 2rem; margin: 2rem auto; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid #e1e5eb; flex-wrap: wrap; }
+        .admin-title { color: var(--primary); font-size: 1.8rem; }
+        .admin-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; background: #f8f9fa; padding: 1rem; border-radius: var(--border-radius); }
+        .tab-btn { padding: 10px 20px; background: white; border: 2px solid #e1e5eb; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.3s; }
+        .tab-btn:hover { background: #f8f9fa; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .form-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem; }
-        .form-col { flex: 1; min-width: 150px; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
-        .data-table th { background: #f1f3f4; padding: 10px; text-align: left; color: var(--primary); }
-        .data-table td { padding: 10px; border-bottom: 1px solid #eee; }
-        .action-btn { padding: 4px 8px; margin: 0 2px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* Marks Entry Table with Fine Inputs */
+        .marks-entry-container { max-height: 500px; overflow-y: auto; border: 1px solid #e1e5eb; border-radius: 8px; padding: 1rem; margin-top: 1rem; }
+        .student-row { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; gap: 15px; flex-wrap: wrap; background: #f9f9f9; border-radius: 6px; margin-bottom: 10px; }
+        .student-info { flex: 2; min-width: 250px; }
+        .student-name { font-weight: 600; color: var(--primary); }
+        .student-roll { color: #666; font-size: 0.9rem; }
+        .marks-inputs { flex: 3; display: flex; flex-wrap: wrap; gap: 10px; }
+        .marks-input { width: 100px; padding: 8px; border: 2px solid #e1e5eb; border-radius: 5px; text-align: center; }
+        .position-select { width: 120px; padding: 8px; border: 2px solid #e1e5eb; border-radius: 5px; }
+        
+        /* Fine Inputs in Marks Entry */
+        .fine-inputs-row { flex: 3; display: flex; gap: 10px; min-width: 350px; }
+        .fine-amount-input { width: 100px; padding: 8px; border: 2px solid #e1e5eb; border-radius: 5px; text-align: center; }
+        .fine-reason-input { flex: 1; padding: 8px; border: 2px solid #e1e5eb; border-radius: 5px; }
+        .fees-paid-checkbox { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+        
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .data-table th { background: #f1f3f4; padding: 12px 15px; text-align: left; color: var(--primary); font-weight: 600; border-bottom: 2px solid #e1e5eb; }
+        .data-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+        .data-table tr:hover { background: #f9f9f9; }
+        
+        /* Alerts */
+        .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+        .alert-info { background: #e7f5ff; color: #0c5460; border-left: 4px solid #17a2b8; }
+        .alert-warning { background: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }
+        .alert-danger { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .alert-success { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
         
         /* Login Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-box { background: white; border-radius: var(--border-radius); padding: 1.5rem; width: 90%; max-width: 400px; }
-        
-        /* Student List */
-        .student-list-container { max-height: 400px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; padding: 1rem; margin-top: 1rem; }
-        .student-row { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; gap: 10px; flex-wrap: wrap; }
-        .marks-input { width: 70px; padding: 6px; border: 2px solid #e1e5eb; border-radius: 5px; text-align: center; }
-        .position-select { width: 100px; padding: 6px; border: 2px solid #e1e5eb; border-radius: 5px; }
+        .modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.7); display: flex; justify-content: center; 
+            align-items: center; z-index: 1000; 
+        }
+        .modal-box { 
+            background: white; border-radius: var(--border-radius); padding: 2rem; 
+            width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+        }
         
         /* Utility */
         .hidden { display: none !important; }
         .text-center { text-align: center; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-3 { margin-top: 1rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .mb-3 { margin-bottom: 1rem; }
-        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        .status-present { background: #d4edda; color: #155724; }
-        .status-absent { background: #f8d7da; color: #721c24; }
+        .mt-2 { margin-top: 0.8rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .status-badge { padding: 8px 16px; border-radius: 25px; font-weight: 700; }
+        .status-present { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; }
+        .status-absent { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; }
+        .status-paid { background: #d4edda; color: #155724; padding: 5px 10px; border-radius: 20px; font-weight: 600; }
+        .status-unpaid { background: #f8d7da; color: #721c24; padding: 5px 10px; border-radius: 20px; font-weight: 600; }
+        .loading-spinner { 
+            border: 6px solid #f3f3f3; border-top: 6px solid var(--primary); 
+            border-radius: 50%; width: 60px; height: 60px; 
+            animation: spin 1s linear infinite; margin: 0 auto; 
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         /* Footer */
-        .footer { text-align: center; padding: 1rem; background: var(--dark); color: white; margin-top: 1rem; border-radius: var(--border-radius); }
+        .footer { 
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%); 
+            color: white; padding: 2rem 0; margin-top: 3rem; 
+            text-align: center;
+        }
         
         /* Responsive */
+        @media (max-width: 992px) {
+            .student-row { flex-direction: column; align-items: flex-start; }
+            .marks-inputs, .fine-inputs-row { width: 100%; }
+            .marks-input { width: 80px; }
+        }
         @media (max-width: 768px) {
             .container { width: 100%; padding: 0 10px; }
-            .madrassa-name { font-size: 1.3rem; }
-            .card, .result-card { padding: 1rem; }
-            .student-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .form-row { flex-direction: column; }
-            .admin-tabs { gap: 3px; }
-            .tab-btn { padding: 6px 10px; font-size: 0.9rem; }
-        }
-        @media (max-width: 480px) {
-            .header::before, .header::after { font-size: 1.8rem; }
-            .btn { padding: 8px 12px; font-size: 0.9rem; }
+            .madrassa-name { font-size: 1.4rem; }
+            .card, .result-card, .search-panel { padding: 1.5rem; }
+            .student-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .btn { padding: 10px 20px; font-size: 1rem; }
+            .nav-container { gap: 10px; }
+            .nav-link { padding: 8px 15px; font-size: 0.9rem; }
+            .header::before, .header::after { font-size: 2rem; }
+            .flower-fall { height: 150px; }
+            .admin-tabs { gap: 5px; }
+            .tab-btn { padding: 8px 12px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -175,304 +241,454 @@
         </div>
     </header>
     
-    <!-- Fixed Search Panel -->
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container nav-container">
+            <a class="nav-link active" data-page="public-result">
+                <i class="fas fa-search"></i> Check Result
+            </a>
+            <a class="nav-link" data-page="admin-panel">
+                <i class="fas fa-user-shield"></i> Admin Panel
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
     <div class="container">
-        <div class="search-panel">
-            <h2 class="search-title">Check Student Result</h2>
-            <div class="form-group">
-                <label for="rollNumber" class="form-label">Enter Roll Number</label>
-                <div class="form-row">
-                    <div class="form-col">
-                        <input type="text" id="rollNumber" class="form-control" placeholder="Enter roll number">
-                    </div>
-                    <div class="form-col">
-                        <button id="checkResultBtn" class="btn btn-primary btn-block">
+        <!-- Public Result Section -->
+        <div id="public-result" class="page-content">
+            <!-- Search Panel -->
+            <div class="search-panel">
+                <h2 class="search-title"><i class="fas fa-graduation-cap"></i> Check Your Result</h2>
+                <div class="form-group">
+                    <label for="rollNumber" class="form-label">Enter Your Roll Number</label>
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <input type="text" id="rollNumber" class="form-control" placeholder="e.g., 2024001" autofocus>
+                        <button id="checkResultBtn" class="btn btn-primary" style="min-width: 150px;">
                             <i class="fas fa-search"></i> Check Result
                         </button>
                     </div>
                 </div>
+                <div class="text-center mt-3">
+                    <p style="color: #666;">
+                        <i class="fas fa-info-circle"></i> Enter your roll number to view your result
+                    </p>
+                </div>
             </div>
-            <div class="text-center mt-2">
-                <small class="text-muted">For admin access, click <a href="#" id="adminLoginLink">here</a></small>
+            
+            <!-- Loading -->
+            <div id="loadingSpinner" class="hidden text-center">
+                <div class="loading-spinner"></div>
+                <p class="mt-3" style="font-size: 1.2rem; color: var(--primary);">Loading result...</p>
             </div>
-        </div>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="container">
-        <div class="main-content">
+            
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="errorText"></span>
+                </div>
+            </div>
+            
             <!-- Result Display -->
             <div id="resultSection" class="result-card hidden">
+                <!-- Flowers ONLY for position holders (1st, 2nd, 3rd) -->
                 <div id="flowerFall" class="flower-fall hidden"></div>
                 
+                <!-- Student Header -->
                 <div class="student-header">
                     <div class="student-info">
                         <h3 id="studentName">Student Name</h3>
-                        <p>Roll No: <span id="resultRollNo">-</span> | Class: <span id="studentClass">-</span></p>
-                        <p id="examDate">Exam Date: June 2024</p>
-                        <p id="studentStatus" class="status-badge status-present">Status: Present</p>
+                        <p><i class="fas fa-id-card"></i> Roll No: <span id="resultRollNo">-</span></p>
+                        <p><i class="fas fa-school"></i> Class: <span id="studentClass">-</span></p>
+                        <p><i class="fas fa-calendar-alt"></i> <span id="examDate">Exam Date: June 2024</span></p>
+                        <p id="studentStatus" class="status-badge status-present mt-2">Status: Present</p>
                     </div>
                     <div class="position-badge" id="positionBadge">Position: -</div>
                 </div>
                 
+                <!-- Marks Table -->
                 <table class="marks-table">
-                    <thead><tr><th>Subject</th><th>Total</th><th>Obtained</th></tr></thead>
-                    <tbody id="marksTableBody"></tbody>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Total Marks</th>
+                            <th>Obtained Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marksTableBody">
+                        <!-- Marks will be inserted here -->
+                    </tbody>
                 </table>
                 
+                <!-- Total Marks -->
                 <div class="total-section">
-                    <div><h4>Total Marks</h4><p>Obtained: <span id="obtainedMarks">0</span>/<span id="totalMarks">100</span></p></div>
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">Total Result</h3>
+                        <p style="font-size: 1.2rem;">
+                            Obtained Marks: <strong id="obtainedMarks">0</strong> / <strong id="totalMarks">100</strong>
+                        </p>
+                    </div>
                     <div class="percentage" id="percentage">0%</div>
                 </div>
                 
+                <!-- Fine Notice -->
                 <div id="fineSection" class="fine-notice hidden">
-                    <strong><i class="fas fa-exclamation-circle"></i> Fine Notice:</strong>
-                    <span id="fineAmount">A fine is due.</span>
+                    <h4><i class="fas fa-exclamation-circle"></i> Fine Notice</h4>
+                    <p id="fineAmount" style="margin-top: 10px; font-size: 1.1rem;"></p>
                 </div>
                 
-                <div class="prayer-message urdu">نماز کی پابندی رکھیں۔</div>
-                
-                <!-- DELETE THIS RESULT BUTTON (ADMIN ONLY) -->
-                <div id="deleteResultSection" class="hidden mt-3">
-                    <div class="alert alert-danger">
-                        <i class="fas fa-trash"></i>
-                        <strong>Admin Action:</strong> Delete this result
-                    </div>
-                    <button id="deleteThisResultBtn" class="btn btn-danger btn-block">
-                        <i class="fas fa-trash-alt"></i> Delete This Result from Firebase
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Loading & Error -->
-            <div id="loadingSpinner" class="hidden text-center"><div class="spinner"></div><p class="mt-2">Loading...</p></div>
-            <div id="errorMessage" class="hidden"><div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> <span id="errorText"></span></div></div>
-        </div>
-        
-        <!-- Admin Login Modal -->
-        <div id="adminLoginModal" class="modal-overlay hidden">
-            <div class="modal-box">
-                <h2 class="card-title mb-3">Admin Login</h2>
-                <div class="form-group">
-                    <input type="password" id="adminPassword" class="form-control" placeholder="Enter admin password">
-                </div>
-                <div class="form-group">
-                    <button id="loginBtn" class="btn btn-primary btn-block">Login</button>
-                    <button id="cancelLoginBtn" class="btn btn-secondary btn-block mt-2">Cancel</button>
+                <!-- Prayer Message -->
+                <div style="background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); 
+                          color: white; padding: 1.5rem; border-radius: 10px; text-align: center; margin-top: 2rem; font-weight: 700;">
+                    <p class="urdu" style="font-size: 1.3rem;">
+                        اللہ تعالیٰ ہم سب کو علم نافع عطا فرمائے اور ہماری محنتوں کو قبول فرمائے۔ آمین
+                        <br>
+                        نماز کی پابندی رکھیں۔
+                    </p>
                 </div>
             </div>
         </div>
         
-        <!-- Admin Panel -->
-        <div id="adminPanel" class="admin-panel hidden">
-            <div class="admin-header">
-                <h2 class="admin-title"><i class="fas fa-user-shield"></i> Admin Panel</h2>
-                <button id="logoutBtn" class="btn btn-danger">Logout</button>
-            </div>
-            
-            <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="examSetup">Exam Setup</button>
-                <button class="tab-btn" data-tab="subjects">Subjects</button>
-                <button class="tab-btn" data-tab="addStudents">Add Students</button>
-                <button class="tab-btn" data-tab="enterMarks">Enter Marks</button>
-                <button class="tab-btn" data-tab="manageFines">Manage Fines</button>
-                <button class="tab-btn" data-tab="deleteData">Delete Data</button>
-                <button class="tab-btn" data-tab="changePassword">Change Password</button>
-                <button class="tab-btn" data-tab="viewResults">View Results</button>
-            </div>
-            
-            <!-- Exam Setup -->
-            <div id="examSetup" class="tab-content active">
-                <h3 class="card-title">Exam Date Setup</h3>
-                <div class="form-group">
-                    <label class="form-label">Exam Date</label>
-                    <input type="date" id="examDateInput" class="form-control" value="2024-06-15">
-                </div>
-                <button id="saveExamDateBtn" class="btn btn-success">Save Exam Date</button>
-            </div>
-            
-            <!-- Subjects -->
-            <div id="subjects" class="tab-content">
-                <h3 class="card-title">Manage Subjects</h3>
-                <div id="subjectInputs">
-                    <div class="form-row subject-row">
-                        <div class="form-col"><input type="text" class="form-control subject-name" placeholder="Subject Name" value="Quran Recitation"></div>
-                        <div class="form-col"><input type="number" class="form-control subject-total" placeholder="Total Marks" value="50"></div>
-                        <div class="form-col"><button class="btn btn-danger remove-subject-btn"><i class="fas fa-times"></i></button></div>
+        <!-- Admin Panel Section -->
+        <div id="admin-panel" class="page-content hidden">
+            <!-- Login Modal -->
+            <div id="adminLoginModal" class="modal-overlay">
+                <div class="modal-box">
+                    <h2 style="color: var(--primary); margin-bottom: 1.5rem; text-align: center;">
+                        <i class="fas fa-lock"></i> Admin Login
+                    </h2>
+                    <div class="form-group">
+                        <input type="password" id="adminPassword" class="form-control" placeholder="Enter admin password" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <button id="loginBtn" class="btn btn-primary btn-block">Login</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Go back to <a href="#" class="nav-link" data-page="public-result">Home Page</a></small>
                     </div>
                 </div>
-                <button id="addSubjectBtn" class="btn btn-secondary mt-2">Add Subject</button>
-                <button id="saveSubjectsBtn" class="btn btn-success mt-2">Save Subjects</button>
             </div>
             
-            <!-- Add Students -->
-            <div id="addStudents" class="tab-content">
-                <h3 class="card-title">Add Students (5 at a Time)</h3>
-                <div id="studentFormsContainer">
-                    <!-- Student forms will be added here -->
+            <div id="adminContent" class="hidden">
+                <!-- Admin Header -->
+                <div class="admin-header">
+                    <h1 class="admin-title">
+                        <i class="fas fa-user-shield"></i> Admin Control Panel
+                    </h1>
+                    <div>
+                        <button id="logoutBtn" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group mt-3">
-                    <button id="addFiveStudentsBtn" class="btn btn-primary">
-                        <i class="fas fa-plus-circle"></i> Add 5 Student Forms
+                
+                <!-- Tabs -->
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="examSetup">Exam Setup</button>
+                    <button class="tab-btn" data-tab="subjects">Subjects</button>
+                    <button class="tab-btn" data-tab="addStudents">Add Students</button>
+                    <button class="tab-btn" data-tab="enterMarks">Enter Marks & Fees</button>
+                    <button class="tab-btn" data-tab="viewResults">View All Results</button>
+                    <button class="tab-btn" data-tab="manageFees">Manage Fees</button>
+                    <button class="tab-btn" data-tab="deleteData">Delete Data</button>
+                    <button class="tab-btn" data-tab="changePassword">Change Password</button>
+                </div>
+                
+                <!-- Exam Setup -->
+                <div id="examSetup" class="tab-content active">
+                    <h2 class="card-title">Exam Date Setup</h2>
+                    <div class="form-group">
+                        <label class="form-label">Exam Date</label>
+                        <input type="date" id="examDateInput" class="form-control">
+                    </div>
+                    <button id="saveExamDateBtn" class="btn btn-success">Save Exam Date</button>
+                </div>
+                
+                <!-- Subjects -->
+                <div id="subjects" class="tab-content">
+                    <h2 class="card-title">Manage Subjects</h2>
+                    <div id="subjectInputs">
+                        <!-- Subjects will be loaded here -->
+                    </div>
+                    <button id="addSubjectBtn" class="btn btn-secondary mt-2">
+                        <i class="fas fa-plus"></i> Add Subject
                     </button>
-                    <button id="saveAllStudentsBtn" class="btn btn-success">
-                        <i class="fas fa-save"></i> Save All Students
+                    <button id="saveSubjectsBtn" class="btn btn-success mt-2">
+                        <i class="fas fa-save"></i> Save Subjects
                     </button>
                 </div>
-            </div>
-            
-            <!-- Enter Marks -->
-            <div id="enterMarks" class="tab-content">
-                <h3 class="card-title">Enter Marks & Positions</h3>
-                <div class="alert alert-info mb-3">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Note:</strong> Leave positions as "Auto" for automatic calculation based on total marks
-                </div>
-                <select id="marksClass" class="form-control mb-3">
-                    <option value="all">All Classes</option>
-                    <option value="Separa">Separa</option>
-                    <option value="Noorani Qayda">Noorani Qayda</option>
-                </select>
-                <div id="marksEntryContainer" class="student-list-container"></div>
-                <button id="saveAllMarksBtn" class="btn btn-success mt-3">Save All Marks & Positions</button>
-                <button id="autoCalculatePositionsBtn" class="btn btn-primary mt-2">
-                    <i class="fas fa-calculator"></i> Auto-Calculate Positions
-                </button>
-            </div>
-            
-            <!-- Manage Fines -->
-            <div id="manageFines" class="tab-content">
-                <h3 class="card-title">Manage Fines</h3>
-                <div class="form-row">
-                    <div class="form-col">
-                        <input type="text" id="fineSearchRoll" class="form-control" placeholder="Search Roll No">
+                
+                <!-- Add Students -->
+                <div id="addStudents" class="tab-content">
+                    <h2 class="card-title">Add Students (Batch Entry)</h2>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        Add up to 5 students at a time. Roll numbers must be unique.
                     </div>
-                    <div class="form-col">
-                        <button id="searchFineBtn" class="btn btn-primary">Search</button>
+                    <div id="studentFormsContainer">
+                        <!-- Student forms will be added here -->
+                    </div>
+                    <div class="form-group mt-3">
+                        <button id="addFiveStudentsBtn" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Add 5 Student Forms
+                        </button>
+                        <button id="saveAllStudentsBtn" class="btn btn-success">
+                            <i class="fas fa-save"></i> Save All Students
+                        </button>
                     </div>
                 </div>
-                <div id="fineManageSection" class="hidden mt-3">
+                
+                <!-- Enter Marks & Fees -->
+                <div id="enterMarks" class="tab-content">
+                    <h2 class="card-title">Enter Marks, Positions & Fees</h2>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Note:</strong> 
+                        <ul style="margin: 10px 0 0 20px;">
+                            <li>Leave position as "Auto" for automatic calculation</li>
+                            <li>Only one student each for 1st, 2nd, 3rd positions</li>
+                            <li>You can add fees/fine directly in this section</li>
+                            <li>Check "Fees Paid" if student has paid their fees</li>
+                        </ul>
+                    </div>
+                    
                     <div class="form-row">
                         <div class="form-col">
-                            <input type="number" id="fineAmountInput" class="form-control" placeholder="Fine Amount">
+                            <label class="form-label">Filter by Class</label>
+                            <select id="marksClass" class="form-control">
+                                <option value="all">All Classes</option>
+                                <option value="Separa">Separa</option>
+                                <option value="Noorani Qayda">Noorani Qayda</option>
+                            </select>
                         </div>
                         <div class="form-col">
-                            <input type="text" id="fineReason" class="form-control" placeholder="Reason">
+                            <label class="form-label">Actions</label>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button id="saveAllMarksBtn" class="btn btn-success">Save All</button>
+                                <button id="autoCalculatePositionsBtn" class="btn btn-primary">
+                                    <i class="fas fa-calculator"></i> Auto-Calc Positions
+                                </button>
+                                <button id="resetAllFeesBtn" class="btn btn-warning">
+                                    <i class="fas fa-redo"></i> Reset All Fees
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <button id="assignFineBtn" class="btn btn-warning">Assign Fine</button>
-                    <button id="clearFineBtn" class="btn btn-danger">Clear Fine</button>
-                    <button id="markPaidBtn" class="btn btn-success">Mark as Paid</button>
-                </div>
-            </div>
-            
-            <!-- Delete Data -->
-            <div id="deleteData" class="tab-content">
-                <h3 class="card-title">Delete Data</h3>
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <strong>Warning:</strong> Deleted data cannot be recovered!
+                    
+                    <div id="marksEntryContainer" class="marks-entry-container">
+                        <!-- Student entries will be loaded here -->
+                    </div>
                 </div>
                 
-                <div class="form-group mt-3">
-                    <label class="form-label">Delete Single Student</label>
+                <!-- View Results -->
+                <div id="viewResults" class="tab-content">
+                    <h2 class="card-title">View All Results</h2>
                     <div class="form-row">
                         <div class="form-col">
-                            <input type="text" id="deleteRollNo" class="form-control" placeholder="Enter Roll Number">
+                            <label class="form-label">Filter by Class</label>
+                            <select id="filterClass" class="form-control">
+                                <option value="all">All Classes</option>
+                                <option value="Separa">Separa</option>
+                                <option value="Noorani Qayda">Noorani Qayda</option>
+                            </select>
                         </div>
                         <div class="form-col">
-                            <button id="deleteStudentBtn" class="btn btn-danger btn-block">Delete Student</button>
+                            <label class="form-label">Actions</label>
+                            <div>
+                                <button id="deleteAllResultsBtn" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> Delete ALL Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Warning:</strong> Deleting results will remove all marks, positions, and fees but keep student info.
+                    </div>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Pos</th><th>Roll</th><th>Name</th><th>Class</th>
+                                    <th>Marks</th><th>%</th><th>Status</th>
+                                    <th>Fees</th><th>Status</th><th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allResultsTable">
+                                <tr><td colspan="10" class="text-center">Loading results...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Manage Fees Section -->
+                <div id="manageFees" class="tab-content">
+                    <h2 class="card-title"><i class="fas fa-money-check-alt"></i> Manage Student Fees</h2>
+                    
+                    <!-- Search Student -->
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h3 class="card-title">Search Student</h3>
+                        <div class="form-group">
+                            <label class="form-label">Enter Roll Number</label>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <input type="text" id="feeSearchRoll" class="form-control" placeholder="e.g., 2024001">
+                                </div>
+                                <div class="form-col">
+                                    <button id="searchFeeBtn" class="btn btn-primary btn-block">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fee Details -->
+                        <div id="feeDetails" class="hidden">
+                            <div class="form-row mt-3">
+                                <div class="form-col">
+                                    <p><strong>Name:</strong> <span id="feeStudentName">-</span></p>
+                                    <p><strong>Roll No:</strong> <span id="feeStudentRoll">-</span></p>
+                                    <p><strong>Class:</strong> <span id="feeStudentClass">-</span></p>
+                                </div>
+                            </div>
+                            
+                            <h3 class="mt-3">Fee Details</h3>
+                            <div class="form-row mt-2">
+                                <div class="form-col">
+                                    <label class="form-label">Fee/Fine Amount (Rs.)</label>
+                                    <input type="number" id="feeAmountInput" class="form-control" placeholder="Enter amount">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Reason</label>
+                                    <input type="text" id="feeReason" class="form-control" placeholder="Enter reason">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Payment Status</label>
+                                    <div class="form-row" style="align-items: center; gap: 10px; margin-top: 10px;">
+                                        <input type="checkbox" id="feePaidCheckbox">
+                                        <label for="feePaidCheckbox" style="margin: 0;">Fees Paid</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row mt-3">
+                                <div class="form-col">
+                                    <button id="assignFeeBtn" class="btn btn-warning">
+                                        <i class="fas fa-plus-circle"></i> Assign/Update Fee
+                                    </button>
+                                    <button id="clearFeeBtn" class="btn btn-danger">
+                                        <i class="fas fa-times-circle"></i> Clear Fee
+                                    </button>
+                                    <button id="markFeePaidBtn" class="btn btn-success">
+                                        <i class="fas fa-check-circle"></i> Mark as Paid
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- All Students with Fees -->
+                    <div class="card">
+                        <h3 class="card-title">All Students with Fees/Fines</h3>
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Class</th>
+                                        <th>Amount</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allFeesTable">
+                                    <tr><td colspan="7" class="text-center">Loading fees data...</td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
                 
-                <div class="form-group mt-3">
-                    <label class="form-label">Delete All Results Only</label>
+                <!-- Delete Data -->
+                <div id="deleteData" class="tab-content">
+                    <h2 class="card-title">Delete Data</h2>
                     <div class="alert alert-danger">
-                        <i class="fas fa-file-alt"></i>
-                        <strong>DANGER:</strong> This will delete ALL RESULTS (marks, positions, fines) but keep student info!
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Danger Zone:</strong> These actions cannot be undone!
                     </div>
-                    <button id="deleteAllResultsBtn" class="btn btn-danger btn-block">
-                        <i class="fas fa-trash"></i> Delete ALL Results Only
-                    </button>
-                </div>
-                
-                <div class="form-group mt-3">
-                    <label class="form-label">Delete All Data from Firebase</label>
-                    <div class="alert alert-danger">
-                        <i class="fas fa-skull-crossbones"></i>
-                        <strong>DANGER:</strong> This will delete ALL students, subjects, and settings!
+                    
+                    <div class="form-group">
+                        <h3>Delete Single Student</h3>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <input type="text" id="deleteRollNo" class="form-control" placeholder="Enter Roll Number">
+                            </div>
+                            <div class="form-col">
+                                <button id="deleteStudentBtn" class="btn btn-danger btn-block">Delete Student</button>
+                            </div>
+                        </div>
                     </div>
-                    <button id="deleteAllDataBtn" class="btn btn-danger btn-block">
-                        <i class="fas fa-trash"></i> Delete ALL Data from Firebase
-                    </button>
+                    
+                    <div class="form-group">
+                        <h3>Delete Selected Student</h3>
+                        <select id="deleteStudentSelect" class="form-control">
+                            <option value="">Select student to delete</option>
+                        </select>
+                        <button id="deleteSelectedBtn" class="btn btn-danger mt-2">Delete Selected Student</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h3>Delete All Results Only</h3>
+                        <div class="alert alert-warning">
+                            <i class="fas fa-file-alt"></i>
+                            This will delete ALL RESULTS (marks, positions, fees) but keep student info!
+                        </div>
+                        <button id="deleteAllResultsOnlyBtn" class="btn btn-danger btn-block">
+                            <i class="fas fa-trash"></i> Delete ALL Results Only
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h3>Delete All Data from Firebase</h3>
+                        <div class="alert alert-danger">
+                            <i class="fas fa-skull-crossbones"></i>
+                            This will delete ALL students, subjects, and settings!
+                        </div>
+                        <button id="deleteAllDataBtn" class="btn btn-danger btn-block">
+                            <i class="fas fa-trash"></i> Delete ALL Data from Firebase
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="form-group mt-3">
-                    <label class="form-label">View All Students for Deletion</label>
-                    <select id="deleteStudentSelect" class="form-control">
-                        <option value="">Select student to delete</option>
-                    </select>
-                    <button id="deleteSelectedBtn" class="btn btn-danger mt-2">Delete Selected Student</button>
-                </div>
-            </div>
-            
-            <!-- Change Password -->
-            <div id="changePassword" class="tab-content">
-                <h3 class="card-title">Change Admin Password</h3>
-                <div class="alert alert-info">
-                    <i class="fas fa-key"></i>
-                    <strong>Note:</strong> Enter previous password to set new password
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Previous Password</label>
-                    <input type="password" id="prevPassword" class="form-control" placeholder="Enter current password">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">New Password</label>
-                    <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Confirm New Password</label>
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password">
-                </div>
-                
-                <button id="changePasswordBtn" class="btn btn-success">Change Password</button>
-                
-                <div class="mt-3">
-                    <div class="alert alert-light">
+                <!-- Change Password -->
+                <div id="changePassword" class="tab-content">
+                    <h2 class="card-title">Change Admin Password</h2>
+                    <div class="form-group">
+                        <label class="form-label">Previous Password</label>
+                        <input type="password" id="prevPassword" class="form-control" placeholder="Enter current password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">New Password</label>
+                        <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password">
+                    </div>
+                    <button id="changePasswordBtn" class="btn btn-success">Change Password</button>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-key"></i>
                         <strong>Current Password Code:</strong>
-                        <code id="currentPasswordCode" class="d-block mt-2">admin123</code>
-                        <small class="text-muted">Copy this code to change password</small>
+                        <div id="currentPasswordCode" style="font-family: monospace; font-size: 1.2rem; margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;"></div>
+                        <small>Copy this code when changing password</small>
                     </div>
                 </div>
-            </div>
-            
-            <!-- View Results -->
-            <div id="viewResults" class="tab-content">
-                <h3 class="card-title">View All Results</h3>
-                <select id="filterClass" class="form-control mb-3">
-                    <option value="all">All Classes</option>
-                    <option value="Separa">Separa</option>
-                    <option value="Noorani Qayda">Noorani Qayda</option>
-                </select>
-                
-                <!-- DELETE ALL RESULTS BUTTON -->
-                <div class="alert alert-danger mb-3">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <strong>Delete All Results:</strong> This will clear marks, positions, and fines for ALL students
-                    <button id="deleteAllResultsFromViewBtn" class="btn btn-danger btn-block mt-2">
-                        <i class="fas fa-trash"></i> Delete ALL Results
-                    </button>
-                </div>
-                
-                <table class="data-table">
-                    <thead><tr><th>Pos</th><th>Roll</th><th>Name</th><th>Class</th><th>Marks</th><th>Status</th><th>Fine</th><th>View</th><th>Delete</th></tr></thead>
-                    <tbody id="allResultsTable"></tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -480,16 +696,19 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p class="arabic">رَبِّ زِدْنِي عِلْمًا</p>
-            <p>"My Lord, increase me in knowledge." (Quran 20:114)</p>
-            <p>&copy; 2024 Faizana Raza Madrassa</p>
+            <p class="arabic" style="font-size: 1.8rem; margin-bottom: 1rem;">رَبِّ زِدْنِي عِلْمًا</p>
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">"My Lord, increase me in knowledge." (Quran 20:114)</p>
+            <p>&copy; 2024 Faizana Raza Madrassa - Complete Result System</p>
+            <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">
+                <i class="fas fa-phone"></i> Contact: 0300-1234567 | 
+                <i class="fas fa-map-marker-alt"></i> Address: Madrassa Chowk, City
+            </p>
         </div>
     </footer>
 
     <!-- JavaScript -->
     <script>
         // Firebase Config
-      
         const firebaseConfig = {
             apiKey: "AIzaSyDp8fdbDJRs17iFgcj1lN1YAmhiWccEkuc",
             authDomain: "result-app-8cdd1.firebaseapp.com",
@@ -500,58 +719,280 @@
             appId: "1:1000820695282:web:82a4f0ee1e51de2305f06b"
         };
 
-
-        
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         
-        // Default admin password (will be loaded from Firebase)
+        // Global Variables
         let currentAdminPassword = "admin123";
+        let isAdminLoggedIn = false;
+        let subjects = [];
+        let currentStudentRoll = null;
         
         // DOM Elements
-        const searchPanel = document.querySelector('.search-panel');
-        const resultSection = document.getElementById('resultSection');
-        const adminPanel = document.getElementById('adminPanel');
-        const adminLoginModal = document.getElementById('adminLoginModal');
-        const rollNumberInput = document.getElementById('rollNumber');
-        const checkResultBtn = document.getElementById('checkResultBtn');
-        const adminLoginLink = document.getElementById('adminLoginLink');
-        const adminPasswordInput = document.getElementById('adminPassword');
-        const loginBtn = document.getElementById('loginBtn');
-        const cancelLoginBtn = document.getElementById('cancelLoginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
+        const pageContents = document.querySelectorAll('.page-content');
+        const navLinks = document.querySelectorAll('.nav-link');
         
-        // Current State
-        let currentStudentRollNo = null;
-        let subjects = [];
-        let isAdminLoggedIn = false;
-        
-        // Initialize
+        // Initialize App
         function initApp() {
+            // Load admin password
             loadAdminPassword();
-            loadSubjects();
-            loadExamDate();
             
-            // Event Listeners
+            // Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => switchPage(link.getAttribute('data-page')));
+            });
+            
+            // Initialize Public Result Page
+            initPublicResult();
+            
+            // Initialize Admin Panel
+            initAdminPanel();
+            
+            // Default page
+            switchPage('public-result');
+            
+            // Check if admin already logged in
+            if(localStorage.getItem('adminLoggedIn') === 'true') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLoginModal').style.display = 'none';
+                document.getElementById('adminContent').classList.remove('hidden');
+            }
+        }
+        
+        // Page Switching
+        function switchPage(pageId) {
+            // Hide all pages
+            pageContents.forEach(page => page.classList.add('hidden'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Update navigation
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+            
+            // Special handling for admin panel
+            if(pageId === 'admin-panel' && !isAdminLoggedIn) {
+                document.getElementById('adminLoginModal').style.display = 'flex';
+            }
+        }
+        
+        // ==================== PUBLIC RESULT PAGE ====================
+        function initPublicResult() {
+            const rollNumberInput = document.getElementById('rollNumber');
+            const checkResultBtn = document.getElementById('checkResultBtn');
+            
             checkResultBtn.addEventListener('click', checkResult);
-            adminLoginLink.addEventListener('click', showAdminLogin);
-            loginBtn.addEventListener('click', handleAdminLogin);
-            cancelLoginBtn.addEventListener('click', hideAdminLogin);
-            logoutBtn.addEventListener('click', handleLogout);
+            rollNumberInput.addEventListener('keypress', e => { 
+                if(e.key === 'Enter') checkResult(); 
+            });
+        }
+        
+        function checkResult() {
+            const rollNo = document.getElementById('rollNumber').value.trim();
+            if(!rollNo) return showMessage("Please enter your roll number", 'error');
             
-            // Delete This Result Button
-            document.getElementById('deleteThisResultBtn').addEventListener('click', deleteThisResult);
+            showLoading(true);
+            database.ref(`students/${rollNo}`).once('value').then(snapshot => {
+                showLoading(false);
+                if(!snapshot.exists()) {
+                    showMessage("Student not found. Please check your roll number.", 'error');
+                    return;
+                }
+                
+                const student = snapshot.val();
+                displayPublicResult(student, rollNo);
+            }).catch(error => {
+                showLoading(false);
+                showMessage("Error: " + error.message, 'error');
+            });
+        }
+        
+        function displayPublicResult(student, rollNo) {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
             
-            // Delete All Results Buttons
-            document.getElementById('deleteAllResultsBtn').addEventListener('click', confirmDeleteAllResults);
-            document.getElementById('deleteAllResultsFromViewBtn').addEventListener('click', confirmDeleteAllResults);
+            // Student Info
+            document.getElementById('studentName').textContent = student.name;
+            document.getElementById('resultRollNo').textContent = rollNo;
+            document.getElementById('studentClass').textContent = student.class;
             
-            // Auto Calculate Positions Button
-            document.getElementById('autoCalculatePositionsBtn').addEventListener('click', autoCalculatePositions);
+            // Exam Date
+            database.ref('examDate').once('value').then(snapshot => {
+                if(snapshot.exists()) {
+                    document.getElementById('examDate').textContent = `Exam Date: ${snapshot.val()}`;
+                }
+            });
             
-            // Admin Tabs
+            // Load subjects
+            database.ref('subjects').once('value').then(snapshot => {
+                subjects = snapshot.val() || [];
+                
+                // Calculate marks
+                let totalObtained = 0, totalMaximum = 0;
+                if(student.marks && subjects.length > 0) {
+                    subjects.forEach((subject, index) => {
+                        const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                        totalObtained += parseInt(mark) || 0;
+                        totalMaximum += subject.total;
+                    });
+                }
+                
+                // Status
+                const hasMarks = student.marks && student.marks.some(m => m > 0);
+                const isAbsent = student.status === 'absent' || !hasMarks;
+                
+                const statusEl = document.getElementById('studentStatus');
+                if(isAbsent) {
+                    statusEl.textContent = 'Status: Absent';
+                    statusEl.className = 'status-badge status-absent';
+                } else {
+                    statusEl.textContent = 'Status: Present';
+                    statusEl.className = 'status-badge status-present';
+                }
+                
+                // Position - FLOWERS ONLY FOR 1st, 2nd, 3rd
+                const position = student.position || 0;
+                const positionBadge = document.getElementById('positionBadge');
+                const flowerContainer = document.getElementById('flowerFall');
+                
+                // Clear previous flowers
+                flowerContainer.classList.add('hidden');
+                flowerContainer.innerHTML = '';
+                
+                // Check for position and show flowers ONLY for 1st, 2nd, 3rd
+                if(position === 1) {
+                    positionBadge.textContent = '🥇 1st Position';
+                    positionBadge.className = 'position-badge position-1';
+                    startFlowerAnimation(); // FLOWERS HERE
+                } else if(position === 2) {
+                    positionBadge.textContent = '🥈 2nd Position';
+                    positionBadge.className = 'position-badge position-2';
+                    startFlowerAnimation(); // FLOWERS HERE
+                } else if(position === 3) {
+                    positionBadge.textContent = '🥉 3rd Position';
+                    positionBadge.className = 'position-badge position-3';
+                    startFlowerAnimation(); // FLOWERS HERE
+                } else if(position === -1) {
+                    // Auto position
+                    const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
+                    if(percentage >= 33) {
+                        positionBadge.textContent = 'Position: Pass 🎉';
+                        positionBadge.className = 'position-badge position-pass';
+                    } else {
+                        positionBadge.textContent = 'Position: Fail';
+                        positionBadge.className = 'position-badge';
+                    }
+                } else if(position === 0 && !isAbsent) {
+                    // No position set
+                    const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
+                    if(percentage >= 33) {
+                        positionBadge.textContent = 'Position: Pass 🎉';
+                        positionBadge.className = 'position-badge position-pass';
+                    } else {
+                        positionBadge.textContent = 'Position: Fail';
+                        positionBadge.className = 'position-badge';
+                    }
+                } else {
+                    positionBadge.textContent = 'Position: -';
+                    positionBadge.className = 'position-badge';
+                }
+                
+                // Marks Table
+                const marksBody = document.getElementById('marksTableBody');
+                marksBody.innerHTML = '';
+                
+                if(isAbsent) {
+                    marksBody.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center" style="padding: 30px; color: #666;">
+                                <i class="fas fa-user-times" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                <br>Student was absent for the exam
+                            </td>
+                        </tr>
+                    `;
+                } else if(subjects.length > 0) {
+                    subjects.forEach((subject, index) => {
+                        const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                        const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
+                        marksBody.innerHTML += row;
+                    });
+                }
+                
+                // Totals
+                document.getElementById('obtainedMarks').textContent = totalObtained;
+                document.getElementById('totalMarks').textContent = totalMaximum;
+                const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
+                document.getElementById('percentage').textContent = `${percentage}%`;
+                
+                // Color code percentage
+                const percentageEl = document.getElementById('percentage');
+                if(percentage >= 80) {
+                    percentageEl.style.color = '#28a745';
+                } else if(percentage >= 60) {
+                    percentageEl.style.color = '#ffc107';
+                } else if(percentage >= 33) {
+                    percentageEl.style.color = '#17a2b8';
+                } else {
+                    percentageEl.style.color = '#dc3545';
+                }
+                
+                // Fine/Fee Section
+                const fineSection = document.getElementById('fineSection');
+                if(student.fee && student.fee.amount > 0) {
+                    const paid = student.fee.paid || false;
+                    document.getElementById('fineAmount').innerHTML = `
+                        <strong>Fee/Fine Amount:</strong> Rs. ${student.fee.amount}<br>
+                        <strong>Reason:</strong> ${student.fee.reason || "Not specified"}<br>
+                        <strong>Status:</strong> ${paid ? '<span style="color: #28a745;">Paid</span>' : '<span style="color: #dc3545;">Unpaid</span>'}
+                    `;
+                    fineSection.classList.remove('hidden');
+                } else {
+                    fineSection.classList.add('hidden');
+                }
+                
+                // Scroll to result
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+        
+        // Flower Animation - ONLY for position holders (1st, 2nd, 3rd)
+        function startFlowerAnimation() {
+            const container = document.getElementById('flowerFall');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
+            
+            // Create beautiful flowers for celebration
+            const flowerTypes = ['💐', '🌸', '🌺', '🌻', '🌷', '🥀', '🌼'];
+            
+            for(let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'falling-flower';
+                flower.textContent = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+                flower.style.left = `${Math.random() * 100}%`;
+                flower.style.animationDuration = `${3 + Math.random() * 5}s`;
+                flower.style.animationDelay = `${Math.random() * 3}s`;
+                flower.style.fontSize = `${1.8 + Math.random() * 1.5}rem`;
+                flower.style.opacity = `${0.7 + Math.random() * 0.3}`;
+                container.appendChild(flower);
+            }
+        }
+        
+        // ==================== ADMIN PANEL ====================
+        function initAdminPanel() {
+            // Login
+            document.getElementById('loginBtn').addEventListener('click', handleAdminLogin);
+            document.getElementById('adminPassword').addEventListener('keypress', e => {
+                if(e.key === 'Enter') handleAdminLogin();
+            });
+            
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+            
+            // Tab switching
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
+                btn.addEventListener('click', () => switchAdminTab(btn.getAttribute('data-tab')));
             });
             
             // Exam Setup
@@ -561,60 +1002,99 @@
             document.getElementById('addSubjectBtn').addEventListener('click', addSubjectField);
             document.getElementById('saveSubjectsBtn').addEventListener('click', saveSubjects);
             
-            // Students - New buttons for adding 5 students at a time
+            // Students
             document.getElementById('addFiveStudentsBtn').addEventListener('click', addFiveStudentForms);
             document.getElementById('saveAllStudentsBtn').addEventListener('click', saveAllStudents);
             
-            // Marks
-            document.getElementById('marksClass').addEventListener('change', loadStudentsForMarks);
-            document.getElementById('saveAllMarksBtn').addEventListener('click', saveAllMarks);
+            // Marks & Fees
+            document.getElementById('marksClass').addEventListener('change', loadStudentsForMarksWithFees);
+            document.getElementById('saveAllMarksBtn').addEventListener('click', saveAllMarksWithFees);
+            document.getElementById('autoCalculatePositionsBtn').addEventListener('click', autoCalculatePositions);
+            document.getElementById('resetAllFeesBtn').addEventListener('click', confirmResetAllFees);
             
-            // Fines
-            document.getElementById('searchFineBtn').addEventListener('click', searchFine);
-            document.getElementById('assignFineBtn').addEventListener('click', assignFine);
-            document.getElementById('clearFineBtn').addEventListener('click', clearFine);
-            document.getElementById('markPaidBtn').addEventListener('click', markFinePaidAdmin);
+            // View Results
+            document.getElementById('filterClass').addEventListener('change', loadAllResults);
+            document.getElementById('deleteAllResultsBtn').addEventListener('click', confirmDeleteAllResults);
+            document.getElementById('deleteAllResultsOnlyBtn').addEventListener('click', confirmDeleteAllResults);
+            
+            // Manage Fees
+            document.getElementById('searchFeeBtn').addEventListener('click', searchFee);
+            document.getElementById('assignFeeBtn').addEventListener('click', assignFee);
+            document.getElementById('clearFeeBtn').addEventListener('click', clearFee);
+            document.getElementById('markFeePaidBtn').addEventListener('click', markFeePaid);
             
             // Delete Data
             document.getElementById('deleteStudentBtn').addEventListener('click', deleteStudent);
-            document.getElementById('deleteAllDataBtn').addEventListener('click', confirmDeleteAllData);
             document.getElementById('deleteSelectedBtn').addEventListener('click', deleteSelectedStudent);
+            document.getElementById('deleteAllDataBtn').addEventListener('click', confirmDeleteAllData);
             
             // Change Password
             document.getElementById('changePasswordBtn').addEventListener('click', changeAdminPassword);
-            
-            // Results
-            document.getElementById('filterClass').addEventListener('change', loadAllResults);
-            
-            // Enter key for roll number
-            rollNumberInput.addEventListener('keypress', e => { if(e.key === 'Enter') checkResult(); });
-            adminPasswordInput.addEventListener('keypress', e => { if(e.key === 'Enter') handleAdminLogin(); });
-            
-            if(localStorage.getItem('adminLoggedIn') === 'true') {
-                isAdminLoggedIn = true;
-                showAdminPanel();
-            }
-            
-            // Add initial 5 student forms when admin panel loads
-            setTimeout(() => {
-                if(isAdminLoggedIn) {
-                    addFiveStudentForms();
-                }
-            }, 100);
         }
         
-        // Load Admin Password from Firebase
+        // Load Admin Password
         function loadAdminPassword() {
             database.ref('adminPassword').once('value').then(snapshot => {
                 if(snapshot.exists()) {
                     currentAdminPassword = snapshot.val();
                 } else {
-                    // Set default password if not exists
                     database.ref('adminPassword').set(currentAdminPassword);
                 }
-                // Update display
                 document.getElementById('currentPasswordCode').textContent = currentAdminPassword;
             });
+        }
+        
+        // Admin Login
+        function handleAdminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            if(password === currentAdminPassword) {
+                isAdminLoggedIn = true;
+                localStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('adminLoginModal').style.display = 'none';
+                document.getElementById('adminContent').classList.remove('hidden');
+                document.getElementById('adminPassword').value = '';
+                loadAdminData();
+                setTimeout(addFiveStudentForms, 100);
+            } else {
+                alert("Invalid password!");
+            }
+        }
+        
+        // Admin Logout
+        function handleLogout() {
+            if(confirm("Are you sure you want to logout?")) {
+                isAdminLoggedIn = false;
+                localStorage.removeItem('adminLoggedIn');
+                document.getElementById('adminLoginModal').style.display = 'flex';
+                document.getElementById('adminContent').classList.add('hidden');
+            }
+        }
+        
+        // Switch Admin Tab
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            
+            if(tabId === 'deleteData') {
+                loadDeleteStudentDropdown();
+            }
+            
+            if(tabId === 'manageFees') {
+                setTimeout(() => {
+                    loadAllFees();
+                }, 100);
+            }
+        }
+        
+        // Load Admin Data
+        function loadAdminData() {
+            loadSubjects();
+            loadExamDate();
+            loadStudentsForMarksWithFees();
+            loadAllResults();
+            loadDeleteStudentDropdown();
         }
         
         // Load Subjects
@@ -636,9 +1116,17 @@
                 const div = document.createElement('div');
                 div.className = 'form-row subject-row mt-2';
                 div.innerHTML = `
-                    <div class="form-col"><input type="text" class="form-control subject-name" value="${subject.name}" placeholder="Subject Name"></div>
-                    <div class="form-col"><input type="number" class="form-control subject-total" value="${subject.total}" placeholder="Total Marks"></div>
-                    <div class="form-col"><button class="btn btn-danger remove-subject-btn"><i class="fas fa-times"></i></button></div>
+                    <div class="form-col">
+                        <input type="text" class="form-control subject-name" value="${subject.name}" placeholder="Subject Name">
+                    </div>
+                    <div class="form-col">
+                        <input type="number" class="form-control subject-total" value="${subject.total}" placeholder="Total Marks">
+                    </div>
+                    <div class="form-col">
+                        <button class="btn btn-danger remove-subject-btn">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </div>
                 `;
                 container.appendChild(div);
                 div.querySelector('.remove-subject-btn').addEventListener('click', () => {
@@ -648,395 +1136,31 @@
             });
         }
         
-        // Load Exam Date
-        function loadExamDate() {
-            database.ref('examDate').once('value').then(snapshot => {
-                if(snapshot.exists()) {
-                    document.getElementById('examDateInput').value = snapshot.val();
-                }
-            });
-        }
-        
-        // Check Result
-        function checkResult() {
-            const rollNo = rollNumberInput.value.trim();
-            if(!rollNo) return showError("Please enter roll number");
-            
-            showLoading(true);
-            database.ref(`students/${rollNo}`).once('value').then(snapshot => {
-                showLoading(false);
-                if(!snapshot.exists()) {
-                    showError("Student not found");
-                    return;
-                }
-                
-                currentStudentRollNo = rollNo;
-                const student = snapshot.val();
-                displayResult(student, rollNo);
-            }).catch(error => {
-                showLoading(false);
-                showError("Error: " + error.message);
-            });
-        }
-        
-        // Display Result - MODIFIED: Flowers only for position holders
-        function displayResult(student, rollNo) {
-            resultSection.classList.remove('hidden');
-            
-            // Student Info
-            document.getElementById('studentName').textContent = student.name;
-            document.getElementById('resultRollNo').textContent = rollNo;
-            document.getElementById('studentClass').textContent = student.class;
-            
-            // Exam Date
-            database.ref('examDate').once('value').then(snapshot => {
-                if(snapshot.exists()) {
-                    document.getElementById('examDate').textContent = `Exam Date: ${snapshot.val()}`;
-                }
-            });
-            
-            // Calculate total marks
-            let totalObtained = 0, totalMaximum = 0;
-            if(student.marks && subjects.length > 0) {
-                subjects.forEach((subject, index) => {
-                    const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
-                    totalObtained += parseInt(mark) || 0;
-                    totalMaximum += subject.total;
-                });
-            }
-            
-            // Status & Position - MODIFIED: Auto set position if not set by admin
-            const hasMarks = student.marks && student.marks.some(m => m > 0);
-            const isAbsent = student.status === 'absent' || !hasMarks;
-            
-            const statusEl = document.getElementById('studentStatus');
-            if(isAbsent) {
-                statusEl.textContent = 'Status: Absent';
-                statusEl.className = 'status-badge status-absent';
-            } else {
-                statusEl.textContent = 'Status: Present';
-                statusEl.className = 'status-badge status-present';
-            }
-            
-            // Get position (if manually set by admin) or calculate auto position
-            let position = student.position || 0;
-            const positionBadge = document.getElementById('positionBadge');
-            
-            // Check if position is "Auto" (position = -1 means auto-calculated as "Pass")
-            if(position === -1) {
-                // Auto position: Check if passed
-                const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
-                if(percentage >= 33) {
-                    positionBadge.textContent = 'Position: Pass 🎉';
-                    positionBadge.className = 'position-badge position-pass';
-                } else {
-                    positionBadge.textContent = 'Position: Fail';
-                    positionBadge.className = 'position-badge';
-                }
-            } else if(position === 1) {
-                positionBadge.textContent = '🥇 1st Position';
-                positionBadge.className = 'position-badge position-1';
-                startFlowerAnimation(); // Flowers ONLY for position holders
-            } else if(position === 2) {
-                positionBadge.textContent = '🥈 2nd Position';
-                positionBadge.className = 'position-badge position-2';
-                startFlowerAnimation(); // Flowers ONLY for position holders
-            } else if(position === 3) {
-                positionBadge.textContent = '🥉 3rd Position';
-                positionBadge.className = 'position-badge position-3';
-                startFlowerAnimation(); // Flowers ONLY for position holders
-            } else if(position === 0 && !isAbsent) {
-                // No position set, but student has marks - show "Pass" if passed
-                const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
-                if(percentage >= 33) {
-                    positionBadge.textContent = 'Position: Pass 🎉';
-                    positionBadge.className = 'position-badge position-pass';
-                } else {
-                    positionBadge.textContent = 'Position: Fail';
-                    positionBadge.className = 'position-badge';
-                }
-            } else {
-                positionBadge.textContent = 'Position: -';
-                positionBadge.className = 'position-badge';
-            }
-            
-            // Marks Table
-            const marksBody = document.getElementById('marksTableBody');
-            marksBody.innerHTML = '';
-            
-            if(isAbsent) {
-                marksBody.innerHTML = '<tr><td colspan="3" class="text-center">Student was absent</td></tr>';
-            } else if(subjects.length > 0) {
-                subjects.forEach((subject, index) => {
-                    const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
-                    const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
-                    marksBody.innerHTML += row;
-                });
-            }
-            
-            // Totals
-            document.getElementById('obtainedMarks').textContent = totalObtained;
-            document.getElementById('totalMarks').textContent = totalMaximum;
-            const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
-            document.getElementById('percentage').textContent = `${percentage}%`;
-            
-            // Color code percentage
-            const percentageEl = document.getElementById('percentage');
-            if(percentage >= 80) {
-                percentageEl.style.color = '#38b000'; // Green for excellent
-            } else if(percentage >= 60) {
-                percentageEl.style.color = '#ffaa00'; // Orange for good
-            } else if(percentage >= 33) {
-                percentageEl.style.color = '#0077b6'; // Blue for pass
-            } else {
-                percentageEl.style.color = '#e63946'; // Red for fail
-            }
-            
-            // Fine Section - Read-only
-            const fineSection = document.getElementById('fineSection');
-            if(student.fine && student.fine.amount > 0) {
-                const paid = student.fine.paid || false;
-                document.getElementById('fineAmount').textContent = 
-                    `Fine: Rs. ${student.fine.amount} (${student.fine.reason}) - ${paid ? 'Paid' : 'Unpaid'}`;
-                fineSection.classList.remove('hidden');
-            } else {
-                fineSection.classList.add('hidden');
-            }
-            
-            // Show delete button for admin
-            const deleteResultSection = document.getElementById('deleteResultSection');
-            if(isAdminLoggedIn) {
-                deleteResultSection.classList.remove('hidden');
-            } else {
-                deleteResultSection.classList.add('hidden');
-            }
-        }
-        
-        // Flower Animation - ONLY for position holders
-        function startFlowerAnimation() {
-            const container = document.getElementById('flowerFall');
-            container.innerHTML = '';
-            container.classList.remove('hidden');
-            for(let i=0; i<10; i++) {
-                const flower = document.createElement('div');
-                flower.className = 'falling-flower';
-                flower.textContent = '💐';
-                flower.style.left = `${Math.random()*100}%`;
-                flower.style.animationDuration = `${2+Math.random()*3}s`;
-                flower.style.animationDelay = `${Math.random()*2}s`;
-                container.appendChild(flower);
-            }
-        }
-        
-        // Auto Calculate Positions based on marks
-        function autoCalculatePositions() {
-            const selectedClass = document.getElementById('marksClass').value;
-            
-            database.ref('students').once('value').then(snapshot => {
-                const students = snapshot.val() || {};
-                let studentsWithMarks = [];
-                
-                // Collect all students with their total marks
-                Object.keys(students).forEach(rollNo => {
-                    const student = students[rollNo];
-                    if(selectedClass !== 'all' && student.class !== selectedClass) return;
-                    
-                    // Calculate total marks
-                    let totalMarks = 0;
-                    if(student.marks && subjects.length > 0) {
-                        subjects.forEach((subject, index) => {
-                            const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
-                            totalMarks += parseInt(mark) || 0;
-                        });
-                    }
-                    
-                    // Only include students who have marks
-                    if(totalMarks > 0) {
-                        studentsWithMarks.push({
-                            rollNo,
-                            name: student.name,
-                            class: student.class,
-                            totalMarks,
-                            currentPosition: student.position || 0
-                        });
-                    }
-                });
-                
-                // Sort by total marks (descending)
-                studentsWithMarks.sort((a, b) => b.totalMarks - a.totalMarks);
-                
-                // Assign positions: 1st, 2nd, 3rd, and "Auto" for others
-                let updates = {};
-                studentsWithMarks.forEach((student, index) => {
-                    let position;
-                    if(index === 0) {
-                        position = 1; // 1st position
-                    } else if(index === 1) {
-                        position = 2; // 2nd position
-                    } else if(index === 2) {
-                        position = 3; // 3rd position
-                    } else {
-                        position = -1; // Auto (will show as Pass/Fail)
-                    }
-                    
-                    updates[`students/${student.rollNo}/position`] = position;
-                });
-                
-                // Apply updates
-                database.ref().update(updates).then(() => {
-                    showSuccess("Positions auto-calculated successfully!");
-                    // Refresh the marks entry view
-                    loadStudentsForMarks();
-                });
-            });
-        }
-        
-        // Delete This Result
-        function deleteThisResult() {
-            if(!currentStudentRollNo) return;
-            
-            if(confirm(`Are you sure you want to delete result for student ${currentStudentRollNo}?`)) {
-                // Clear marks, position, status, and fine
-                const updates = {
-                    marks: [],
-                    position: 0,
-                    status: 'absent',
-                    fine: {amount: 0, reason: "", paid: false}
-                };
-                
-                database.ref(`students/${currentStudentRollNo}`).update(updates).then(() => {
-                    showSuccess(`Result for ${currentStudentRollNo} deleted`);
-                    // Refresh display
-                    database.ref(`students/${currentStudentRollNo}`).once('value').then(snapshot => {
-                        displayResult(snapshot.val(), currentStudentRollNo);
-                    });
-                    // Refresh admin tables
-                    loadAllResults();
-                    loadStudentsForMarks();
-                });
-            }
-        }
-        
-        // Delete All Results
-        function confirmDeleteAllResults() {
-            if(confirm("⚠️ WARNING! This will delete ALL results (marks, positions, fines) for ALL students!\n\nStudent information will remain, but all marks will be cleared.\n\nAre you sure?")) {
-                if(prompt("Type 'DELETE ALL RESULTS' to confirm:") === "DELETE ALL RESULTS") {
-                    deleteAllResults();
-                }
-            }
-        }
-        
-        function deleteAllResults() {
-            showLoading(true);
-            
-            // Get all students
-            database.ref('students').once('value').then(snapshot => {
-                const students = snapshot.val() || {};
-                let updates = {};
-                
-                // Clear results for each student
-                Object.keys(students).forEach(rollNo => {
-                    updates[`students/${rollNo}/marks`] = [];
-                    updates[`students/${rollNo}/position`] = 0;
-                    updates[`students/${rollNo}/status`] = 'absent';
-                    updates[`students/${rollNo}/fine`] = {amount: 0, reason: "", paid: false};
-                });
-                
-                // Apply updates
-                database.ref().update(updates).then(() => {
-                    showLoading(false);
-                    showSuccess("All results deleted successfully!");
-                    // Refresh displays
-                    if(currentStudentRollNo) {
-                        database.ref(`students/${currentStudentRollNo}`).once('value').then(snap => {
-                            displayResult(snap.val(), currentStudentRollNo);
-                        });
-                    }
-                    loadAllResults();
-                    loadStudentsForMarks();
-                }).catch(error => {
-                    showLoading(false);
-                    showError("Error: " + error.message);
-                });
-            }).catch(error => {
-                showLoading(false);
-                showError("Error: " + error.message);
-            });
-        }
-        
-        // Admin Functions
-        function showAdminLogin() {
-            adminLoginModal.classList.remove('hidden');
-            adminPasswordInput.focus();
-        }
-        
-        function hideAdminLogin() {
-            adminLoginModal.classList.add('hidden');
-            adminPasswordInput.value = '';
-        }
-        
-        function handleAdminLogin() {
-            if(adminPasswordInput.value === currentAdminPassword) {
-                isAdminLoggedIn = true;
-                localStorage.setItem('adminLoggedIn', 'true');
-                hideAdminLogin();
-                showAdminPanel();
-                // Add initial 5 student forms when admin logs in
-                setTimeout(addFiveStudentForms, 100);
-            } else {
-                showError("Invalid password");
-            }
-        }
-        
-        function showAdminPanel() {
-            adminPanel.classList.remove('hidden');
-            loadStudentsForMarks();
-            loadAllResults();
-            loadDeleteStudentDropdown();
-        }
-        
-        function handleLogout() {
-            isAdminLoggedIn = false;
-            localStorage.removeItem('adminLoggedIn');
-            adminPanel.classList.add('hidden');
-        }
-        
-        // Tab Switching
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-            
-            if(tabId === 'deleteData') {
-                loadDeleteStudentDropdown();
-            }
-        }
-        
-        // Exam Date
-        function saveExamDate() {
-            const date = document.getElementById('examDateInput').value;
-            database.ref('examDate').set(date);
-            showSuccess("Exam date saved");
-        }
-        
-        // Subjects Management
+        // Add Subject Field
         function addSubjectField() {
+            const container = document.getElementById('subjectInputs');
             const div = document.createElement('div');
             div.className = 'form-row subject-row mt-2';
             div.innerHTML = `
-                <div class="form-col"><input type="text" class="form-control subject-name" placeholder="Subject Name"></div>
-                <div class="form-col"><input type="number" class="form-control subject-total" placeholder="Total Marks"></div>
-                <div class="form-col"><button class="btn btn-danger remove-subject-btn"><i class="fas fa-times"></i></button></div>
+                <div class="form-col">
+                    <input type="text" class="form-control subject-name" placeholder="Subject Name">
+                </div>
+                <div class="form-col">
+                    <input type="number" class="form-control subject-total" placeholder="Total Marks">
+                </div>
+                <div class="form-col">
+                    <button class="btn btn-danger remove-subject-btn">
+                        <i class="fas fa-times"></i> Remove
+                    </button>
+                </div>
             `;
-            document.getElementById('subjectInputs').appendChild(div);
+            container.appendChild(div);
             div.querySelector('.remove-subject-btn').addEventListener('click', () => {
-                const index = Array.from(document.querySelectorAll('.subject-row')).indexOf(div);
-                subjects.splice(index, 1);
-                updateSubjectInputs();
+                div.remove();
             });
         }
         
+        // Save Subjects
         function saveSubjects() {
             const rows = document.querySelectorAll('.subject-row');
             const newSubjects = [];
@@ -1045,14 +1169,35 @@
                 const total = parseInt(row.querySelector('.subject-total').value) || 0;
                 if(name && total > 0) newSubjects.push({name, total});
             });
-            if(newSubjects.length === 0) return showError("Add at least one subject");
+            if(newSubjects.length === 0) return alert("Add at least one subject");
+            
             database.ref('subjects').set(newSubjects).then(() => {
                 subjects = newSubjects;
-                showSuccess("Subjects saved");
+                alert("Subjects saved successfully!");
+                loadStudentsForMarksWithFees();
             });
         }
         
-        // Add Student Forms (5 at a time) - NEW FUNCTION
+        // Load Exam Date
+        function loadExamDate() {
+            database.ref('examDate').once('value').then(snapshot => {
+                if(snapshot.exists()) {
+                    document.getElementById('examDateInput').value = snapshot.val();
+                } else {
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('examDateInput').value = today;
+                }
+            });
+        }
+        
+        // Save Exam Date
+        function saveExamDate() {
+            const date = document.getElementById('examDateInput').value;
+            database.ref('examDate').set(date);
+            alert("Exam date saved!");
+        }
+        
+        // Add 5 Student Forms
         function addFiveStudentForms() {
             const container = document.getElementById('studentFormsContainer');
             for(let i = 0; i < 5; i++) {
@@ -1079,22 +1224,20 @@
                 `;
                 container.appendChild(formGroup);
                 
-                // Add remove button functionality
                 formGroup.querySelector('.remove-student-form-btn').addEventListener('click', () => {
                     formGroup.remove();
                 });
             }
         }
         
-        // Save All Students - NEW FUNCTION
+        // Save All Students
         function saveAllStudents() {
             const forms = document.querySelectorAll('.student-form');
             if(forms.length === 0) {
-                return showError("No student forms to save. Click 'Add 5 Student Forms' first.");
+                return alert("No student forms to save. Click 'Add 5 Student Forms' first.");
             }
             
             let validStudents = 0;
-            let errors = [];
             let updates = {};
             
             forms.forEach((form, index) => {
@@ -1103,69 +1246,50 @@
                 const cls = form.querySelector('.student-class').value;
                 
                 if(rollNo && name) {
-                    // Check if roll number already exists
-                    database.ref(`students/${rollNo}`).once('value').then(snapshot => {
-                        if(snapshot.exists()) {
-                            errors.push(`Roll number ${rollNo} already exists`);
-                        } else {
-                            updates[`students/${rollNo}`] = {
-                                name,
-                                class: cls,
-                                position: 0,
-                                status: 'present',
-                                fine: {amount: 0, reason: "", paid: false},
-                                marks: [],
-                                createdAt: new Date().toISOString()
-                            };
-                            validStudents++;
-                        }
-                    });
-                } else if(rollNo || name) {
-                    errors.push(`Form ${index + 1}: Both roll number and name are required`);
+                    updates[`students/${rollNo}`] = {
+                        name,
+                        class: cls,
+                        position: 0,
+                        status: 'present',
+                        fee: {amount: 0, reason: "", paid: false},
+                        marks: [],
+                        createdAt: new Date().toISOString()
+                    };
+                    validStudents++;
                 }
             });
             
-            // Wait a moment for async checks to complete
-            setTimeout(() => {
-                if(errors.length > 0) {
-                    showError(errors.join('\n'));
-                    return;
-                }
-                
-                if(validStudents === 0) {
-                    showError("No valid students to save. Fill in roll number and name.");
-                    return;
-                }
-                
-                // Save all students to Firebase
-                database.ref().update(updates).then(() => {
-                    showSuccess(`${validStudents} student(s) added successfully!`);
-                    
-                    // Clear the forms
-                    document.getElementById('studentFormsContainer').innerHTML = '';
-                    
-                    // Refresh other sections
-                    loadStudentsForMarks();
-                    loadAllResults();
-                    loadDeleteStudentDropdown();
-                    
-                    // Add 5 more empty forms
-                    addFiveStudentForms();
-                }).catch(error => {
-                    showError("Error saving students: " + error.message);
-                });
-            }, 500);
+            if(validStudents === 0) {
+                alert("No valid students to save. Fill in roll number and name.");
+                return;
+            }
+            
+            database.ref().update(updates).then(() => {
+                alert(`${validStudents} student(s) added successfully!`);
+                document.getElementById('studentFormsContainer').innerHTML = '';
+                loadStudentsForMarksWithFees();
+                loadAllResults();
+                loadDeleteStudentDropdown();
+                addFiveStudentForms();
+            }).catch(error => {
+                alert("Error saving students: " + error.message);
+            });
         }
         
-        // Load Students for Marks Entry - MODIFIED: Added Auto option
-        function loadStudentsForMarks() {
+        // Load Students for Marks Entry WITH FEE INPUTS
+        function loadStudentsForMarksWithFees() {
             const selectedClass = document.getElementById('marksClass').value;
             const container = document.getElementById('marksEntryContainer');
-            container.innerHTML = '<p>Loading students...</p>';
+            container.innerHTML = '<div class="loading-spinner" style="width: 40px; height: 40px;"></div><p>Loading students...</p>';
             
             database.ref('students').once('value').then(snapshot => {
                 const students = snapshot.val() || {};
                 container.innerHTML = '';
+                
+                if(Object.keys(students).length === 0) {
+                    container.innerHTML = '<p class="text-center">No students found. Add students first.</p>';
+                    return;
+                }
                 
                 Object.keys(students).forEach(rollNo => {
                     const student = students[rollNo];
@@ -1174,39 +1298,56 @@
                     const row = document.createElement('div');
                     row.className = 'student-row';
                     
+                    // Marks inputs
                     let marksHTML = '';
                     subjects.forEach((subject, index) => {
                         const mark = student.marks && student.marks[index] ? student.marks[index] : '';
                         marksHTML += `
-                            <div class="form-col">
-                                <input type="number" class="marks-input" data-roll="${rollNo}" data-index="${index}" 
-                                       max="${subject.total}" placeholder="${subject.name}" value="${mark}">
-                            </div>
+                            <input type="number" class="marks-input" 
+                                   data-roll="${rollNo}" data-index="${index}" 
+                                   max="${subject.total}" placeholder="${subject.name}" 
+                                   value="${mark}" min="0" max="${subject.total}">
                         `;
                     });
                     
-                    // Determine current position display
-                    let positionDisplay = "Auto";
-                    if(student.position === 1) positionDisplay = "1st";
-                    else if(student.position === 2) positionDisplay = "2nd";
-                    else if(student.position === 3) positionDisplay = "3rd";
-                    else if(student.position === -1) positionDisplay = "Auto";
-                    else positionDisplay = "Auto";
+                    // Position select
+                    const position = student.position || 0;
+                    
+                    // Fee data
+                    const feeAmount = student.fee?.amount || 0;
+                    const feeReason = student.fee?.reason || '';
+                    const feePaid = student.fee?.paid || false;
                     
                     row.innerHTML = `
-                        <div style="flex:1; min-width:150px;">
-                            <strong>${rollNo} - ${student.name}</strong><br>
-                            <small>${student.class}</small>
+                        <div class="student-info">
+                            <div class="student-name">${student.name}</div>
+                            <div class="student-roll">${rollNo} - ${student.class}</div>
                         </div>
-                        <div class="form-row" style="flex:2;">${marksHTML}</div>
-                        <div class="form-col">
+                        
+                        <div class="marks-inputs">
+                            ${marksHTML}
+                        </div>
+                        
+                        <div>
                             <select class="position-select" data-roll="${rollNo}">
-                                <option value="-1" ${student.position==-1?'selected':''}>Auto</option>
-                                <option value="0" ${student.position==0?'selected':''}>No Position</option>
-                                <option value="1" ${student.position==1?'selected':''}>1st</option>
-                                <option value="2" ${student.position==2?'selected':''}>2nd</option>
-                                <option value="3" ${student.position==3?'selected':''}>3rd</option>
+                                <option value="-1" ${position==-1?'selected':''}>Auto</option>
+                                <option value="0" ${position==0?'selected':''}>No Position</option>
+                                <option value="1" ${position==1?'selected':''}>1st</option>
+                                <option value="2" ${position==2?'selected':''}>2nd</option>
+                                <option value="3" ${position==3?'selected':''}>3rd</option>
                             </select>
+                        </div>
+                        
+                        <div class="fine-inputs-row">
+                            <input type="number" class="fine-amount-input" data-roll="${rollNo}" 
+                                   placeholder="Fee/Fine" value="${feeAmount > 0 ? feeAmount : ''}">
+                            <input type="text" class="fine-reason-input" data-roll="${rollNo}" 
+                                   placeholder="Reason" value="${feeReason}">
+                            <div class="fees-paid-checkbox">
+                                <input type="checkbox" class="fees-paid-check" data-roll="${rollNo}" 
+                                       ${feePaid ? 'checked' : ''}>
+                                <span>Fees Paid</span>
+                            </div>
                         </div>
                     `;
                     container.appendChild(row);
@@ -1214,23 +1355,26 @@
             });
         }
         
-        // Save All Marks - MODIFIED: Include Auto position option
-        function saveAllMarks() {
+        // Save All Marks WITH FEE DATA
+        function saveAllMarksWithFees() {
             const marksInputs = document.querySelectorAll('.marks-input');
             const positionSelects = document.querySelectorAll('.position-select');
+            const feeAmountInputs = document.querySelectorAll('.fine-amount-input');
+            const feeReasonInputs = document.querySelectorAll('.fine-reason-input');
+            const feePaidChecks = document.querySelectorAll('.fees-paid-check');
             
             let updates = {};
             let positionCount = {1:0,2:0,3:0};
             
-            // Count manual positions (excluding Auto)
+            // Count positions
             positionSelects.forEach(select => {
                 const pos = parseInt(select.value);
                 if(pos > 0) positionCount[pos]++;
             });
             
-            // Validate only 3 positions (excluding Auto)
+            // Validate positions
             if(positionCount[1] > 1 || positionCount[2] > 1 || positionCount[3] > 1) {
-                return showError("Only one student per position (1st, 2nd, 3rd) allowed");
+                return alert("Only one student each for 1st, 2nd, and 3rd positions allowed!");
             }
             
             // Process marks
@@ -1244,7 +1388,7 @@
                 }
                 updates[`students/${rollNo}/marks`][index] = mark === '' ? 0 : parseInt(mark);
                 
-                // Auto absent if all marks are 0 or empty
+                // Determine status
                 const allMarks = Array.from(document.querySelectorAll(`.marks-input[data-roll="${rollNo}"]`));
                 const hasMarks = allMarks.some(m => m.value.trim() !== '' && parseInt(m.value) > 0);
                 updates[`students/${rollNo}/status`] = hasMarks ? 'present' : 'absent';
@@ -1256,68 +1400,424 @@
                 updates[`students/${rollNo}/position`] = parseInt(select.value);
             });
             
+            // Process fees
+            feeAmountInputs.forEach(input => {
+                const rollNo = input.getAttribute('data-roll');
+                const amount = parseInt(input.value) || 0;
+                const reason = Array.from(feeReasonInputs).find(r => r.getAttribute('data-roll') === rollNo)?.value || '';
+                const paid = Array.from(feePaidChecks).find(c => c.getAttribute('data-roll') === rollNo)?.checked || false;
+                
+                updates[`students/${rollNo}/fee`] = {
+                    amount,
+                    reason,
+                    paid
+                };
+            });
+            
             database.ref().update(updates).then(() => {
-                showSuccess("All marks and positions saved");
+                alert("All marks, positions, and fees saved successfully!");
+                loadStudentsForMarksWithFees();
+                loadAllResults();
+            }).catch(error => {
+                alert("Error saving data: " + error.message);
             });
         }
         
-        // Fine Management
-        function searchFine() {
-            const rollNo = document.getElementById('fineSearchRoll').value.trim();
-            if(!rollNo) return showError("Enter roll number");
+        // Auto Calculate Positions
+        function autoCalculatePositions() {
+            const selectedClass = document.getElementById('marksClass').value;
+            
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                let studentsWithMarks = [];
+                
+                Object.keys(students).forEach(rollNo => {
+                    const student = students[rollNo];
+                    if(selectedClass !== 'all' && student.class !== selectedClass) return;
+                    
+                    let totalMarks = 0;
+                    if(student.marks && subjects.length > 0) {
+                        subjects.forEach((subject, index) => {
+                            const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                            totalMarks += parseInt(mark) || 0;
+                        });
+                    }
+                    
+                    if(totalMarks > 0) {
+                        studentsWithMarks.push({
+                            rollNo,
+                            name: student.name,
+                            class: student.class,
+                            totalMarks
+                        });
+                    }
+                });
+                
+                studentsWithMarks.sort((a, b) => b.totalMarks - a.totalMarks);
+                
+                let updates = {};
+                studentsWithMarks.forEach((student, index) => {
+                    let position;
+                    if(index === 0) position = 1;
+                    else if(index === 1) position = 2;
+                    else if(index === 2) position = 3;
+                    else position = -1;
+                    
+                    updates[`students/${student.rollNo}/position`] = position;
+                });
+                
+                database.ref().update(updates).then(() => {
+                    alert("Positions auto-calculated successfully!");
+                    loadStudentsForMarksWithFees();
+                    loadAllResults();
+                });
+            });
+        }
+        
+        // Load All Results
+        function loadAllResults() {
+            const filter = document.getElementById('filterClass').value;
+            const table = document.getElementById('allResultsTable');
+            table.innerHTML = '<tr><td colspan="10" class="text-center">Loading...</td></tr>';
+            
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                table.innerHTML = '';
+                
+                let allStudents = [];
+                
+                Object.keys(students).forEach(rollNo => {
+                    const student = students[rollNo];
+                    if(filter !== 'all' && student.class !== filter) return;
+                    
+                    // Calculate marks
+                    let totalObtained = 0, totalMaximum = 0;
+                    if(student.marks && subjects.length > 0) {
+                        subjects.forEach((subject, index) => {
+                            const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                            totalObtained += parseInt(mark) || 0;
+                            totalMaximum += subject.total;
+                        });
+                    }
+                    
+                    const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
+                    const isAbsent = student.status === 'absent' || !student.marks || student.marks.every(m => m === 0);
+                    
+                    allStudents.push({
+                        rollNo,
+                        student,
+                        totalObtained,
+                        totalMaximum,
+                        percentage,
+                        isAbsent
+                    });
+                });
+                
+                // Sort by position
+                allStudents.sort((a, b) => {
+                    const posA = a.student.position || 0;
+                    const posB = b.student.position || 0;
+                    return posA - posB;
+                });
+                
+                // Render table
+                allStudents.forEach(data => {
+                    const {rollNo, student, totalObtained, totalMaximum, percentage, isAbsent} = data;
+                    
+                    // Position text
+                    let positionText = '-';
+                    if(student.position === 1) positionText = '🥇';
+                    else if(student.position === 2) positionText = '🥈';
+                    else if(student.position === 3) positionText = '🥉';
+                    else if(student.position === -1) {
+                        positionText = percentage >= 33 ? 'Pass' : 'Fail';
+                    }
+                    
+                    // Fee text
+                    const feeAmount = student.fee?.amount || 0;
+                    const feePaid = student.fee?.paid || false;
+                    const feeText = feeAmount > 0 ? `Rs.${feeAmount}` : 'None';
+                    const feeStatus = feeAmount > 0 ? (feePaid ? 'Paid' : 'Unpaid') : '-';
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${positionText}</td>
+                        <td>${rollNo}</td>
+                        <td>${student.name}</td>
+                        <td>${student.class}</td>
+                        <td>${isAbsent ? 'Absent' : `${totalObtained}/${totalMaximum}`}</td>
+                        <td>${isAbsent ? '-' : `${percentage}%`}</td>
+                        <td>${isAbsent ? 'Absent' : 'Present'}</td>
+                        <td>${feeText}</td>
+                        <td>
+                            <span class="${feePaid ? 'status-paid' : 'status-unpaid'}">
+                                ${feeStatus}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-small btn-primary" onclick="viewStudentAdmin('${rollNo}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-small btn-danger" onclick="deleteStudentFromTable('${rollNo}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    table.appendChild(row);
+                });
+                
+                if(table.innerHTML === '') {
+                    table.innerHTML = '<tr><td colspan="10" class="text-center">No students found</td></tr>';
+                }
+            });
+        }
+        
+        // View Student from Admin Panel
+        function viewStudentAdmin(rollNo) {
+            switchPage('public-result');
+            document.getElementById('rollNumber').value = rollNo;
+            setTimeout(() => checkResult(), 100);
+        }
+        
+        // Delete Student from Table
+        function deleteStudentFromTable(rollNo) {
+            if(confirm(`Are you sure you want to delete student ${rollNo}?`)) {
+                database.ref(`students/${rollNo}`).remove().then(() => {
+                    alert(`Student ${rollNo} deleted!`);
+                    loadAllResults();
+                    loadDeleteStudentDropdown();
+                    loadStudentsForMarksWithFees();
+                });
+            }
+        }
+        
+        // Delete All Results Confirmation
+        function confirmDeleteAllResults() {
+            if(confirm("⚠️ WARNING! This will delete ALL results for ALL students!\n\nMarks, positions, and fees will be cleared.\n\nAre you sure?")) {
+                if(prompt("Type 'DELETE ALL RESULTS' to confirm:") === "DELETE ALL RESULTS") {
+                    deleteAllResults();
+                }
+            }
+        }
+        
+        // Delete All Results
+        function deleteAllResults() {
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                let updates = {};
+                
+                Object.keys(students).forEach(rollNo => {
+                    updates[`students/${rollNo}/marks`] = [];
+                    updates[`students/${rollNo}/position`] = 0;
+                    updates[`students/${rollNo}/status`] = 'absent';
+                    updates[`students/${rollNo}/fee`] = {amount: 0, reason: "", paid: false};
+                });
+                
+                database.ref().update(updates).then(() => {
+                    alert("All results deleted successfully!");
+                    loadAllResults();
+                    loadStudentsForMarksWithFees();
+                });
+            });
+        }
+        
+        // ==================== MANAGE FEES SECTION ====================
+        // Search Fee
+        function searchFee() {
+            const rollNo = document.getElementById('feeSearchRoll').value.trim();
+            if(!rollNo) return alert("Please enter roll number");
+            
+            currentStudentRoll = rollNo;
             
             database.ref(`students/${rollNo}`).once('value').then(snapshot => {
                 if(!snapshot.exists()) {
-                    showError("Student not found");
+                    alert("Student not found");
+                    document.getElementById('feeDetails').classList.add('hidden');
                     return;
                 }
                 
                 const student = snapshot.val();
-                document.getElementById('fineManageSection').classList.remove('hidden');
-                document.getElementById('fineAmountInput').value = student.fine?.amount || '';
-                document.getElementById('fineReason').value = student.fine?.reason || '';
+                displayFeeDetails(student, rollNo);
             });
         }
         
-        function assignFine() {
-            const rollNo = document.getElementById('fineSearchRoll').value.trim();
-            const amount = parseInt(document.getElementById('fineAmountInput').value) || 0;
-            const reason = document.getElementById('fineReason').value.trim();
+        // Display Fee Details
+        function displayFeeDetails(student, rollNo) {
+            const feeDetails = document.getElementById('feeDetails');
+            feeDetails.classList.remove('hidden');
             
-            if(!rollNo || amount <= 0) return showError("Enter valid amount");
+            // Student info
+            document.getElementById('feeStudentName').textContent = student.name;
+            document.getElementById('feeStudentRoll').textContent = rollNo;
+            document.getElementById('feeStudentClass').textContent = student.class;
             
-            const fine = {amount, reason: reason || "Fine", paid: false};
-            database.ref(`students/${rollNo}/fine`).set(fine).then(() => {
-                showSuccess("Fine assigned");
+            // Fee info
+            if(student.fee && student.fee.amount > 0) {
+                document.getElementById('feeAmountInput').value = student.fee.amount;
+                document.getElementById('feeReason').value = student.fee.reason || '';
+                document.getElementById('feePaidCheckbox').checked = student.fee.paid || false;
+            } else {
+                document.getElementById('feeAmountInput').value = '';
+                document.getElementById('feeReason').value = '';
+                document.getElementById('feePaidCheckbox').checked = false;
+            }
+        }
+        
+        // Assign Fee
+        function assignFee() {
+            if(!currentStudentRoll) return alert("Search for a student first");
+            
+            const amount = parseInt(document.getElementById('feeAmountInput').value) || 0;
+            const reason = document.getElementById('feeReason').value.trim() || "Fee";
+            const paid = document.getElementById('feePaidCheckbox').checked;
+            
+            if(amount <= 0) return alert("Enter valid fee amount");
+            
+            const fee = {
+                amount,
+                reason,
+                paid
+            };
+            
+            database.ref(`students/${currentStudentRoll}/fee`).set(fee).then(() => {
+                alert("Fee assigned/updated successfully!");
+                loadAllFees();
+                loadStudentsForMarksWithFees();
             });
         }
         
-        function clearFine() {
-            const rollNo = document.getElementById('fineSearchRoll').value.trim();
-            if(!rollNo) return showError("Enter roll number");
+        // Clear Fee
+        function clearFee() {
+            if(!currentStudentRoll) return alert("Search for a student first");
             
-            const fine = {amount: 0, reason: "", paid: false};
-            database.ref(`students/${rollNo}/fine`).set(fine).then(() => {
-                showSuccess("Fine cleared");
+            if(confirm("Are you sure you want to clear the fee?")) {
+                const fee = {amount: 0, reason: "", paid: false};
+                database.ref(`students/${currentStudentRoll}/fee`).set(fee).then(() => {
+                    alert("Fee cleared!");
+                    displayFeeDetails({name: "Loading...", class: ""}, currentStudentRoll);
+                    loadAllFees();
+                    loadStudentsForMarksWithFees();
+                });
+            }
+        }
+        
+        // Mark Fee as Paid
+        function markFeePaid() {
+            if(!currentStudentRoll) return alert("Search for a student first");
+            
+            database.ref(`students/${currentStudentRoll}/fee`).once('value').then(snapshot => {
+                if(snapshot.exists() && snapshot.val().amount > 0) {
+                    const fee = snapshot.val();
+                    fee.paid = true;
+                    database.ref(`students/${currentStudentRoll}/fee`).set(fee).then(() => {
+                        alert("Fee marked as paid!");
+                        document.getElementById('feePaidCheckbox').checked = true;
+                        loadAllFees();
+                        loadStudentsForMarksWithFees();
+                    });
+                } else {
+                    alert("No fee assigned to this student");
+                }
             });
         }
         
-        function markFinePaidAdmin() {
-            const rollNo = document.getElementById('fineSearchRoll').value.trim();
-            if(!rollNo) return showError("Enter roll number");
+        // Load All Fees
+        function loadAllFees() {
+            const table = document.getElementById('allFeesTable');
+            table.innerHTML = '<tr><td colspan="7" class="text-center">Loading...</td></tr>';
             
-            database.ref(`students/${rollNo}/fine`).once('value').then(snapshot => {
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                table.innerHTML = '';
+                
+                let hasFees = false;
+                
+                Object.keys(students).forEach(rollNo => {
+                    const student = students[rollNo];
+                    if(student.fee && student.fee.amount > 0) {
+                        hasFees = true;
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${rollNo}</td>
+                            <td>${student.name}</td>
+                            <td>${student.class}</td>
+                            <td>Rs. ${student.fee.amount}</td>
+                            <td>${student.fee.reason || "Not specified"}</td>
+                            <td>
+                                <span class="${student.fee.paid ? 'status-paid' : 'status-unpaid'}">
+                                    ${student.fee.paid ? 'Paid' : 'Unpaid'}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-small btn-primary" onclick="viewStudentFees('${rollNo}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-small btn-success" onclick="quickMarkFeePaid('${rollNo}')">
+                                    <i class="fas fa-check"></i> Paid
+                                </button>
+                            </td>
+                        `;
+                        table.appendChild(row);
+                    }
+                });
+                
+                if(!hasFees) {
+                    table.innerHTML = '<tr><td colspan="7" class="text-center">No students with fees found</td></tr>';
+                }
+            });
+        }
+        
+        // Quick Mark Fee Paid
+        function quickMarkFeePaid(rollNo) {
+            database.ref(`students/${rollNo}/fee`).once('value').then(snapshot => {
                 if(snapshot.exists()) {
-                    const fine = snapshot.val();
-                    fine.paid = true;
-                    database.ref(`students/${rollNo}/fine`).set(fine).then(() => {
-                        showSuccess("Fine marked as paid");
+                    const fee = snapshot.val();
+                    fee.paid = true;
+                    database.ref(`students/${rollNo}/fee`).set(fee).then(() => {
+                        alert(`Fee for ${rollNo} marked as paid!`);
+                        loadAllFees();
+                        loadStudentsForMarksWithFees();
                     });
                 }
             });
         }
         
-        // Delete Functions
+        // View Student Fee
+        function viewStudentFees(rollNo) {
+            document.getElementById('feeSearchRoll').value = rollNo;
+            searchFee();
+        }
+        
+        // Confirm Reset All Fees
+        function confirmResetAllFees() {
+            if(confirm("⚠️ WARNING! This will reset ALL fees for ALL students!\n\nAll fee amounts will be set to 0 and marked as unpaid.\n\nAre you sure?")) {
+                if(prompt("Type 'RESET ALL FEES' to confirm:") === "RESET ALL FEES") {
+                    resetAllFees();
+                }
+            }
+        }
+        
+        // Reset All Fees
+        function resetAllFees() {
+            database.ref('students').once('value').then(snapshot => {
+                const students = snapshot.val() || {};
+                let updates = {};
+                
+                Object.keys(students).forEach(rollNo => {
+                    updates[`students/${rollNo}/fee`] = {amount: 0, reason: "", paid: false};
+                });
+                
+                database.ref().update(updates).then(() => {
+                    alert("All fees reset successfully!");
+                    loadAllFees();
+                    loadStudentsForMarksWithFees();
+                    loadAllResults();
+                });
+            });
+        }
+        
+        // Load Delete Student Dropdown
         function loadDeleteStudentDropdown() {
             const select = document.getElementById('deleteStudentSelect');
             select.innerHTML = '<option value="">Select student to delete</option>';
@@ -1334,58 +1834,60 @@
             });
         }
         
+        // Delete Student
         function deleteStudent() {
             const rollNo = document.getElementById('deleteRollNo').value.trim();
-            if(!rollNo) return showError("Enter roll number");
+            if(!rollNo) return alert("Enter roll number");
             
-            if(confirm(`Are you sure you want to delete student ${rollNo} from Firebase?`)) {
+            if(confirm(`Delete student ${rollNo}?`)) {
                 database.ref(`students/${rollNo}`).remove().then(() => {
-                    showSuccess(`Student ${rollNo} deleted from Firebase`);
+                    alert(`Student ${rollNo} deleted!`);
                     document.getElementById('deleteRollNo').value = '';
                     loadDeleteStudentDropdown();
                     loadAllResults();
-                    loadStudentsForMarks();
+                    loadStudentsForMarksWithFees();
                 });
             }
         }
         
+        // Delete Selected Student
         function deleteSelectedStudent() {
             const select = document.getElementById('deleteStudentSelect');
             const rollNo = select.value;
-            if(!rollNo) return showError("Select a student first");
+            if(!rollNo) return alert("Select a student first");
             
-            if(confirm(`Are you sure you want to delete student ${rollNo} from Firebase?`)) {
+            if(confirm(`Delete student ${rollNo}?`)) {
                 database.ref(`students/${rollNo}`).remove().then(() => {
-                    showSuccess(`Student ${rollNo} deleted from Firebase`);
+                    alert(`Student ${rollNo} deleted!`);
                     loadDeleteStudentDropdown();
                     loadAllResults();
-                    loadStudentsForMarks();
+                    loadStudentsForMarksWithFees();
                 });
             }
         }
         
+        // Delete All Data Confirmation
         function confirmDeleteAllData() {
-            if(confirm("⚠️ DANGER! This will delete ALL data from Firebase - students, subjects, exam date, everything!\n\nThis action cannot be undone!\n\nAre you absolutely sure?")) {
+            if(confirm("⚠️ DANGER! This will delete EVERYTHING from Firebase!\n\nStudents, subjects, settings - ALL GONE!\n\nAre you absolutely sure?")) {
                 if(prompt("Type 'DELETE ALL' to confirm:") === "DELETE ALL") {
                     deleteAllData();
                 }
             }
         }
         
+        // Delete All Data
         function deleteAllData() {
             database.ref().remove().then(() => {
-                showSuccess("ALL data deleted from Firebase");
-                // Reset local state
-                subjects = [];
+                alert("ALL data deleted!");
                 currentAdminPassword = "admin123";
                 database.ref('adminPassword').set(currentAdminPassword);
                 document.getElementById('currentPasswordCode').textContent = currentAdminPassword;
                 
-                // Reload everything
+                subjects = [];
                 loadSubjects();
                 loadDeleteStudentDropdown();
                 loadAllResults();
-                loadStudentsForMarks();
+                loadStudentsForMarksWithFees();
             });
         }
         
@@ -1396,19 +1898,19 @@
             const confirmPass = document.getElementById('confirmPassword').value.trim();
             
             if(!prevPass || !newPass || !confirmPass) {
-                return showError("All fields are required");
+                return alert("All fields are required");
             }
             
             if(prevPass !== currentAdminPassword) {
-                return showError("Previous password is incorrect");
+                return alert("Previous password is incorrect");
             }
             
             if(newPass !== confirmPass) {
-                return showError("New passwords don't match");
+                return alert("New passwords don't match");
             }
             
             if(newPass.length < 4) {
-                return showError("Password must be at least 4 characters");
+                return alert("Password must be at least 4 characters");
             }
             
             database.ref('adminPassword').set(newPass).then(() => {
@@ -1417,104 +1919,32 @@
                 document.getElementById('prevPassword').value = '';
                 document.getElementById('newPassword').value = '';
                 document.getElementById('confirmPassword').value = '';
-                showSuccess("Password changed successfully");
+                alert("Password changed successfully!");
             });
         }
         
-        // Load All Results
-        function loadAllResults() {
-            const filter = document.getElementById('filterClass').value;
-            const table = document.getElementById('allResultsTable');
-            table.innerHTML = '<tr><td colspan="9">Loading...</td></tr>';
-            
-            database.ref('students').once('value').then(snapshot => {
-                const students = snapshot.val() || {};
-                table.innerHTML = '';
-                
-                Object.keys(students).forEach(rollNo => {
-                    const student = students[rollNo];
-                    if(filter !== 'all' && student.class !== filter) return;
-                    
-                    // Calculate marks
-                    let totalObtained = 0, totalMaximum = 0;
-                    if(student.marks && subjects.length > 0) {
-                        subjects.forEach((subject, index) => {
-                            const mark = student.marks[index] || 0;
-                            totalObtained += parseInt(mark);
-                            totalMaximum += subject.total;
-                        });
-                    }
-                    
-                    const isAbsent = student.status === 'absent' || !student.marks || student.marks.every(m => m === 0);
-                    
-                    // Determine position text
-                    let positionText = '-';
-                    if(student.position === 1) positionText = '🥇';
-                    else if(student.position === 2) positionText = '🥈';
-                    else if(student.position === 3) positionText = '🥉';
-                    else if(student.position === -1) {
-                        // Auto position: Check if passed
-                        const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
-                        positionText = percentage >= 33 ? 'Pass' : 'Fail';
-                    }
-                    
-                    const fineText = student.fine?.amount > 0 ? 
-                        (student.fine.paid ? `Rs.${student.fine.amount} (Paid)` : `Rs.${student.fine.amount}`) : 'None';
-                    
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${positionText}</td>
-                        <td>${rollNo}</td>
-                        <td>${student.name}</td>
-                        <td>${student.class}</td>
-                        <td>${isAbsent ? 'Absent' : `${totalObtained}/${totalMaximum}`}</td>
-                        <td>${isAbsent ? 'Absent' : 'Present'}</td>
-                        <td>${fineText}</td>
-                        <td><button class="action-btn btn-primary" onclick="viewStudent('${rollNo}')">View</button></td>
-                        <td><button class="action-btn btn-danger" onclick="deleteStudentFromTable('${rollNo}')">Delete</button></td>
-                    `;
-                    table.appendChild(row);
-                });
-            });
-        }
-        
-        // Delete Student from Results Table
-        function deleteStudentFromTable(rollNo) {
-            if(confirm(`Delete student ${rollNo} from Firebase?`)) {
-                database.ref(`students/${rollNo}`).remove().then(() => {
-                    showSuccess(`Student ${rollNo} deleted from Firebase`);
-                    loadAllResults();
-                    loadDeleteStudentDropdown();
-                    loadStudentsForMarks();
-                });
-            }
-        }
-        
-        // View Student from Results
-        function viewStudent(rollNo) {
-            rollNumberInput.value = rollNo;
-            checkResult();
-        }
-        
-        // Utility Functions
+        // ==================== UTILITY FUNCTIONS ====================
         function showLoading(show) {
             if(show) {
                 document.getElementById('loadingSpinner').classList.remove('hidden');
-                resultSection.classList.add('hidden');
+                document.getElementById('resultSection').classList.add('hidden');
+                document.getElementById('errorMessage').classList.add('hidden');
             } else {
                 document.getElementById('loadingSpinner').classList.add('hidden');
             }
         }
         
-        function showError(message) {
-            const el = document.getElementById('errorMessage');
-            document.getElementById('errorText').textContent = message;
-            el.classList.remove('hidden');
-            setTimeout(() => el.classList.add('hidden'), 5000);
-        }
-        
-        function showSuccess(message) {
-            alert(message);
+        function showMessage(message, type) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            
+            errorText.textContent = message;
+            errorDiv.className = type === 'error' ? 'alert alert-danger' : 'alert alert-success';
+            errorDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+            }, 5000);
         }
         
         // Initialize App
