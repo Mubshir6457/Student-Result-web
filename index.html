@@ -307,23 +307,18 @@
             
             <!-- Add Students -->
             <div id="addStudents" class="tab-content">
-                <h3 class="card-title">Add Students</h3>
-                <div class="form-row">
-                    <div class="form-col">
-                        <input type="text" id="addRollNo" class="form-control" placeholder="Roll Number">
-                    </div>
-                    <div class="form-col">
-                        <input type="text" id="addName" class="form-control" placeholder="Student Name">
-                    </div>
-                    <div class="form-col">
-                        <select id="addClass" class="form-control">
-                            <option value="Separa">Separa</option>
-                            <option value="Noorani Qayda">Noorani Qayda</option>
-                        </select>
-                    </div>
+                <h3 class="card-title">Add Students (5 at a Time)</h3>
+                <div id="studentFormsContainer">
+                    <!-- Student forms will be added here -->
                 </div>
-                <button id="saveStudentBtn" class="btn btn-success mt-2">Save Student</button>
-                <button id="addSampleStudentsBtn" class="btn btn-primary mt-2">Add All Sample Students</button>
+                <div class="form-group mt-3">
+                    <button id="addFiveStudentsBtn" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i> Add 5 Student Forms
+                    </button>
+                    <button id="saveAllStudentsBtn" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save All Students
+                    </button>
+                </div>
             </div>
             
             <!-- Enter Marks -->
@@ -494,6 +489,7 @@
     <!-- JavaScript -->
     <script>
         // Firebase Config
+      
         const firebaseConfig = {
             apiKey: "AIzaSyDp8fdbDJRs17iFgcj1lN1YAmhiWccEkuc",
             authDomain: "result-app-8cdd1.firebaseapp.com",
@@ -503,6 +499,8 @@
             messagingSenderId: "1000820695282",
             appId: "1:1000820695282:web:82a4f0ee1e51de2305f06b"
         };
+
+
         
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
@@ -563,9 +561,9 @@
             document.getElementById('addSubjectBtn').addEventListener('click', addSubjectField);
             document.getElementById('saveSubjectsBtn').addEventListener('click', saveSubjects);
             
-            // Students
-            document.getElementById('saveStudentBtn').addEventListener('click', saveStudent);
-            document.getElementById('addSampleStudentsBtn').addEventListener('click', addSampleStudents);
+            // Students - New buttons for adding 5 students at a time
+            document.getElementById('addFiveStudentsBtn').addEventListener('click', addFiveStudentForms);
+            document.getElementById('saveAllStudentsBtn').addEventListener('click', saveAllStudents);
             
             // Marks
             document.getElementById('marksClass').addEventListener('change', loadStudentsForMarks);
@@ -597,7 +595,12 @@
                 showAdminPanel();
             }
             
-            checkAndAddSampleData();
+            // Add initial 5 student forms when admin panel loads
+            setTimeout(() => {
+                if(isAdminLoggedIn) {
+                    addFiveStudentForms();
+                }
+            }, 100);
         }
         
         // Load Admin Password from Firebase
@@ -978,6 +981,8 @@
                 localStorage.setItem('adminLoggedIn', 'true');
                 hideAdminLogin();
                 showAdminPanel();
+                // Add initial 5 student forms when admin logs in
+                setTimeout(addFiveStudentForms, 100);
             } else {
                 showError("Invalid password");
             }
@@ -1047,80 +1052,109 @@
             });
         }
         
-        // Add Student
-        function saveStudent() {
-            const rollNo = document.getElementById('addRollNo').value.trim();
-            const name = document.getElementById('addName').value.trim();
-            const cls = document.getElementById('addClass').value;
-            
-            if(!rollNo || !name) return showError("Enter roll number and name");
-            
-            const student = {
-                rollNo, name, class: cls,
-                position: 0, status: 'present',
-                fine: {amount: 0, reason: "", paid: false},
-                marks: [], createdAt: new Date().toISOString()
-            };
-            
-            database.ref(`students/${rollNo}`).set(student).then(() => {
-                showSuccess("Student added");
-                document.getElementById('addRollNo').value = '';
-                document.getElementById('addName').value = '';
-                loadStudentsForMarks();
-                loadDeleteStudentDropdown();
-            });
+        // Add Student Forms (5 at a time) - NEW FUNCTION
+        function addFiveStudentForms() {
+            const container = document.getElementById('studentFormsContainer');
+            for(let i = 0; i < 5; i++) {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-row student-form mb-3';
+                formGroup.innerHTML = `
+                    <div class="form-col">
+                        <input type="text" class="form-control student-roll" placeholder="Roll Number">
+                    </div>
+                    <div class="form-col">
+                        <input type="text" class="form-control student-name" placeholder="Student Name">
+                    </div>
+                    <div class="form-col">
+                        <select class="form-control student-class">
+                            <option value="Separa">Separa</option>
+                            <option value="Noorani Qayda">Noorani Qayda</option>
+                        </select>
+                    </div>
+                    <div class="form-col">
+                        <button class="btn btn-danger remove-student-form-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(formGroup);
+                
+                // Add remove button functionality
+                formGroup.querySelector('.remove-student-form-btn').addEventListener('click', () => {
+                    formGroup.remove();
+                });
+            }
         }
         
-        // Add Sample Students
-        function addSampleStudents() {
-            const sampleStudents = {
-                "1": {name: "Abdullah", class: "Separa"},
-                "2": {name: "Ayesha", class: "Separa"},
-                "3": {name: "Farwa", class: "Separa"},
-                "4": {name: "Rahan", class: "Separa"},
-                "5": {name: "Saniya", class: "Separa"},
-                "6": {name: "Arooj", class: "Separa"},
-                "7": {name: "Munaza", class: "Separa"},
-                "8": {name: "Anees", class: "Separa"},
-                "9": {name: "Saad-ullah", class: "Separa"},
-                "10": {name: "Asad-ullah", class: "Separa"},
-                "11": {name: "Amna", class: "Separa"},
-                "12": {name: "Farwa J.", class: "Separa"},
-                "13": {name: "Maryam", class: "Separa"},
-                "14": {name: "Muqadas", class: "Separa"},
-                "15": {name: "Javairia", class: "Separa"},
-                "01": {name: "Nimra", class: "Noorani Qayda"},
-                "02": {name: "Faizan", class: "Noorani Qayda"},
-                "03": {name: "Mustansira", class: "Noorani Qayda"},
-                "04": {name: "Ali Hassan", class: "Noorani Qayda"},
-                "05": {name: "Habiba", class: "Noorani Qayda"},
-                "06": {name: "Usman", class: "Noorani Qayda"},
-                "07": {name: "Mera", class: "Noorani Qayda"},
-                "010": {name: "Saliha", class: "Noorani Qayda"},
-                "011": {name: "Ahmad Shah", class: "Noorani Qayda"},
-                "012": {name: "Ayesha", class: "Noorani Qayda"},
-                "013": {name: "Hadiya", class: "Noorani Qayda"},
-                "014": {name: "Hassan", class: "Noorani Qayda"},
-                "015": {name: "Hashim", class: "Noorani Qayda"}
-            };
+        // Save All Students - NEW FUNCTION
+        function saveAllStudents() {
+            const forms = document.querySelectorAll('.student-form');
+            if(forms.length === 0) {
+                return showError("No student forms to save. Click 'Add 5 Student Forms' first.");
+            }
             
+            let validStudents = 0;
+            let errors = [];
             let updates = {};
-            Object.keys(sampleStudents).forEach(rollNo => {
-                updates[`students/${rollNo}`] = {
-                    ...sampleStudents[rollNo],
-                    position: 0,
-                    status: 'present',
-                    fine: {amount: 0, reason: "", paid: false},
-                    marks: [],
-                    createdAt: new Date().toISOString()
-                };
+            
+            forms.forEach((form, index) => {
+                const rollNo = form.querySelector('.student-roll').value.trim();
+                const name = form.querySelector('.student-name').value.trim();
+                const cls = form.querySelector('.student-class').value;
+                
+                if(rollNo && name) {
+                    // Check if roll number already exists
+                    database.ref(`students/${rollNo}`).once('value').then(snapshot => {
+                        if(snapshot.exists()) {
+                            errors.push(`Roll number ${rollNo} already exists`);
+                        } else {
+                            updates[`students/${rollNo}`] = {
+                                name,
+                                class: cls,
+                                position: 0,
+                                status: 'present',
+                                fine: {amount: 0, reason: "", paid: false},
+                                marks: [],
+                                createdAt: new Date().toISOString()
+                            };
+                            validStudents++;
+                        }
+                    });
+                } else if(rollNo || name) {
+                    errors.push(`Form ${index + 1}: Both roll number and name are required`);
+                }
             });
             
-            database.ref().update(updates).then(() => {
-                showSuccess("All sample students added");
-                loadStudentsForMarks();
-                loadDeleteStudentDropdown();
-            });
+            // Wait a moment for async checks to complete
+            setTimeout(() => {
+                if(errors.length > 0) {
+                    showError(errors.join('\n'));
+                    return;
+                }
+                
+                if(validStudents === 0) {
+                    showError("No valid students to save. Fill in roll number and name.");
+                    return;
+                }
+                
+                // Save all students to Firebase
+                database.ref().update(updates).then(() => {
+                    showSuccess(`${validStudents} student(s) added successfully!`);
+                    
+                    // Clear the forms
+                    document.getElementById('studentFormsContainer').innerHTML = '';
+                    
+                    // Refresh other sections
+                    loadStudentsForMarks();
+                    loadAllResults();
+                    loadDeleteStudentDropdown();
+                    
+                    // Add 5 more empty forms
+                    addFiveStudentForms();
+                }).catch(error => {
+                    showError("Error saving students: " + error.message);
+                });
+            }, 500);
         }
         
         // Load Students for Marks Entry - MODIFIED: Added Auto option
@@ -1481,21 +1515,6 @@
         
         function showSuccess(message) {
             alert(message);
-        }
-        
-        // Check and Add Sample Data
-        function checkAndAddSampleData() {
-            database.ref('students').once('value').then(snapshot => {
-                if(!snapshot.exists() || Object.keys(snapshot.val()).length === 0) {
-                    addSampleStudents();
-                    // Add default exam date
-                    database.ref('examDate').set('2024-06-15');
-                    // Add default subjects
-                    if(subjects.length === 0) {
-                        database.ref('subjects').set([{name: "Quran Recitation", total: 50}]);
-                    }
-                }
-            });
         }
         
         // Initialize App
