@@ -79,6 +79,7 @@
         .position-2 { background: linear-gradient(135deg, var(--silver) 0%, #e0e0e0 100%); color: #495057; }
         .position-3 { background: linear-gradient(135deg, var(--bronze) 0%, #e6b17e 100%); color: white; }
         .position-pass { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; }
+        .position-noresult { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); color: #6c757d; }
         
         /* Flowers Animation - ONLY FOR POSITION HOLDERS */
         .flower-fall { 
@@ -108,6 +109,14 @@
             border-left: 6px solid var(--warning); padding: 1.2rem; 
             margin: 1.5rem 0; border-radius: 8px;
         }
+        
+        /* No Result Message */
+        .no-result-message { 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            border-left: 6px solid #6c757d; padding: 2rem; 
+            margin: 1.5rem 0; border-radius: 8px; text-align: center;
+        }
+        .no-result-icon { font-size: 3rem; color: #6c757d; margin-bottom: 1rem; }
         
         /* Forms */
         .form-group { margin-bottom: 1.5rem; }
@@ -154,7 +163,6 @@
         .fine-inputs-row { flex: 3; display: flex; gap: 10px; min-width: 350px; }
         .fine-amount-input { width: 100px; padding: 8px; border: 2px solid #e1e5eb; border-radius: 5px; text-align: center; }
         .fine-reason-input { flex: 1; padding: 8px; border: 2px solid #e1e5eb; border-radius: 5px; }
-        .fees-paid-checkbox { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         
         /* Tables */
         .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
@@ -189,8 +197,7 @@
         .status-badge { padding: 8px 16px; border-radius: 25px; font-weight: 700; }
         .status-present { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; }
         .status-absent { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; }
-        .status-paid { background: #d4edda; color: #155724; padding: 5px 10px; border-radius: 20px; font-weight: 600; }
-        .status-unpaid { background: #f8d7da; color: #721c24; padding: 5px 10px; border-radius: 20px; font-weight: 600; }
+        .status-noresult { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); color: #6c757d; }
         .loading-spinner { 
             border: 6px solid #f3f3f3; border-top: 6px solid var(--primary); 
             border-radius: 50%; width: 60px; height: 60px; 
@@ -295,20 +302,38 @@
                 <!-- Flowers ONLY for position holders (1st, 2nd, 3rd) -->
                 <div id="flowerFall" class="flower-fall hidden"></div>
                 
-                <!-- Student Header -->
+                <!-- Student Header - SIMPLIFIED VERSION -->
                 <div class="student-header">
                     <div class="student-info">
                         <h3 id="studentName">Student Name</h3>
-                        <p><i class="fas fa-id-card"></i> Roll No: <span id="resultRollNo">-</span></p>
-                        <p><i class="fas fa-school"></i> Class: <span id="studentClass">-</span></p>
-                        <p><i class="fas fa-calendar-alt"></i> <span id="examDate">Exam Date: June 2024</span></p>
-                        <p id="studentStatus" class="status-badge status-present mt-2">Status: Present</p>
+                        <!-- Roll number and class only shown when result is available -->
+                        <p id="resultDetails" class="hidden">
+                            <i class="fas fa-id-card"></i> Roll No: <span id="resultRollNo">-</span> | 
+                            <i class="fas fa-school"></i> Class: <span id="studentClass">-</span>
+                        </p>
+                        <p id="examDateInfo" class="hidden">
+                            <i class="fas fa-calendar-alt"></i> <span id="examDate">Exam Date: June 2024</span>
+                        </p>
                     </div>
-                    <div class="position-badge" id="positionBadge">Position: -</div>
+                    <div class="position-badge hidden" id="positionBadge">Position: -</div>
                 </div>
                 
-                <!-- Marks Table -->
-                <table class="marks-table">
+                <!-- No Result Message (Shown when no marks entered) -->
+                <div id="noResultMessage" class="no-result-message">
+                    <div class="no-result-icon">
+                        <i class="fas fa-file-exclamation"></i>
+                    </div>
+                    <h3 style="color: #6c757d; margin-bottom: 1rem;">Result Not Available</h3>
+                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 1rem;">
+                        The result for this student has not been entered yet.
+                    </p>
+                    <p style="font-size: 1rem; color: #888;">
+                        <i class="fas fa-info-circle"></i> Please check back later or contact the administration.
+                    </p>
+                </div>
+                
+                <!-- Marks Table (Hidden when no result) -->
+                <table id="marksTable" class="marks-table hidden">
                     <thead>
                         <tr>
                             <th>Subject</th>
@@ -321,8 +346,8 @@
                     </tbody>
                 </table>
                 
-                <!-- Total Marks -->
-                <div class="total-section">
+                <!-- Total Marks (Hidden when no result) -->
+                <div id="totalSection" class="total-section hidden">
                     <div>
                         <h3 style="color: var(--primary); margin-bottom: 10px;">Total Result</h3>
                         <p style="font-size: 1.2rem;">
@@ -332,14 +357,14 @@
                     <div class="percentage" id="percentage">0%</div>
                 </div>
                 
-                <!-- Fine Notice -->
+                <!-- Fine Notice (Shown only when result available AND fine exists) -->
                 <div id="fineSection" class="fine-notice hidden">
                     <h4><i class="fas fa-exclamation-circle"></i> Fine Notice</h4>
                     <p id="fineAmount" style="margin-top: 10px; font-size: 1.1rem;"></p>
                 </div>
                 
-                <!-- Prayer Message -->
-                <div style="background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); 
+                <!-- Prayer Message (Hidden when no result) -->
+                <div id="prayerMessage" class="hidden" style="background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); 
                           color: white; padding: 1.5rem; border-radius: 10px; text-align: center; margin-top: 2rem; font-weight: 700;">
                     <p class="urdu" style="font-size: 1.3rem;">
                         اللہ تعالیٰ ہم سب کو علم نافع عطا فرمائے اور ہماری محنتوں کو قبول فرمائے۔ آمین
@@ -388,9 +413,9 @@
                     <button class="tab-btn active" data-tab="examSetup">Exam Setup</button>
                     <button class="tab-btn" data-tab="subjects">Subjects</button>
                     <button class="tab-btn" data-tab="addStudents">Add Students</button>
-                    <button class="tab-btn" data-tab="enterMarks">Enter Marks & Fees</button>
+                    <button class="tab-btn" data-tab="enterMarks">Enter Marks & Fines</button>
                     <button class="tab-btn" data-tab="viewResults">View All Results</button>
-                    <button class="tab-btn" data-tab="manageFees">Manage Fees</button>
+                    <button class="tab-btn" data-tab="manageFines">Manage Fines</button>
                     <button class="tab-btn" data-tab="deleteData">Delete Data</button>
                     <button class="tab-btn" data-tab="changePassword">Change Password</button>
                 </div>
@@ -439,17 +464,16 @@
                     </div>
                 </div>
                 
-                <!-- Enter Marks & Fees -->
+                <!-- Enter Marks & Fines -->
                 <div id="enterMarks" class="tab-content">
-                    <h2 class="card-title">Enter Marks, Positions & Fees</h2>
+                    <h2 class="card-title">Enter Marks, Positions & Fines</h2>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle"></i>
                         <strong>Note:</strong> 
                         <ul style="margin: 10px 0 0 20px;">
                             <li>Leave position as "Auto" for automatic calculation</li>
                             <li>Only one student each for 1st, 2nd, 3rd positions</li>
-                            <li>You can add fees/fine directly in this section</li>
-                            <li>Check "Fees Paid" if student has paid their fees</li>
+                            <li>You can add fines directly in this section</li>
                         </ul>
                     </div>
                     
@@ -469,8 +493,8 @@
                                 <button id="autoCalculatePositionsBtn" class="btn btn-primary">
                                     <i class="fas fa-calculator"></i> Auto-Calc Positions
                                 </button>
-                                <button id="resetAllFeesBtn" class="btn btn-warning">
-                                    <i class="fas fa-redo"></i> Reset All Fees
+                                <button id="resetAllFinesBtn" class="btn btn-warning">
+                                    <i class="fas fa-redo"></i> Reset All Fines
                                 </button>
                             </div>
                         </div>
@@ -505,7 +529,7 @@
                     
                     <div class="alert alert-warning">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <strong>Warning:</strong> Deleting results will remove all marks, positions, and fees but keep student info.
+                        <strong>Warning:</strong> Deleting results will remove all marks, positions, and fines but keep student info.
                     </div>
                     
                     <div style="overflow-x: auto;">
@@ -514,19 +538,19 @@
                                 <tr>
                                     <th>Pos</th><th>Roll</th><th>Name</th><th>Class</th>
                                     <th>Marks</th><th>%</th><th>Status</th>
-                                    <th>Fees</th><th>Status</th><th>Actions</th>
+                                    <th>Fine</th><th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="allResultsTable">
-                                <tr><td colspan="10" class="text-center">Loading results...</td></tr>
+                                <tr><td colspan="9" class="text-center">Loading results...</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 
-                <!-- Manage Fees Section -->
-                <div id="manageFees" class="tab-content">
-                    <h2 class="card-title"><i class="fas fa-money-check-alt"></i> Manage Student Fees</h2>
+                <!-- Manage Fines Section -->
+                <div id="manageFines" class="tab-content">
+                    <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> Manage Student Fines</h2>
                     
                     <!-- Search Student -->
                     <div class="card" style="margin-bottom: 2rem;">
@@ -535,64 +559,54 @@
                             <label class="form-label">Enter Roll Number</label>
                             <div class="form-row">
                                 <div class="form-col">
-                                    <input type="text" id="feeSearchRoll" class="form-control" placeholder="e.g., 2024001">
+                                    <input type="text" id="fineSearchRoll" class="form-control" placeholder="e.g., 2024001">
                                 </div>
                                 <div class="form-col">
-                                    <button id="searchFeeBtn" class="btn btn-primary btn-block">
+                                    <button id="searchFineBtn" class="btn btn-primary btn-block">
                                         <i class="fas fa-search"></i> Search
                                     </button>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Fee Details -->
-                        <div id="feeDetails" class="hidden">
+                        <!-- Fine Details -->
+                        <div id="fineDetails" class="hidden">
                             <div class="form-row mt-3">
                                 <div class="form-col">
-                                    <p><strong>Name:</strong> <span id="feeStudentName">-</span></p>
-                                    <p><strong>Roll No:</strong> <span id="feeStudentRoll">-</span></p>
-                                    <p><strong>Class:</strong> <span id="feeStudentClass">-</span></p>
+                                    <p><strong>Name:</strong> <span id="fineStudentName">-</span></p>
+                                    <p><strong>Roll No:</strong> <span id="fineStudentRoll">-</span></p>
+                                    <p><strong>Class:</strong> <span id="fineStudentClass">-</span></p>
                                 </div>
                             </div>
                             
-                            <h3 class="mt-3">Fee Details</h3>
+                            <h3 class="mt-3">Fine Details</h3>
                             <div class="form-row mt-2">
                                 <div class="form-col">
-                                    <label class="form-label">Fee/Fine Amount (Rs.)</label>
-                                    <input type="number" id="feeAmountInput" class="form-control" placeholder="Enter amount">
+                                    <label class="form-label">Fine Amount (Rs.)</label>
+                                    <input type="number" id="fineAmountInput" class="form-control" placeholder="Enter fine amount">
                                 </div>
                                 <div class="form-col">
                                     <label class="form-label">Reason</label>
-                                    <input type="text" id="feeReason" class="form-control" placeholder="Enter reason">
-                                </div>
-                                <div class="form-col">
-                                    <label class="form-label">Payment Status</label>
-                                    <div class="form-row" style="align-items: center; gap: 10px; margin-top: 10px;">
-                                        <input type="checkbox" id="feePaidCheckbox">
-                                        <label for="feePaidCheckbox" style="margin: 0;">Fees Paid</label>
-                                    </div>
+                                    <input type="text" id="fineReason" class="form-control" placeholder="Enter fine reason">
                                 </div>
                             </div>
                             
                             <div class="form-row mt-3">
                                 <div class="form-col">
-                                    <button id="assignFeeBtn" class="btn btn-warning">
-                                        <i class="fas fa-plus-circle"></i> Assign/Update Fee
+                                    <button id="assignFineBtn" class="btn btn-warning">
+                                        <i class="fas fa-plus-circle"></i> Assign/Update Fine
                                     </button>
-                                    <button id="clearFeeBtn" class="btn btn-danger">
-                                        <i class="fas fa-times-circle"></i> Clear Fee
-                                    </button>
-                                    <button id="markFeePaidBtn" class="btn btn-success">
-                                        <i class="fas fa-check-circle"></i> Mark as Paid
+                                    <button id="clearFineBtn" class="btn btn-danger">
+                                        <i class="fas fa-times-circle"></i> Clear Fine
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- All Students with Fees -->
+                    <!-- All Students with Fines -->
                     <div class="card">
-                        <h3 class="card-title">All Students with Fees/Fines</h3>
+                        <h3 class="card-title">All Students with Fines</h3>
                         <div style="overflow-x: auto;">
                             <table class="data-table">
                                 <thead>
@@ -600,14 +614,13 @@
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Class</th>
-                                        <th>Amount</th>
+                                        <th>Fine Amount</th>
                                         <th>Reason</th>
-                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="allFeesTable">
-                                    <tr><td colspan="7" class="text-center">Loading fees data...</td></tr>
+                                <tbody id="allFinesTable">
+                                    <tr><td colspan="6" class="text-center">Loading fines data...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -646,7 +659,7 @@
                         <h3>Delete All Results Only</h3>
                         <div class="alert alert-warning">
                             <i class="fas fa-file-alt"></i>
-                            This will delete ALL RESULTS (marks, positions, fees) but keep student info!
+                            This will delete ALL RESULTS (marks, positions, fines) but keep student info!
                         </div>
                         <button id="deleteAllResultsOnlyBtn" class="btn btn-danger btn-block">
                             <i class="fas fa-trash"></i> Delete ALL Results Only
@@ -813,148 +826,197 @@
             resultSection.classList.remove('hidden');
             document.getElementById('errorMessage').classList.add('hidden');
             
-            // Student Info
+            // Student Info - Always show name
             document.getElementById('studentName').textContent = student.name;
-            document.getElementById('resultRollNo').textContent = rollNo;
-            document.getElementById('studentClass').textContent = student.class;
-            
-            // Exam Date
-            database.ref('examDate').once('value').then(snapshot => {
-                if(snapshot.exists()) {
-                    document.getElementById('examDate').textContent = `Exam Date: ${snapshot.val()}`;
-                }
-            });
             
             // Load subjects
             database.ref('subjects').once('value').then(snapshot => {
                 subjects = snapshot.val() || [];
                 
-                // Calculate marks
-                let totalObtained = 0, totalMaximum = 0;
-                if(student.marks && subjects.length > 0) {
-                    subjects.forEach((subject, index) => {
-                        const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
-                        totalObtained += parseInt(mark) || 0;
-                        totalMaximum += subject.total;
-                    });
-                }
+                // Check if marks exist
+                const hasMarks = student.marks && Array.isArray(student.marks) && student.marks.length > 0 && student.marks.some(m => m !== null && m !== undefined && m !== '');
+                const isAbsent = student.status === 'absent';
+                const hasNoResult = !hasMarks && !isAbsent; // Student exists but no marks entered
                 
-                // Status
-                const hasMarks = student.marks && student.marks.some(m => m > 0);
-                const isAbsent = student.status === 'absent' || !hasMarks;
-                
-                const statusEl = document.getElementById('studentStatus');
-                if(isAbsent) {
-                    statusEl.textContent = 'Status: Absent';
-                    statusEl.className = 'status-badge status-absent';
-                } else {
-                    statusEl.textContent = 'Status: Present';
-                    statusEl.className = 'status-badge status-present';
-                }
-                
-                // Position - FLOWERS ONLY FOR 1st, 2nd, 3rd
-                const position = student.position || 0;
+                // Get DOM elements
+                const resultDetails = document.getElementById('resultDetails');
+                const examDateInfo = document.getElementById('examDateInfo');
                 const positionBadge = document.getElementById('positionBadge');
+                const noResultMessage = document.getElementById('noResultMessage');
+                const marksTable = document.getElementById('marksTable');
+                const totalSection = document.getElementById('totalSection');
+                const fineSection = document.getElementById('fineSection');
+                const prayerMessage = document.getElementById('prayerMessage');
                 const flowerContainer = document.getElementById('flowerFall');
                 
                 // Clear previous flowers
                 flowerContainer.classList.add('hidden');
                 flowerContainer.innerHTML = '';
                 
-                // Check for position and show flowers ONLY for 1st, 2nd, 3rd
-                if(position === 1) {
-                    positionBadge.textContent = '🥇 1st Position';
-                    positionBadge.className = 'position-badge position-1';
-                    startFlowerAnimation(); // FLOWERS HERE
-                } else if(position === 2) {
-                    positionBadge.textContent = '🥈 2nd Position';
-                    positionBadge.className = 'position-badge position-2';
-                    startFlowerAnimation(); // FLOWERS HERE
-                } else if(position === 3) {
-                    positionBadge.textContent = '🥉 3rd Position';
-                    positionBadge.className = 'position-badge position-3';
-                    startFlowerAnimation(); // FLOWERS HERE
-                } else if(position === -1) {
-                    // Auto position
-                    const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
-                    if(percentage >= 33) {
-                        positionBadge.textContent = 'Position: Pass 🎉';
-                        positionBadge.className = 'position-badge position-pass';
+                if(hasNoResult || !hasMarks) {
+                    // SHOW ONLY: Student Name + "Result not available"
+                    resultDetails.classList.add('hidden');
+                    examDateInfo.classList.add('hidden');
+                    positionBadge.classList.add('hidden');
+                    noResultMessage.classList.remove('hidden');
+                    marksTable.classList.add('hidden');
+                    totalSection.classList.add('hidden');
+                    prayerMessage.classList.add('hidden');
+                    
+                    // Show fine if exists (even when no result)
+                    if(student.fine && student.fine.amount > 0) {
+                        document.getElementById('fineAmount').innerHTML = `
+                            <strong>Fine Amount:</strong> Rs. ${student.fine.amount}<br>
+                            <strong>Reason:</strong> ${student.fine.reason || "Not specified"}
+                        `;
+                        fineSection.classList.remove('hidden');
                     } else {
-                        positionBadge.textContent = 'Position: Fail';
-                        positionBadge.className = 'position-badge';
-                    }
-                } else if(position === 0 && !isAbsent) {
-                    // No position set
-                    const percentage = totalMaximum > 0 ? (totalObtained/totalMaximum)*100 : 0;
-                    if(percentage >= 33) {
-                        positionBadge.textContent = 'Position: Pass 🎉';
-                        positionBadge.className = 'position-badge position-pass';
-                    } else {
-                        positionBadge.textContent = 'Position: Fail';
-                        positionBadge.className = 'position-badge';
+                        fineSection.classList.add('hidden');
                     }
                 } else {
-                    positionBadge.textContent = 'Position: -';
-                    positionBadge.className = 'position-badge';
-                }
-                
-                // Marks Table
-                const marksBody = document.getElementById('marksTableBody');
-                marksBody.innerHTML = '';
-                
-                if(isAbsent) {
-                    marksBody.innerHTML = `
-                        <tr>
-                            <td colspan="3" class="text-center" style="padding: 30px; color: #666;">
-                                <i class="fas fa-user-times" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                                <br>Student was absent for the exam
-                            </td>
-                        </tr>
-                    `;
-                } else if(subjects.length > 0) {
-                    subjects.forEach((subject, index) => {
-                        const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
-                        const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
-                        marksBody.innerHTML += row;
+                    // SHOW FULL RESULT
+                    resultDetails.classList.remove('hidden');
+                    examDateInfo.classList.remove('hidden');
+                    positionBadge.classList.remove('hidden');
+                    noResultMessage.classList.add('hidden');
+                    marksTable.classList.remove('hidden');
+                    totalSection.classList.remove('hidden');
+                    prayerMessage.classList.remove('hidden');
+                    
+                    // Set result details
+                    document.getElementById('resultRollNo').textContent = rollNo;
+                    document.getElementById('studentClass').textContent = student.class;
+                    
+                    // Exam Date
+                    database.ref('examDate').once('value').then(snapshot => {
+                        if(snapshot.exists()) {
+                            document.getElementById('examDate').textContent = `Exam Date: ${snapshot.val()}`;
+                        }
                     });
-                }
-                
-                // Totals
-                document.getElementById('obtainedMarks').textContent = totalObtained;
-                document.getElementById('totalMarks').textContent = totalMaximum;
-                const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
-                document.getElementById('percentage').textContent = `${percentage}%`;
-                
-                // Color code percentage
-                const percentageEl = document.getElementById('percentage');
-                if(percentage >= 80) {
-                    percentageEl.style.color = '#28a745';
-                } else if(percentage >= 60) {
-                    percentageEl.style.color = '#ffc107';
-                } else if(percentage >= 33) {
-                    percentageEl.style.color = '#17a2b8';
-                } else {
-                    percentageEl.style.color = '#dc3545';
-                }
-                
-                // Fine/Fee Section
-                const fineSection = document.getElementById('fineSection');
-                if(student.fee && student.fee.amount > 0) {
-                    const paid = student.fee.paid || false;
-                    document.getElementById('fineAmount').innerHTML = `
-                        <strong>Fee/Fine Amount:</strong> Rs. ${student.fee.amount}<br>
-                        <strong>Reason:</strong> ${student.fee.reason || "Not specified"}<br>
-                        <strong>Status:</strong> ${paid ? '<span style="color: #28a745;">Paid</span>' : '<span style="color: #dc3545;">Unpaid</span>'}
-                    `;
-                    fineSection.classList.remove('hidden');
-                } else {
-                    fineSection.classList.add('hidden');
+                    
+                    // Position - FLOWERS ONLY FOR 1st, 2nd, 3rd
+                    const position = student.position || 0;
+                    
+                    if(position === 1 && hasMarks) {
+                        positionBadge.textContent = '🥇 1st Position';
+                        positionBadge.className = 'position-badge position-1';
+                        startFlowerAnimation(); // FLOWERS HERE
+                    } else if(position === 2 && hasMarks) {
+                        positionBadge.textContent = '🥈 2nd Position';
+                        positionBadge.className = 'position-badge position-2';
+                        startFlowerAnimation(); // FLOWERS HERE
+                    } else if(position === 3 && hasMarks) {
+                        positionBadge.textContent = '🥉 3rd Position';
+                        positionBadge.className = 'position-badge position-3';
+                        startFlowerAnimation(); // FLOWERS HERE
+                    } else if(position === -1 && hasMarks) {
+                        // Auto position
+                        const percentage = calculatePercentage(student);
+                        if(percentage >= 33) {
+                            positionBadge.textContent = 'Position: Pass 🎉';
+                            positionBadge.className = 'position-badge position-pass';
+                        } else {
+                            positionBadge.textContent = 'Position: Fail';
+                            positionBadge.className = 'position-badge';
+                        }
+                    } else if(position === 0 && hasMarks) {
+                        // No position set
+                        const percentage = calculatePercentage(student);
+                        if(percentage >= 33) {
+                            positionBadge.textContent = 'Position: Pass 🎉';
+                            positionBadge.className = 'position-badge position-pass';
+                        } else {
+                            positionBadge.textContent = 'Position: Fail';
+                            positionBadge.className = 'position-badge';
+                        }
+                    } else {
+                        positionBadge.textContent = 'Position: -';
+                        positionBadge.className = 'position-badge';
+                    }
+                    
+                    // Marks Table
+                    const marksBody = document.getElementById('marksTableBody');
+                    marksBody.innerHTML = '';
+                    
+                    if(isAbsent) {
+                        marksBody.innerHTML = `
+                            <tr>
+                                <td colspan="3" class="text-center" style="padding: 30px; color: #666;">
+                                    <i class="fas fa-user-times" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                    <br>Student was absent for the exam
+                                </td>
+                            </tr>
+                        `;
+                    } else if(subjects.length > 0) {
+                        subjects.forEach((subject, index) => {
+                            const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                            const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
+                            marksBody.innerHTML += row;
+                        });
+                    }
+                    
+                    // Totals
+                    const totalObtained = calculateObtainedMarks(student);
+                    const totalMaximum = calculateTotalMarks();
+                    document.getElementById('obtainedMarks').textContent = totalObtained;
+                    document.getElementById('totalMarks').textContent = totalMaximum;
+                    const percentage = calculatePercentage(student);
+                    document.getElementById('percentage').textContent = `${percentage}%`;
+                    
+                    // Color code percentage
+                    const percentageEl = document.getElementById('percentage');
+                    if(percentage >= 80) {
+                        percentageEl.style.color = '#28a745';
+                    } else if(percentage >= 60) {
+                        percentageEl.style.color = '#ffc107';
+                    } else if(percentage >= 33) {
+                        percentageEl.style.color = '#17a2b8';
+                    } else {
+                        percentageEl.style.color = '#dc3545';
+                    }
+                    
+                    // Fine Section
+                    if(student.fine && student.fine.amount > 0) {
+                        document.getElementById('fineAmount').innerHTML = `
+                            <strong>Fine Amount:</strong> Rs. ${student.fine.amount}<br>
+                            <strong>Reason:</strong> ${student.fine.reason || "Not specified"}
+                        `;
+                        fineSection.classList.remove('hidden');
+                    } else {
+                        fineSection.classList.add('hidden');
+                    }
                 }
                 
                 // Scroll to result
                 resultSection.scrollIntoView({ behavior: 'smooth' });
             });
+        }
+        
+        // Calculate obtained marks
+        function calculateObtainedMarks(student) {
+            if(!student.marks || !Array.isArray(student.marks)) return 0;
+            let total = 0;
+            student.marks.forEach(mark => {
+                total += parseInt(mark) || 0;
+            });
+            return total;
+        }
+        
+        // Calculate total possible marks
+        function calculateTotalMarks() {
+            let total = 0;
+            subjects.forEach(subject => {
+                total += subject.total || 0;
+            });
+            return total;
+        }
+        
+        // Calculate percentage
+        function calculatePercentage(student) {
+            const obtained = calculateObtainedMarks(student);
+            const total = calculateTotalMarks();
+            if(total === 0) return 0;
+            return ((obtained/total)*100).toFixed(2);
         }
         
         // Flower Animation - ONLY for position holders (1st, 2nd, 3rd)
@@ -1006,22 +1068,21 @@
             document.getElementById('addFiveStudentsBtn').addEventListener('click', addFiveStudentForms);
             document.getElementById('saveAllStudentsBtn').addEventListener('click', saveAllStudents);
             
-            // Marks & Fees
-            document.getElementById('marksClass').addEventListener('change', loadStudentsForMarksWithFees);
-            document.getElementById('saveAllMarksBtn').addEventListener('click', saveAllMarksWithFees);
+            // Marks & Fines
+            document.getElementById('marksClass').addEventListener('change', loadStudentsForMarksWithFines);
+            document.getElementById('saveAllMarksBtn').addEventListener('click', saveAllMarksWithFines);
             document.getElementById('autoCalculatePositionsBtn').addEventListener('click', autoCalculatePositions);
-            document.getElementById('resetAllFeesBtn').addEventListener('click', confirmResetAllFees);
+            document.getElementById('resetAllFinesBtn').addEventListener('click', confirmResetAllFines);
             
             // View Results
             document.getElementById('filterClass').addEventListener('change', loadAllResults);
             document.getElementById('deleteAllResultsBtn').addEventListener('click', confirmDeleteAllResults);
             document.getElementById('deleteAllResultsOnlyBtn').addEventListener('click', confirmDeleteAllResults);
             
-            // Manage Fees
-            document.getElementById('searchFeeBtn').addEventListener('click', searchFee);
-            document.getElementById('assignFeeBtn').addEventListener('click', assignFee);
-            document.getElementById('clearFeeBtn').addEventListener('click', clearFee);
-            document.getElementById('markFeePaidBtn').addEventListener('click', markFeePaid);
+            // Manage Fines
+            document.getElementById('searchFineBtn').addEventListener('click', searchFine);
+            document.getElementById('assignFineBtn').addEventListener('click', assignFine);
+            document.getElementById('clearFineBtn').addEventListener('click', clearFine);
             
             // Delete Data
             document.getElementById('deleteStudentBtn').addEventListener('click', deleteStudent);
@@ -1081,9 +1142,9 @@
                 loadDeleteStudentDropdown();
             }
             
-            if(tabId === 'manageFees') {
+            if(tabId === 'manageFines') {
                 setTimeout(() => {
-                    loadAllFees();
+                    loadAllFines();
                 }, 100);
             }
         }
@@ -1092,7 +1153,7 @@
         function loadAdminData() {
             loadSubjects();
             loadExamDate();
-            loadStudentsForMarksWithFees();
+            loadStudentsForMarksWithFines();
             loadAllResults();
             loadDeleteStudentDropdown();
         }
@@ -1174,7 +1235,7 @@
             database.ref('subjects').set(newSubjects).then(() => {
                 subjects = newSubjects;
                 alert("Subjects saved successfully!");
-                loadStudentsForMarksWithFees();
+                loadStudentsForMarksWithFines();
             });
         }
         
@@ -1251,7 +1312,7 @@
                         class: cls,
                         position: 0,
                         status: 'present',
-                        fee: {amount: 0, reason: "", paid: false},
+                        fine: {amount: 0, reason: ""},
                         marks: [],
                         createdAt: new Date().toISOString()
                     };
@@ -1267,7 +1328,7 @@
             database.ref().update(updates).then(() => {
                 alert(`${validStudents} student(s) added successfully!`);
                 document.getElementById('studentFormsContainer').innerHTML = '';
-                loadStudentsForMarksWithFees();
+                loadStudentsForMarksWithFines();
                 loadAllResults();
                 loadDeleteStudentDropdown();
                 addFiveStudentForms();
@@ -1276,8 +1337,8 @@
             });
         }
         
-        // Load Students for Marks Entry WITH FEE INPUTS
-        function loadStudentsForMarksWithFees() {
+        // Load Students for Marks Entry WITH FINE INPUTS
+        function loadStudentsForMarksWithFines() {
             const selectedClass = document.getElementById('marksClass').value;
             const container = document.getElementById('marksEntryContainer');
             container.innerHTML = '<div class="loading-spinner" style="width: 40px; height: 40px;"></div><p>Loading students...</p>';
@@ -1313,10 +1374,9 @@
                     // Position select
                     const position = student.position || 0;
                     
-                    // Fee data
-                    const feeAmount = student.fee?.amount || 0;
-                    const feeReason = student.fee?.reason || '';
-                    const feePaid = student.fee?.paid || false;
+                    // Fine data
+                    const fineAmount = student.fine?.amount || 0;
+                    const fineReason = student.fine?.reason || '';
                     
                     row.innerHTML = `
                         <div class="student-info">
@@ -1340,14 +1400,9 @@
                         
                         <div class="fine-inputs-row">
                             <input type="number" class="fine-amount-input" data-roll="${rollNo}" 
-                                   placeholder="Fee/Fine" value="${feeAmount > 0 ? feeAmount : ''}">
+                                   placeholder="Fine" value="${fineAmount > 0 ? fineAmount : ''}">
                             <input type="text" class="fine-reason-input" data-roll="${rollNo}" 
-                                   placeholder="Reason" value="${feeReason}">
-                            <div class="fees-paid-checkbox">
-                                <input type="checkbox" class="fees-paid-check" data-roll="${rollNo}" 
-                                       ${feePaid ? 'checked' : ''}>
-                                <span>Fees Paid</span>
-                            </div>
+                                   placeholder="Reason" value="${fineReason}">
                         </div>
                     `;
                     container.appendChild(row);
@@ -1355,13 +1410,12 @@
             });
         }
         
-        // Save All Marks WITH FEE DATA
-        function saveAllMarksWithFees() {
+        // Save All Marks WITH FINE DATA
+        function saveAllMarksWithFines() {
             const marksInputs = document.querySelectorAll('.marks-input');
             const positionSelects = document.querySelectorAll('.position-select');
-            const feeAmountInputs = document.querySelectorAll('.fine-amount-input');
-            const feeReasonInputs = document.querySelectorAll('.fine-reason-input');
-            const feePaidChecks = document.querySelectorAll('.fees-paid-check');
+            const fineAmountInputs = document.querySelectorAll('.fine-amount-input');
+            const fineReasonInputs = document.querySelectorAll('.fine-reason-input');
             
             let updates = {};
             let positionCount = {1:0,2:0,3:0};
@@ -1400,23 +1454,21 @@
                 updates[`students/${rollNo}/position`] = parseInt(select.value);
             });
             
-            // Process fees
-            feeAmountInputs.forEach(input => {
+            // Process fines
+            fineAmountInputs.forEach(input => {
                 const rollNo = input.getAttribute('data-roll');
                 const amount = parseInt(input.value) || 0;
-                const reason = Array.from(feeReasonInputs).find(r => r.getAttribute('data-roll') === rollNo)?.value || '';
-                const paid = Array.from(feePaidChecks).find(c => c.getAttribute('data-roll') === rollNo)?.checked || false;
+                const reason = Array.from(fineReasonInputs).find(r => r.getAttribute('data-roll') === rollNo)?.value || '';
                 
-                updates[`students/${rollNo}/fee`] = {
+                updates[`students/${rollNo}/fine`] = {
                     amount,
-                    reason,
-                    paid
+                    reason
                 };
             });
             
             database.ref().update(updates).then(() => {
-                alert("All marks, positions, and fees saved successfully!");
-                loadStudentsForMarksWithFees();
+                alert("All marks, positions, and fines saved successfully!");
+                loadStudentsForMarksWithFines();
                 loadAllResults();
             }).catch(error => {
                 alert("Error saving data: " + error.message);
@@ -1468,7 +1520,7 @@
                 
                 database.ref().update(updates).then(() => {
                     alert("Positions auto-calculated successfully!");
-                    loadStudentsForMarksWithFees();
+                    loadStudentsForMarksWithFines();
                     loadAllResults();
                 });
             });
@@ -1478,7 +1530,7 @@
         function loadAllResults() {
             const filter = document.getElementById('filterClass').value;
             const table = document.getElementById('allResultsTable');
-            table.innerHTML = '<tr><td colspan="10" class="text-center">Loading...</td></tr>';
+            table.innerHTML = '<tr><td colspan="9" class="text-center">Loading...</td></tr>';
             
             database.ref('students').once('value').then(snapshot => {
                 const students = snapshot.val() || {};
@@ -1501,7 +1553,8 @@
                     }
                     
                     const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
-                    const isAbsent = student.status === 'absent' || !student.marks || student.marks.every(m => m === 0);
+                    const isAbsent = student.status === 'absent';
+                    const hasMarks = student.marks && Array.isArray(student.marks) && student.marks.length > 0 && student.marks.some(m => m !== null && m !== undefined && m !== '');
                     
                     allStudents.push({
                         rollNo,
@@ -1509,7 +1562,8 @@
                         totalObtained,
                         totalMaximum,
                         percentage,
-                        isAbsent
+                        isAbsent,
+                        hasMarks
                     });
                 });
                 
@@ -1522,22 +1576,55 @@
                 
                 // Render table
                 allStudents.forEach(data => {
-                    const {rollNo, student, totalObtained, totalMaximum, percentage, isAbsent} = data;
+                    const {rollNo, student, totalObtained, totalMaximum, percentage, isAbsent, hasMarks} = data;
                     
                     // Position text
                     let positionText = '-';
-                    if(student.position === 1) positionText = '🥇';
-                    else if(student.position === 2) positionText = '🥈';
-                    else if(student.position === 3) positionText = '🥉';
-                    else if(student.position === -1) {
+                    if(!hasMarks) {
+                        positionText = 'N/A';
+                    } else if(student.position === 1) {
+                        positionText = '🥇';
+                    } else if(student.position === 2) {
+                        positionText = '🥈';
+                    } else if(student.position === 3) {
+                        positionText = '🥉';
+                    } else if(student.position === -1) {
                         positionText = percentage >= 33 ? 'Pass' : 'Fail';
                     }
                     
-                    // Fee text
-                    const feeAmount = student.fee?.amount || 0;
-                    const feePaid = student.fee?.paid || false;
-                    const feeText = feeAmount > 0 ? `Rs.${feeAmount}` : 'None';
-                    const feeStatus = feeAmount > 0 ? (feePaid ? 'Paid' : 'Unpaid') : '-';
+                    // Fine text
+                    const fineAmount = student.fine?.amount || 0;
+                    const fineText = fineAmount > 0 ? `Rs.${fineAmount}` : 'None';
+                    
+                    // Status text
+                    let statusText = '';
+                    if(!hasMarks) {
+                        statusText = '<span class="status-noresult">No Result</span>';
+                    } else if(isAbsent) {
+                        statusText = '<span class="status-absent">Absent</span>';
+                    } else {
+                        statusText = '<span class="status-present">Present</span>';
+                    }
+                    
+                    // Marks text
+                    let marksText = '';
+                    if(!hasMarks) {
+                        marksText = 'Not Available';
+                    } else if(isAbsent) {
+                        marksText = 'Absent';
+                    } else {
+                        marksText = `${totalObtained}/${totalMaximum}`;
+                    }
+                    
+                    // Percentage text
+                    let percentageText = '';
+                    if(!hasMarks) {
+                        percentageText = '-';
+                    } else if(isAbsent) {
+                        percentageText = '-';
+                    } else {
+                        percentageText = `${percentage}%`;
+                    }
                     
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -1545,15 +1632,10 @@
                         <td>${rollNo}</td>
                         <td>${student.name}</td>
                         <td>${student.class}</td>
-                        <td>${isAbsent ? 'Absent' : `${totalObtained}/${totalMaximum}`}</td>
-                        <td>${isAbsent ? '-' : `${percentage}%`}</td>
-                        <td>${isAbsent ? 'Absent' : 'Present'}</td>
-                        <td>${feeText}</td>
-                        <td>
-                            <span class="${feePaid ? 'status-paid' : 'status-unpaid'}">
-                                ${feeStatus}
-                            </span>
-                        </td>
+                        <td>${marksText}</td>
+                        <td>${percentageText}</td>
+                        <td>${statusText}</td>
+                        <td>${fineText}</td>
                         <td>
                             <button class="btn btn-small btn-primary" onclick="viewStudentAdmin('${rollNo}')">
                                 <i class="fas fa-eye"></i>
@@ -1567,7 +1649,7 @@
                 });
                 
                 if(table.innerHTML === '') {
-                    table.innerHTML = '<tr><td colspan="10" class="text-center">No students found</td></tr>';
+                    table.innerHTML = '<tr><td colspan="9" class="text-center">No students found</td></tr>';
                 }
             });
         }
@@ -1586,14 +1668,14 @@
                     alert(`Student ${rollNo} deleted!`);
                     loadAllResults();
                     loadDeleteStudentDropdown();
-                    loadStudentsForMarksWithFees();
+                    loadStudentsForMarksWithFines();
                 });
             }
         }
         
         // Delete All Results Confirmation
         function confirmDeleteAllResults() {
-            if(confirm("⚠️ WARNING! This will delete ALL results for ALL students!\n\nMarks, positions, and fees will be cleared.\n\nAre you sure?")) {
+            if(confirm("⚠️ WARNING! This will delete ALL results for ALL students!\n\nMarks, positions, and fines will be cleared.\n\nAre you sure?")) {
                 if(prompt("Type 'DELETE ALL RESULTS' to confirm:") === "DELETE ALL RESULTS") {
                     deleteAllResults();
                 }
@@ -1609,22 +1691,22 @@
                 Object.keys(students).forEach(rollNo => {
                     updates[`students/${rollNo}/marks`] = [];
                     updates[`students/${rollNo}/position`] = 0;
-                    updates[`students/${rollNo}/status`] = 'absent';
-                    updates[`students/${rollNo}/fee`] = {amount: 0, reason: "", paid: false};
+                    updates[`students/${rollNo}/status`] = 'present';
+                    updates[`students/${rollNo}/fine`] = {amount: 0, reason: ""};
                 });
                 
                 database.ref().update(updates).then(() => {
                     alert("All results deleted successfully!");
                     loadAllResults();
-                    loadStudentsForMarksWithFees();
+                    loadStudentsForMarksWithFines();
                 });
             });
         }
         
-        // ==================== MANAGE FEES SECTION ====================
-        // Search Fee
-        function searchFee() {
-            const rollNo = document.getElementById('feeSearchRoll').value.trim();
+        // ==================== MANAGE FINES SECTION ====================
+        // Search Fine
+        function searchFine() {
+            const rollNo = document.getElementById('fineSearchRoll').value.trim();
             if(!rollNo) return alert("Please enter roll number");
             
             currentStudentRoll = rollNo;
@@ -1632,129 +1714,97 @@
             database.ref(`students/${rollNo}`).once('value').then(snapshot => {
                 if(!snapshot.exists()) {
                     alert("Student not found");
-                    document.getElementById('feeDetails').classList.add('hidden');
+                    document.getElementById('fineDetails').classList.add('hidden');
                     return;
                 }
                 
                 const student = snapshot.val();
-                displayFeeDetails(student, rollNo);
+                displayFineDetails(student, rollNo);
             });
         }
         
-        // Display Fee Details
-        function displayFeeDetails(student, rollNo) {
-            const feeDetails = document.getElementById('feeDetails');
-            feeDetails.classList.remove('hidden');
+        // Display Fine Details
+        function displayFineDetails(student, rollNo) {
+            const fineDetails = document.getElementById('fineDetails');
+            fineDetails.classList.remove('hidden');
             
             // Student info
-            document.getElementById('feeStudentName').textContent = student.name;
-            document.getElementById('feeStudentRoll').textContent = rollNo;
-            document.getElementById('feeStudentClass').textContent = student.class;
+            document.getElementById('fineStudentName').textContent = student.name;
+            document.getElementById('fineStudentRoll').textContent = rollNo;
+            document.getElementById('fineStudentClass').textContent = student.class;
             
-            // Fee info
-            if(student.fee && student.fee.amount > 0) {
-                document.getElementById('feeAmountInput').value = student.fee.amount;
-                document.getElementById('feeReason').value = student.fee.reason || '';
-                document.getElementById('feePaidCheckbox').checked = student.fee.paid || false;
+            // Fine info
+            if(student.fine && student.fine.amount > 0) {
+                document.getElementById('fineAmountInput').value = student.fine.amount;
+                document.getElementById('fineReason').value = student.fine.reason || '';
             } else {
-                document.getElementById('feeAmountInput').value = '';
-                document.getElementById('feeReason').value = '';
-                document.getElementById('feePaidCheckbox').checked = false;
+                document.getElementById('fineAmountInput').value = '';
+                document.getElementById('fineReason').value = '';
             }
         }
         
-        // Assign Fee
-        function assignFee() {
+        // Assign Fine
+        function assignFine() {
             if(!currentStudentRoll) return alert("Search for a student first");
             
-            const amount = parseInt(document.getElementById('feeAmountInput').value) || 0;
-            const reason = document.getElementById('feeReason').value.trim() || "Fee";
-            const paid = document.getElementById('feePaidCheckbox').checked;
+            const amount = parseInt(document.getElementById('fineAmountInput').value) || 0;
+            const reason = document.getElementById('fineReason').value.trim() || "Fine";
             
-            if(amount <= 0) return alert("Enter valid fee amount");
+            if(amount <= 0) return alert("Enter valid fine amount");
             
-            const fee = {
+            const fine = {
                 amount,
-                reason,
-                paid
+                reason
             };
             
-            database.ref(`students/${currentStudentRoll}/fee`).set(fee).then(() => {
-                alert("Fee assigned/updated successfully!");
-                loadAllFees();
-                loadStudentsForMarksWithFees();
+            database.ref(`students/${currentStudentRoll}/fine`).set(fine).then(() => {
+                alert("Fine assigned/updated successfully!");
+                loadAllFines();
+                loadStudentsForMarksWithFines();
             });
         }
         
-        // Clear Fee
-        function clearFee() {
+        // Clear Fine
+        function clearFine() {
             if(!currentStudentRoll) return alert("Search for a student first");
             
-            if(confirm("Are you sure you want to clear the fee?")) {
-                const fee = {amount: 0, reason: "", paid: false};
-                database.ref(`students/${currentStudentRoll}/fee`).set(fee).then(() => {
-                    alert("Fee cleared!");
-                    displayFeeDetails({name: "Loading...", class: ""}, currentStudentRoll);
-                    loadAllFees();
-                    loadStudentsForMarksWithFees();
+            if(confirm("Are you sure you want to clear the fine?")) {
+                const fine = {amount: 0, reason: ""};
+                database.ref(`students/${currentStudentRoll}/fine`).set(fine).then(() => {
+                    alert("Fine cleared!");
+                    displayFineDetails({name: "Loading...", class: ""}, currentStudentRoll);
+                    loadAllFines();
+                    loadStudentsForMarksWithFines();
                 });
             }
         }
         
-        // Mark Fee as Paid
-        function markFeePaid() {
-            if(!currentStudentRoll) return alert("Search for a student first");
-            
-            database.ref(`students/${currentStudentRoll}/fee`).once('value').then(snapshot => {
-                if(snapshot.exists() && snapshot.val().amount > 0) {
-                    const fee = snapshot.val();
-                    fee.paid = true;
-                    database.ref(`students/${currentStudentRoll}/fee`).set(fee).then(() => {
-                        alert("Fee marked as paid!");
-                        document.getElementById('feePaidCheckbox').checked = true;
-                        loadAllFees();
-                        loadStudentsForMarksWithFees();
-                    });
-                } else {
-                    alert("No fee assigned to this student");
-                }
-            });
-        }
-        
-        // Load All Fees
-        function loadAllFees() {
-            const table = document.getElementById('allFeesTable');
-            table.innerHTML = '<tr><td colspan="7" class="text-center">Loading...</td></tr>';
+        // Load All Fines
+        function loadAllFines() {
+            const table = document.getElementById('allFinesTable');
+            table.innerHTML = '<tr><td colspan="6" class="text-center">Loading...</td></tr>';
             
             database.ref('students').once('value').then(snapshot => {
                 const students = snapshot.val() || {};
                 table.innerHTML = '';
                 
-                let hasFees = false;
+                let hasFines = false;
                 
                 Object.keys(students).forEach(rollNo => {
                     const student = students[rollNo];
-                    if(student.fee && student.fee.amount > 0) {
-                        hasFees = true;
+                    if(student.fine && student.fine.amount > 0) {
+                        hasFines = true;
                         
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${rollNo}</td>
                             <td>${student.name}</td>
                             <td>${student.class}</td>
-                            <td>Rs. ${student.fee.amount}</td>
-                            <td>${student.fee.reason || "Not specified"}</td>
+                            <td>Rs. ${student.fine.amount}</td>
+                            <td>${student.fine.reason || "Not specified"}</td>
                             <td>
-                                <span class="${student.fee.paid ? 'status-paid' : 'status-unpaid'}">
-                                    ${student.fee.paid ? 'Paid' : 'Unpaid'}
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-small btn-primary" onclick="viewStudentFees('${rollNo}')">
+                                <button class="btn btn-small btn-primary" onclick="viewStudentFines('${rollNo}')">
                                     <i class="fas fa-eye"></i> View
-                                </button>
-                                <button class="btn btn-small btn-success" onclick="quickMarkFeePaid('${rollNo}')">
-                                    <i class="fas fa-check"></i> Paid
                                 </button>
                             </td>
                         `;
@@ -1762,56 +1812,41 @@
                     }
                 });
                 
-                if(!hasFees) {
-                    table.innerHTML = '<tr><td colspan="7" class="text-center">No students with fees found</td></tr>';
+                if(!hasFines) {
+                    table.innerHTML = '<tr><td colspan="6" class="text-center">No students with fines found</td></tr>';
                 }
             });
         }
         
-        // Quick Mark Fee Paid
-        function quickMarkFeePaid(rollNo) {
-            database.ref(`students/${rollNo}/fee`).once('value').then(snapshot => {
-                if(snapshot.exists()) {
-                    const fee = snapshot.val();
-                    fee.paid = true;
-                    database.ref(`students/${rollNo}/fee`).set(fee).then(() => {
-                        alert(`Fee for ${rollNo} marked as paid!`);
-                        loadAllFees();
-                        loadStudentsForMarksWithFees();
-                    });
-                }
-            });
+        // View Student Fine
+        function viewStudentFines(rollNo) {
+            document.getElementById('fineSearchRoll').value = rollNo;
+            searchFine();
         }
         
-        // View Student Fee
-        function viewStudentFees(rollNo) {
-            document.getElementById('feeSearchRoll').value = rollNo;
-            searchFee();
-        }
-        
-        // Confirm Reset All Fees
-        function confirmResetAllFees() {
-            if(confirm("⚠️ WARNING! This will reset ALL fees for ALL students!\n\nAll fee amounts will be set to 0 and marked as unpaid.\n\nAre you sure?")) {
-                if(prompt("Type 'RESET ALL FEES' to confirm:") === "RESET ALL FEES") {
-                    resetAllFees();
+        // Confirm Reset All Fines
+        function confirmResetAllFines() {
+            if(confirm("⚠️ WARNING! This will reset ALL fines for ALL students!\n\nAll fine amounts will be set to 0.\n\nAre you sure?")) {
+                if(prompt("Type 'RESET ALL FINES' to confirm:") === "RESET ALL FINES") {
+                    resetAllFines();
                 }
             }
         }
         
-        // Reset All Fees
-        function resetAllFees() {
+        // Reset All Fines
+        function resetAllFines() {
             database.ref('students').once('value').then(snapshot => {
                 const students = snapshot.val() || {};
                 let updates = {};
                 
                 Object.keys(students).forEach(rollNo => {
-                    updates[`students/${rollNo}/fee`] = {amount: 0, reason: "", paid: false};
+                    updates[`students/${rollNo}/fine`] = {amount: 0, reason: ""};
                 });
                 
                 database.ref().update(updates).then(() => {
-                    alert("All fees reset successfully!");
-                    loadAllFees();
-                    loadStudentsForMarksWithFees();
+                    alert("All fines reset successfully!");
+                    loadAllFines();
+                    loadStudentsForMarksWithFines();
                     loadAllResults();
                 });
             });
@@ -1845,7 +1880,7 @@
                     document.getElementById('deleteRollNo').value = '';
                     loadDeleteStudentDropdown();
                     loadAllResults();
-                    loadStudentsForMarksWithFees();
+                    loadStudentsForMarksWithFines();
                 });
             }
         }
@@ -1861,7 +1896,7 @@
                     alert(`Student ${rollNo} deleted!`);
                     loadDeleteStudentDropdown();
                     loadAllResults();
-                    loadStudentsForMarksWithFees();
+                    loadStudentsForMarksWithFines();
                 });
             }
         }
@@ -1887,7 +1922,7 @@
                 loadSubjects();
                 loadDeleteStudentDropdown();
                 loadAllResults();
-                loadStudentsForMarksWithFees();
+                loadStudentsForMarksWithFines();
             });
         }
         
