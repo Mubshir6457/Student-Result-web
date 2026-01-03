@@ -472,8 +472,8 @@
                         <strong>Note:</strong> 
                         <ul style="margin: 10px 0 0 20px;">
                             <li>Leave position as "Auto" for automatic calculation</li>
-                            <li>Only one student each for 1st, 2nd, 3rd positions</li>
                             <li>You can add fines directly in this section</li>
+                            <li>Multiple students can have same positions (1st, 2nd, 3rd)</li>
                         </ul>
                     </div>
                     
@@ -854,7 +854,7 @@
                 flowerContainer.innerHTML = '';
                 
                 if(hasNoResult || !hasMarks) {
-                    // SHOW ONLY: Student Name + "Result not available"
+                    // SHOW ONLY: Student Name + "Student was Absent in Exam" message
                     resultDetails.classList.add('hidden');
                     examDateInfo.classList.add('hidden');
                     positionBadge.classList.add('hidden');
@@ -862,19 +862,22 @@
                     marksTable.classList.add('hidden');
                     totalSection.classList.add('hidden');
                     prayerMessage.classList.add('hidden');
+                    fineSection.classList.add('hidden'); // Also hide fine section
                     
-                    // Show fine if exists (even when no result)
-                    if(student.fine && student.fine.amount > 0) {
-                        document.getElementById('fineAmount').innerHTML = `
-                            <strong>Fine Amount:</strong> Rs. ${student.fine.amount}<br>
-                            <strong>Reason:</strong> ${student.fine.reason || "Not specified"}
-                        `;
-                        fineSection.classList.remove('hidden');
-                    } else {
-                        fineSection.classList.add('hidden');
-                    }
+                    // Update the no result message to show "Student was Absent in Exam"
+                    document.querySelector('.no-result-icon').innerHTML = '<i class="fas fa-user-times"></i>';
+                    document.querySelector('#noResultMessage h3').textContent = 'Student was Absent in Exam';
+                    document.querySelector('#noResultMessage p:nth-child(3)').innerHTML = `
+                        The result for this student has not been entered yet.
+                        <br><br>
+                        <strong>Student Details:</strong><br>
+                        Name: ${student.name}<br>
+                        Roll No: ${rollNo}<br>
+                        Class: ${student.class || 'Not specified'}
+                    `;
+                    
                 } else {
-                    // SHOW FULL RESULT
+                    // SHOW FULL RESULT (when marks are available)
                     resultDetails.classList.remove('hidden');
                     examDateInfo.classList.remove('hidden');
                     positionBadge.classList.remove('hidden');
@@ -939,6 +942,8 @@
                     marksBody.innerHTML = '';
                     
                     if(isAbsent) {
+                        // This case shouldn't happen if we're in the hasMarks branch,
+                        // but just in case
                         marksBody.innerHTML = `
                             <tr>
                                 <td colspan="3" class="text-center" style="padding: 30px; color: #666;">
@@ -1418,18 +1423,9 @@
             const fineReasonInputs = document.querySelectorAll('.fine-reason-input');
             
             let updates = {};
-            let positionCount = {1:0,2:0,3:0};
             
-            // Count positions
-            positionSelects.forEach(select => {
-                const pos = parseInt(select.value);
-                if(pos > 0) positionCount[pos]++;
-            });
-            
-            // Validate positions
-            if(positionCount[1] > 1 || positionCount[2] > 1 || positionCount[3] > 1) {
-                return alert("Only one student each for 1st, 2nd, and 3rd positions allowed!");
-            }
+            // REMOVED: Position count validation
+            // No restriction on positions - admin can give same position to multiple students
             
             // Process marks
             marksInputs.forEach(input => {
