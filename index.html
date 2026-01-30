@@ -110,7 +110,7 @@
             margin: 1.5rem 0; border-radius: 8px;
         }
         
-        /* No Result Message */
+        /* No Result Message - UPDATED FOR ABSENT STUDENTS */
         .no-result-message { 
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
             border-left: 6px solid #6c757d; padding: 2rem; 
@@ -306,33 +306,33 @@
                 <div class="student-header">
                     <div class="student-info">
                         <h3 id="studentName">Student Name</h3>
-                        <!-- Roll number and class only shown when result is available -->
-                        <p id="resultDetails" class="hidden">
-                            <i class="fas fa-id-card"></i> Roll No: <span id="resultRollNo">-</span> | 
-                            <i class="fas fa-school"></i> Class: <span id="studentClass">-</span>
+                        <!-- Exam Date with Current Date -->
+                        <p id="examDateInfo">
+                            <i class="fas fa-calendar-alt"></i> Exam Date: <span id="examDate">Loading...</span>
                         </p>
-                        <p id="examDateInfo" class="hidden">
-                            <i class="fas fa-calendar-alt"></i> <span id="examDate">Exam Date: June 2024</span>
-                        </p>
+                        <!-- Student details shown only when result is available -->
+                        <div id="resultDetails" class="hidden">
+                            <p>
+                                <i class="fas fa-id-card"></i> Roll No: <span id="resultRollNo">-</span> | 
+                                <i class="fas fa-school"></i> Class: <span id="studentClass">-</span>
+                            </p>
+                        </div>
                     </div>
                     <div class="position-badge hidden" id="positionBadge">Position: -</div>
                 </div>
                 
-                <!-- No Result Message (Shown when no marks entered) -->
+                <!-- No Result Message (Shown when student was absent) -->
                 <div id="noResultMessage" class="no-result-message">
                     <div class="no-result-icon">
-                        <i class="fas fa-file-exclamation"></i>
+                        <i class="fas fa-user-times"></i>
                     </div>
-                    <h3 style="color: #6c757d; margin-bottom: 1rem;">Result Not Available</h3>
+                    <h3 style="color: #6c757d; margin-bottom: 1rem;">Student was Absent</h3>
                     <p style="font-size: 1.1rem; color: #666; margin-bottom: 1rem;">
-                        The result for this student has not been entered yet.
-                    </p>
-                    <p style="font-size: 1rem; color: #888;">
-                        <i class="fas fa-info-circle"></i> Please check back later or contact the administration.
+                        The result for this student is not available as they were absent for the exam.
                     </p>
                 </div>
                 
-                <!-- Marks Table (Hidden when no result) -->
+                <!-- Marks Table (Hidden when absent) -->
                 <table id="marksTable" class="marks-table hidden">
                     <thead>
                         <tr>
@@ -346,24 +346,24 @@
                     </tbody>
                 </table>
                 
-                <!-- Total Marks (Hidden when no result) -->
+                <!-- Total Marks (Hidden when absent) -->
                 <div id="totalSection" class="total-section hidden">
                     <div>
                         <h3 style="color: var(--primary); margin-bottom: 10px;">Total Result</h3>
                         <p style="font-size: 1.2rem;">
-                            Obtained Marks: <strong id="obtainedMarks">0</strong> / <strong id="totalMarks">100</strong>
+                            Obtained Marks: <strong id="obtainedMarks">0</strong> / <strong id="totalMarks">30</strong>
                         </p>
                     </div>
                     <div class="percentage" id="percentage">0%</div>
                 </div>
                 
-                <!-- Fine Notice (Shown only when result available AND fine exists) -->
+                <!-- Fine Notice (Hidden when absent) -->
                 <div id="fineSection" class="fine-notice hidden">
                     <h4><i class="fas fa-exclamation-circle"></i> Fine Notice</h4>
                     <p id="fineAmount" style="margin-top: 10px; font-size: 1.1rem;"></p>
                 </div>
                 
-                <!-- Prayer Message (Hidden when no result) -->
+                <!-- Prayer Message (Hidden when absent) -->
                 <div id="prayerMessage" class="hidden" style="background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); 
                           color: white; padding: 1.5rem; border-radius: 10px; text-align: center; margin-top: 2rem; font-weight: 700;">
                     <p class="urdu" style="font-size: 1.3rem;">
@@ -410,9 +410,7 @@
                 
                 <!-- Tabs -->
                 <div class="admin-tabs">
-                    <button class="tab-btn active" data-tab="examSetup">Exam Setup</button>
-                    <button class="tab-btn" data-tab="subjects">Subjects</button>
-                    <button class="tab-btn" data-tab="addStudents">Add Students</button>
+                    <button class="tab-btn active" data-tab="addStudents">Add Students</button>
                     <button class="tab-btn" data-tab="enterMarks">Enter Marks & Fines</button>
                     <button class="tab-btn" data-tab="viewResults">View All Results</button>
                     <button class="tab-btn" data-tab="manageFines">Manage Fines</button>
@@ -420,32 +418,8 @@
                     <button class="tab-btn" data-tab="changePassword">Change Password</button>
                 </div>
                 
-                <!-- Exam Setup -->
-                <div id="examSetup" class="tab-content active">
-                    <h2 class="card-title">Exam Date Setup</h2>
-                    <div class="form-group">
-                        <label class="form-label">Exam Date</label>
-                        <input type="date" id="examDateInput" class="form-control">
-                    </div>
-                    <button id="saveExamDateBtn" class="btn btn-success">Save Exam Date</button>
-                </div>
-                
-                <!-- Subjects -->
-                <div id="subjects" class="tab-content">
-                    <h2 class="card-title">Manage Subjects</h2>
-                    <div id="subjectInputs">
-                        <!-- Subjects will be loaded here -->
-                    </div>
-                    <button id="addSubjectBtn" class="btn btn-secondary mt-2">
-                        <i class="fas fa-plus"></i> Add Subject
-                    </button>
-                    <button id="saveSubjectsBtn" class="btn btn-success mt-2">
-                        <i class="fas fa-save"></i> Save Subjects
-                    </button>
-                </div>
-                
                 <!-- Add Students -->
-                <div id="addStudents" class="tab-content">
+                <div id="addStudents" class="tab-content active">
                     <h2 class="card-title">Add Students (Batch Entry)</h2>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle"></i>
@@ -469,7 +443,7 @@
                     <h2 class="card-title">Enter Marks, Positions & Fines</h2>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle"></i>
-                        <strong>Note:</strong> 
+                        <strong>Subjects:</strong> ناظرہ (10 marks), کلمے (10 marks), نماز (10 marks)
                         <ul style="margin: 10px 0 0 20px;">
                             <li>Leave position as "Auto" for automatic calculation</li>
                             <li>You can add fines directly in this section</li>
@@ -738,7 +712,12 @@
         // Global Variables
         let currentAdminPassword = "admin123";
         let isAdminLoggedIn = false;
-        let subjects = [];
+        // Fixed subjects: ناظرہ، کلمے، نماز - each 10 marks
+        let subjects = [
+            {name: "ناظرہ", total: 10},
+            {name: "کلمے", total: 10},
+            {name: "نماز", total: 10}
+        ];
         let currentStudentRoll = null;
         
         // DOM Elements
@@ -749,6 +728,9 @@
         function initApp() {
             // Load admin password
             loadAdminPassword();
+            
+            // Initialize subjects in Firebase
+            initializeSubjects();
             
             // Navigation
             navLinks.forEach(link => {
@@ -770,6 +752,19 @@
                 document.getElementById('adminLoginModal').style.display = 'none';
                 document.getElementById('adminContent').classList.remove('hidden');
             }
+        }
+        
+        // Initialize Subjects in Firebase
+        function initializeSubjects() {
+            database.ref('subjects').once('value').then(snapshot => {
+                if(!snapshot.exists()) {
+                    // Save fixed subjects to Firebase
+                    database.ref('subjects').set(subjects);
+                } else {
+                    // Load subjects from Firebase
+                    subjects = snapshot.val();
+                }
+            });
         }
         
         // Page Switching
@@ -799,6 +794,14 @@
             rollNumberInput.addEventListener('keypress', e => { 
                 if(e.key === 'Enter') checkResult(); 
             });
+            
+            // Set current date for exam date
+            const currentDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('examDate').textContent = currentDate;
         }
         
         function checkResult() {
@@ -829,172 +832,144 @@
             // Student Info - Always show name
             document.getElementById('studentName').textContent = student.name;
             
-            // Load subjects
-            database.ref('subjects').once('value').then(snapshot => {
-                subjects = snapshot.val() || [];
+            // Set current date for exam date
+            const currentDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('examDate').textContent = currentDate;
+            
+            // Check if student is absent
+            const isAbsent = student.status === 'absent';
+            
+            // Get DOM elements
+            const resultDetails = document.getElementById('resultDetails');
+            const positionBadge = document.getElementById('positionBadge');
+            const noResultMessage = document.getElementById('noResultMessage');
+            const marksTable = document.getElementById('marksTable');
+            const totalSection = document.getElementById('totalSection');
+            const fineSection = document.getElementById('fineSection');
+            const prayerMessage = document.getElementById('prayerMessage');
+            const flowerContainer = document.getElementById('flowerFall');
+            
+            // Clear previous flowers
+            flowerContainer.classList.add('hidden');
+            flowerContainer.innerHTML = '';
+            
+            // اگر student absent ہے تو صرف student name اور absent message دکھائیں
+            if(isAbsent) {
+                resultDetails.classList.add('hidden');
+                positionBadge.classList.add('hidden');
+                marksTable.classList.add('hidden');
+                totalSection.classList.add('hidden');
+                fineSection.classList.add('hidden');
+                prayerMessage.classList.add('hidden');
+                noResultMessage.classList.remove('hidden');
                 
-                // Check if marks exist
-                const hasMarks = student.marks && Array.isArray(student.marks) && student.marks.length > 0 && student.marks.some(m => m !== null && m !== undefined && m !== '');
-                const isAbsent = student.status === 'absent';
-                const hasNoResult = !hasMarks && !isAbsent; // Student exists but no marks entered
+                // فقط student name دکھائیں، باقی کچھ نہیں
+                document.getElementById('studentName').textContent = student.name;
                 
-                // Get DOM elements
-                const resultDetails = document.getElementById('resultDetails');
-                const examDateInfo = document.getElementById('examDateInfo');
-                const positionBadge = document.getElementById('positionBadge');
-                const noResultMessage = document.getElementById('noResultMessage');
-                const marksTable = document.getElementById('marksTable');
-                const totalSection = document.getElementById('totalSection');
-                const fineSection = document.getElementById('fineSection');
-                const prayerMessage = document.getElementById('prayerMessage');
-                const flowerContainer = document.getElementById('flowerFall');
+            } else {
+                // اگر student present ہے تو مکمل رزلٹ دکھائیں
+                resultDetails.classList.remove('hidden');
+                noResultMessage.classList.add('hidden');
+                marksTable.classList.remove('hidden');
+                totalSection.classList.remove('hidden');
+                prayerMessage.classList.remove('hidden');
                 
-                // Clear previous flowers
-                flowerContainer.classList.add('hidden');
-                flowerContainer.innerHTML = '';
+                // Set result details
+                document.getElementById('resultRollNo').textContent = rollNo;
+                document.getElementById('studentClass').textContent = student.class;
                 
-                if(hasNoResult || !hasMarks) {
-                    // SHOW ONLY: Student Name + "Student was Absent in Exam" message
-                    resultDetails.classList.add('hidden');
-                    examDateInfo.classList.add('hidden');
-                    positionBadge.classList.add('hidden');
-                    noResultMessage.classList.remove('hidden');
-                    marksTable.classList.add('hidden');
-                    totalSection.classList.add('hidden');
-                    prayerMessage.classList.add('hidden');
-                    fineSection.classList.add('hidden'); // Also hide fine section
-                    
-                    // Update the no result message to show "Student was Absent in Exam"
-                    document.querySelector('.no-result-icon').innerHTML = '<i class="fas fa-user-times"></i>';
-                    document.querySelector('#noResultMessage h3').textContent = 'Student was Absent in Exam';
-                    document.querySelector('#noResultMessage p:nth-child(3)').innerHTML = `
-                        The result for this student has not been entered yet.
-                        <br><br>
-                        <strong>Student Details:</strong><br>
-                        Name: ${student.name}<br>
-                        Roll No: ${rollNo}<br>
-                        Class: ${student.class || 'Not specified'}
-                    `;
-                    
-                } else {
-                    // SHOW FULL RESULT (when marks are available)
-                    resultDetails.classList.remove('hidden');
-                    examDateInfo.classList.remove('hidden');
+                // Position - FLOWERS ONLY FOR 1st, 2nd, 3rd
+                const position = student.position || 0;
+                
+                if(position === 1) {
+                    positionBadge.textContent = '🥇 1st Position';
+                    positionBadge.className = 'position-badge position-1';
                     positionBadge.classList.remove('hidden');
-                    noResultMessage.classList.add('hidden');
-                    marksTable.classList.remove('hidden');
-                    totalSection.classList.remove('hidden');
-                    prayerMessage.classList.remove('hidden');
-                    
-                    // Set result details
-                    document.getElementById('resultRollNo').textContent = rollNo;
-                    document.getElementById('studentClass').textContent = student.class;
-                    
-                    // Exam Date
-                    database.ref('examDate').once('value').then(snapshot => {
-                        if(snapshot.exists()) {
-                            document.getElementById('examDate').textContent = `Exam Date: ${snapshot.val()}`;
-                        }
-                    });
-                    
-                    // Position - FLOWERS ONLY FOR 1st, 2nd, 3rd
-                    const position = student.position || 0;
-                    
-                    if(position === 1 && hasMarks) {
-                        positionBadge.textContent = '🥇 1st Position';
-                        positionBadge.className = 'position-badge position-1';
-                        startFlowerAnimation(); // FLOWERS HERE
-                    } else if(position === 2 && hasMarks) {
-                        positionBadge.textContent = '🥈 2nd Position';
-                        positionBadge.className = 'position-badge position-2';
-                        startFlowerAnimation(); // FLOWERS HERE
-                    } else if(position === 3 && hasMarks) {
-                        positionBadge.textContent = '🥉 3rd Position';
-                        positionBadge.className = 'position-badge position-3';
-                        startFlowerAnimation(); // FLOWERS HERE
-                    } else if(position === -1 && hasMarks) {
-                        // Auto position
-                        const percentage = calculatePercentage(student);
-                        if(percentage >= 33) {
-                            positionBadge.textContent = 'Position: Pass 🎉';
-                            positionBadge.className = 'position-badge position-pass';
-                        } else {
-                            positionBadge.textContent = 'Position: Fail';
-                            positionBadge.className = 'position-badge';
-                        }
-                    } else if(position === 0 && hasMarks) {
-                        // No position set
-                        const percentage = calculatePercentage(student);
-                        if(percentage >= 33) {
-                            positionBadge.textContent = 'Position: Pass 🎉';
-                            positionBadge.className = 'position-badge position-pass';
-                        } else {
-                            positionBadge.textContent = 'Position: Fail';
-                            positionBadge.className = 'position-badge';
-                        }
-                    } else {
-                        positionBadge.textContent = 'Position: -';
-                        positionBadge.className = 'position-badge';
-                    }
-                    
-                    // Marks Table
-                    const marksBody = document.getElementById('marksTableBody');
-                    marksBody.innerHTML = '';
-                    
-                    if(isAbsent) {
-                        // This case shouldn't happen if we're in the hasMarks branch,
-                        // but just in case
-                        marksBody.innerHTML = `
-                            <tr>
-                                <td colspan="3" class="text-center" style="padding: 30px; color: #666;">
-                                    <i class="fas fa-user-times" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                                    <br>Student was absent for the exam
-                                </td>
-                            </tr>
-                        `;
-                    } else if(subjects.length > 0) {
-                        subjects.forEach((subject, index) => {
-                            const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
-                            const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
-                            marksBody.innerHTML += row;
-                        });
-                    }
-                    
-                    // Totals
-                    const totalObtained = calculateObtainedMarks(student);
-                    const totalMaximum = calculateTotalMarks();
-                    document.getElementById('obtainedMarks').textContent = totalObtained;
-                    document.getElementById('totalMarks').textContent = totalMaximum;
+                    startFlowerAnimation(); // FLOWERS HERE
+                } else if(position === 2) {
+                    positionBadge.textContent = '🥈 2nd Position';
+                    positionBadge.className = 'position-badge position-2';
+                    positionBadge.classList.remove('hidden');
+                    startFlowerAnimation(); // FLOWERS HERE
+                } else if(position === 3) {
+                    positionBadge.textContent = '🥉 3rd Position';
+                    positionBadge.className = 'position-badge position-3';
+                    positionBadge.classList.remove('hidden');
+                    startFlowerAnimation(); // FLOWERS HERE
+                } else if(position === -1) {
+                    // Auto position - Only show if pass
                     const percentage = calculatePercentage(student);
-                    document.getElementById('percentage').textContent = `${percentage}%`;
-                    
-                    // Color code percentage
-                    const percentageEl = document.getElementById('percentage');
-                    if(percentage >= 80) {
-                        percentageEl.style.color = '#28a745';
-                    } else if(percentage >= 60) {
-                        percentageEl.style.color = '#ffc107';
-                    } else if(percentage >= 33) {
-                        percentageEl.style.color = '#17a2b8';
+                    if(percentage >= 33) {
+                        positionBadge.textContent = 'Position: Pass 🎉';
+                        positionBadge.className = 'position-badge position-pass';
+                        positionBadge.classList.remove('hidden');
                     } else {
-                        percentageEl.style.color = '#dc3545';
+                        positionBadge.classList.add('hidden'); // Hide position badge if fail
                     }
-                    
-                    // Fine Section
-                    if(student.fine && student.fine.amount > 0) {
-                        document.getElementById('fineAmount').innerHTML = `
-                            <strong>Fine Amount:</strong> Rs. ${student.fine.amount}<br>
-                            <strong>Reason:</strong> ${student.fine.reason || "Not specified"}
-                        `;
-                        fineSection.classList.remove('hidden');
+                } else if(position === 0) {
+                    // No position set - Only show if pass
+                    const percentage = calculatePercentage(student);
+                    if(percentage >= 33) {
+                        positionBadge.textContent = 'Position: Pass 🎉';
+                        positionBadge.className = 'position-badge position-pass';
+                        positionBadge.classList.remove('hidden');
                     } else {
-                        fineSection.classList.add('hidden');
+                        positionBadge.classList.add('hidden'); // Hide position badge if fail
                     }
+                } else {
+                    positionBadge.classList.add('hidden'); // Hide if no position
                 }
                 
-                // Scroll to result
-                resultSection.scrollIntoView({ behavior: 'smooth' });
-            });
+                // Marks Table
+                const marksBody = document.getElementById('marksTableBody');
+                marksBody.innerHTML = '';
+                
+                if(subjects.length > 0) {
+                    subjects.forEach((subject, index) => {
+                        const mark = student.marks && student.marks[index] ? student.marks[index] : 0;
+                        const row = `<tr><td>${subject.name}</td><td>${subject.total}</td><td>${mark}</td></tr>`;
+                        marksBody.innerHTML += row;
+                    });
+                }
+                
+                // Totals
+                const totalObtained = calculateObtainedMarks(student);
+                const totalMaximum = calculateTotalMarks();
+                document.getElementById('obtainedMarks').textContent = totalObtained;
+                document.getElementById('totalMarks').textContent = totalMaximum;
+                const percentage = calculatePercentage(student);
+                document.getElementById('percentage').textContent = `${percentage}%`;
+                
+                // Color code percentage
+                const percentageEl = document.getElementById('percentage');
+                if(percentage >= 80) {
+                    percentageEl.style.color = '#28a745';
+                } else if(percentage >= 60) {
+                    percentageEl.style.color = '#ffc107';
+                } else if(percentage >= 33) {
+                    percentageEl.style.color = '#17a2b8';
+                } else {
+                    percentageEl.style.color = '#dc3545';
+                }
+                
+                // Fine Section
+                if(student.fine && student.fine.amount > 0) {
+                    document.getElementById('fineAmount').innerHTML = `
+                        <strong>Fine Amount:</strong> Rs. ${student.fine.amount}<br>
+                        <strong>Reason:</strong> ${student.fine.reason || "Not specified"}
+                    `;
+                    fineSection.classList.remove('hidden');
+                } else {
+                    fineSection.classList.add('hidden');
+                }
+            }
+            
+            // Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth' });
         }
         
         // Calculate obtained marks
@@ -1061,13 +1036,6 @@
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', () => switchAdminTab(btn.getAttribute('data-tab')));
             });
-            
-            // Exam Setup
-            document.getElementById('saveExamDateBtn').addEventListener('click', saveExamDate);
-            
-            // Subjects
-            document.getElementById('addSubjectBtn').addEventListener('click', addSubjectField);
-            document.getElementById('saveSubjectsBtn').addEventListener('click', saveSubjects);
             
             // Students
             document.getElementById('addFiveStudentsBtn').addEventListener('click', addFiveStudentForms);
@@ -1156,111 +1124,9 @@
         
         // Load Admin Data
         function loadAdminData() {
-            loadSubjects();
-            loadExamDate();
             loadStudentsForMarksWithFines();
             loadAllResults();
             loadDeleteStudentDropdown();
-        }
-        
-        // Load Subjects
-        function loadSubjects() {
-            database.ref('subjects').once('value').then(snapshot => {
-                subjects = snapshot.val() || [];
-                if(subjects.length === 0) {
-                    subjects = [{name: "Quran Recitation", total: 50}];
-                    database.ref('subjects').set(subjects);
-                }
-                updateSubjectInputs();
-            });
-        }
-        
-        function updateSubjectInputs() {
-            const container = document.getElementById('subjectInputs');
-            container.innerHTML = '';
-            subjects.forEach((subject, index) => {
-                const div = document.createElement('div');
-                div.className = 'form-row subject-row mt-2';
-                div.innerHTML = `
-                    <div class="form-col">
-                        <input type="text" class="form-control subject-name" value="${subject.name}" placeholder="Subject Name">
-                    </div>
-                    <div class="form-col">
-                        <input type="number" class="form-control subject-total" value="${subject.total}" placeholder="Total Marks">
-                    </div>
-                    <div class="form-col">
-                        <button class="btn btn-danger remove-subject-btn">
-                            <i class="fas fa-times"></i> Remove
-                        </button>
-                    </div>
-                `;
-                container.appendChild(div);
-                div.querySelector('.remove-subject-btn').addEventListener('click', () => {
-                    subjects.splice(index, 1);
-                    updateSubjectInputs();
-                });
-            });
-        }
-        
-        // Add Subject Field
-        function addSubjectField() {
-            const container = document.getElementById('subjectInputs');
-            const div = document.createElement('div');
-            div.className = 'form-row subject-row mt-2';
-            div.innerHTML = `
-                <div class="form-col">
-                    <input type="text" class="form-control subject-name" placeholder="Subject Name">
-                </div>
-                <div class="form-col">
-                    <input type="number" class="form-control subject-total" placeholder="Total Marks">
-                </div>
-                <div class="form-col">
-                    <button class="btn btn-danger remove-subject-btn">
-                        <i class="fas fa-times"></i> Remove
-                    </button>
-                </div>
-            `;
-            container.appendChild(div);
-            div.querySelector('.remove-subject-btn').addEventListener('click', () => {
-                div.remove();
-            });
-        }
-        
-        // Save Subjects
-        function saveSubjects() {
-            const rows = document.querySelectorAll('.subject-row');
-            const newSubjects = [];
-            rows.forEach(row => {
-                const name = row.querySelector('.subject-name').value.trim();
-                const total = parseInt(row.querySelector('.subject-total').value) || 0;
-                if(name && total > 0) newSubjects.push({name, total});
-            });
-            if(newSubjects.length === 0) return alert("Add at least one subject");
-            
-            database.ref('subjects').set(newSubjects).then(() => {
-                subjects = newSubjects;
-                alert("Subjects saved successfully!");
-                loadStudentsForMarksWithFines();
-            });
-        }
-        
-        // Load Exam Date
-        function loadExamDate() {
-            database.ref('examDate').once('value').then(snapshot => {
-                if(snapshot.exists()) {
-                    document.getElementById('examDateInput').value = snapshot.val();
-                } else {
-                    const today = new Date().toISOString().split('T')[0];
-                    document.getElementById('examDateInput').value = today;
-                }
-            });
-        }
-        
-        // Save Exam Date
-        function saveExamDate() {
-            const date = document.getElementById('examDateInput').value;
-            database.ref('examDate').set(date);
-            alert("Exam date saved!");
         }
         
         // Add 5 Student Forms
@@ -1364,15 +1230,18 @@
                     const row = document.createElement('div');
                     row.className = 'student-row';
                     
-                    // Marks inputs
+                    // Marks inputs - Fixed subjects: ناظرہ، کلمے، نماز
                     let marksHTML = '';
                     subjects.forEach((subject, index) => {
                         const mark = student.marks && student.marks[index] ? student.marks[index] : '';
                         marksHTML += `
-                            <input type="number" class="marks-input" 
-                                   data-roll="${rollNo}" data-index="${index}" 
-                                   max="${subject.total}" placeholder="${subject.name}" 
-                                   value="${mark}" min="0" max="${subject.total}">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <small style="font-size: 0.8rem; margin-bottom: 2px;">${subject.name}</small>
+                                <input type="number" class="marks-input" 
+                                       data-roll="${rollNo}" data-index="${index}" 
+                                       max="${subject.total}" placeholder="0-${subject.total}" 
+                                       value="${mark}" min="0" max="${subject.total}">
+                            </div>
                         `;
                     });
                     
@@ -1423,9 +1292,6 @@
             const fineReasonInputs = document.querySelectorAll('.fine-reason-input');
             
             let updates = {};
-            
-            // REMOVED: Position count validation
-            // No restriction on positions - admin can give same position to multiple students
             
             // Process marks
             marksInputs.forEach(input => {
@@ -1550,7 +1416,6 @@
                     
                     const percentage = totalMaximum > 0 ? ((totalObtained/totalMaximum)*100).toFixed(2) : 0;
                     const isAbsent = student.status === 'absent';
-                    const hasMarks = student.marks && Array.isArray(student.marks) && student.marks.length > 0 && student.marks.some(m => m !== null && m !== undefined && m !== '');
                     
                     allStudents.push({
                         rollNo,
@@ -1558,8 +1423,7 @@
                         totalObtained,
                         totalMaximum,
                         percentage,
-                        isAbsent,
-                        hasMarks
+                        isAbsent
                     });
                 });
                 
@@ -1572,12 +1436,12 @@
                 
                 // Render table
                 allStudents.forEach(data => {
-                    const {rollNo, student, totalObtained, totalMaximum, percentage, isAbsent, hasMarks} = data;
+                    const {rollNo, student, totalObtained, totalMaximum, percentage, isAbsent} = data;
                     
                     // Position text
                     let positionText = '-';
-                    if(!hasMarks) {
-                        positionText = 'N/A';
+                    if(isAbsent) {
+                        positionText = 'Absent';
                     } else if(student.position === 1) {
                         positionText = '🥇';
                     } else if(student.position === 2) {
@@ -1594,9 +1458,7 @@
                     
                     // Status text
                     let statusText = '';
-                    if(!hasMarks) {
-                        statusText = '<span class="status-noresult">No Result</span>';
-                    } else if(isAbsent) {
+                    if(isAbsent) {
                         statusText = '<span class="status-absent">Absent</span>';
                     } else {
                         statusText = '<span class="status-present">Present</span>';
@@ -1604,9 +1466,7 @@
                     
                     // Marks text
                     let marksText = '';
-                    if(!hasMarks) {
-                        marksText = 'Not Available';
-                    } else if(isAbsent) {
+                    if(isAbsent) {
                         marksText = 'Absent';
                     } else {
                         marksText = `${totalObtained}/${totalMaximum}`;
@@ -1614,9 +1474,7 @@
                     
                     // Percentage text
                     let percentageText = '';
-                    if(!hasMarks) {
-                        percentageText = '-';
-                    } else if(isAbsent) {
+                    if(isAbsent) {
                         percentageText = '-';
                     } else {
                         percentageText = `${percentage}%`;
@@ -1899,7 +1757,7 @@
         
         // Delete All Data Confirmation
         function confirmDeleteAllData() {
-            if(confirm("⚠️ DANGER! This will delete EVERYTHING from Firebase!\n\nStudents, subjects, settings - ALL GONE!\n\nAre you absolutely sure?")) {
+            if(confirm("⚠️ DANGER! This will delete EVERYTHING from Firebase!\n\nStudents, subjects, and settings - ALL GONE!\n\nAre you absolutely sure?")) {
                 if(prompt("Type 'DELETE ALL' to confirm:") === "DELETE ALL") {
                     deleteAllData();
                 }
@@ -1914,8 +1772,14 @@
                 database.ref('adminPassword').set(currentAdminPassword);
                 document.getElementById('currentPasswordCode').textContent = currentAdminPassword;
                 
-                subjects = [];
-                loadSubjects();
+                // Reset subjects
+                subjects = [
+                    {name: "ناظرہ", total: 10},
+                    {name: "کلمے", total: 10},
+                    {name: "نماز", total: 10}
+                ];
+                database.ref('subjects').set(subjects);
+                
                 loadDeleteStudentDropdown();
                 loadAllResults();
                 loadStudentsForMarksWithFines();
